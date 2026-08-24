@@ -22,6 +22,9 @@ struct ContentView: View {
                 .font(.subheadline)
                 .foregroundColor(.gray)
                 .padding()
+            Text("Versión MANUAL - Hecha sin IA")
+            .font(.headline)
+            .foregroundColor(.blue)
         }
     }
 }
