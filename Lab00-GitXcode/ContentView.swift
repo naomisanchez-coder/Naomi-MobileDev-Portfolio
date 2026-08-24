@@ -22,6 +22,9 @@ struct ContentView: View {
                 .font(.subheadline)
                 .foregroundColor(.gray)
                 .padding()
+            Text("Versión CON IA\nAsistida por Claude")
+                .font(.headline)
+                .foregroundColor(.green)
         }
     }
 }
