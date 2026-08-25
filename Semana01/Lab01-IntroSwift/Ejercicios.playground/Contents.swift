@@ -57,9 +57,11 @@ var y = 20
 y = y + x
 print(y) // PREDICT 1: Imprime 30 (20 + 10)
 
-let a = "Hola"
-let b = "Mundo"
-print(a + " " + b) // PREDICT 2: Imprime "Hola Mundo"
+do {
+    let a = "Hola"
+    let b = "Mundo"
+    print(a + " " + b) // PREDICT 2
+}
 
 var contador = 0
 contador = contador + 1
@@ -93,43 +95,90 @@ let matriculado = false
 print(type(of: matriculado))
 
 // ==========================================
-// EJERCICIO 2: OPERACIONES Y CÁLCULOS
+// EJERCICIO 2: OPERACIONES ARITMÉTICAS
+// Docente: Juan León
 // ==========================================
 
-// --- 2.1 CÁLCULOS BÁSICOS
-// TODO 1: Calcula el área de un rectángulo (base * altura)
-let base: Double = 12.5
-let altura: Double = 5.0
-let area = base * altura
-print("Área del rectángulo: \(area)")
+let a = 25
+let b = 7
 
-// TODO 2: Calcula el promedio de 3 notas
-let nota1: Double = 16.0
-let nota2: Double = 18.0
-let nota3: Double = 14.0
-let promedio = (nota1 + nota2 + nota3) / 3.0
-print("Promedio de notas: \(promedio)")
+// --- Ejemplo (ya resuelto):
+let suma = a + b
+print("Suma: \(a) + \(b) = \(suma)") // 32
 
-// TODO 3: Uso del operador módulo (%) para saber si un número es par
-let numero = 15
-let esPar = (numero % 2 == 0)
-print("¿El número \(numero) es par?: \(esPar)")
+// --- TODO 11: Calcula la resta ---
+let resta = a - b
+print("Resta: \(a) - \(b) = \(resta)")
 
+// --- TODO 12: Calcula la multiplicación ---
+let multiplicacion = a * b
+print("Multiplicación: \(a) * \(b) = \(multiplicacion)")
 
-// --- 2.2 CORREGIR ERRORES (FIX)
-// FIX 1: Convertir Int a Double para poder sumar ambos tipos.
-let enteroNum: Int = 10
-let decimalNum: Double = 5.5
-let sumaMezclada = Double(enteroNum) + decimalNum
-print("Suma mezclada: \(sumaMezclada)")
+// --- TODO 13: Calcula la división entera ---
+let divisionEntera = a / b
+print("División entera: \(a) / \(b) = \(divisionEntera)")
 
-// FIX 2: Usar decimales para evitar truncamiento en división.
-let divisionDecimal = 5.0 / 2.0
-print("División exacta: \(divisionDecimal)")
+// --- TODO 14: Calcula el residuo (módulo) ---
+let residuo = a % b
+print("Residuo: \(a) % \(b) = \(residuo)")
 
 
-// --- 2.3 OPERADORES LÓGICOS
-let tieneMembresia = true
-let tieneCupon = false
-let aplicaDescuento = tieneMembresia || tieneCupon
-print("¿Aplica descuento?: \(aplicaDescuento)")
+// ==========================================
+// 2.2 — PREDICCIÓN DE DIVISIÓN
+// ==========================================
+
+print(10 / 3)   // PREDICT 5a: 3
+print(10 % 3)   // PREDICT 5b: 1
+print(20 / 7)   // PREDICT 5c: 2
+print(20 % 7)   // PREDICT 5d: 6
+print(100 / 3)  // PREDICT 5e: 33
+print(100 % 3)  // PREDICT 5f: 1
+
+
+// ==========================================
+// 2.3 — CORREGIR CÁLCULOS (FIX)
+// ==========================================
+
+// FIX 5: Faltaban paréntesis. Sin ellos, dividía solo nota3 entre 3.
+let nota1 = 15
+let nota2 = 12
+let nota3 = 18
+let promedio = (nota1 + nota2 + nota3) / 3
+print("Promedio: \(promedio)")
+
+// FIX 6: Faltaban paréntesis para priorizar la resta antes de multiplicar.
+let fahrenheit = 98.6
+let celsius = (fahrenheit - 32) * 5 / 9
+print("Celsius: \(celsius)")
+
+// FIX 7: Se convierten los Int a Double para obtener la división con decimales (3.5714...).
+let dividendo = 25
+let divisor = 7
+let resultado = Double(dividendo) / Double(divisor)
+print("Resultado: \(resultado)")
+
+
+// ==========================================
+// 2.4 — CÁLCULOS PRÁCTICOS
+// ==========================================
+
+// --- TODO 15: Calcula el IGV (18%) de un producto de S/. 350.00
+let precioProducto = 350.0
+let igv = precioProducto * 0.18
+let precioConIgv = precioProducto + igv
+print("Precio: S/. \(precioProducto)")
+print("IGV: S/. \(igv)")
+print("Total: S/. \(precioConIgv)")
+
+// --- TODO 16: Calcula el área de un círculo con radio 5.0
+let pi = 3.14159
+let radio = 5.0
+let area = pi * radio * radio
+print("Área: \(area)")
+
+// --- TODO 17: Calcula tu nota final del curso
+let notaPa = 15.0
+let notaPb = 13.0
+let notaFinal = 0.30 * notaPa + 0.70 * notaPb
+print("Nota final: \(notaFinal)")
+print("¿Aprueba? \(notaFinal >= 13.0)")
