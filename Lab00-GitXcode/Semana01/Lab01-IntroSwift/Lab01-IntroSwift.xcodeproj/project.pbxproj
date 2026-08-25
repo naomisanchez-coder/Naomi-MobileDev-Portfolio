@@ -10,14 +10,6 @@
 		CD6A7E04303CF8D6000C9B65 /* Lab01-IntroSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Lab01-IntroSwift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		CD6A7E06303CF8D6000C9B65 /* Lab01-IntroSwift */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Lab01-IntroSwift";
-			sourceTree = "<group>";
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
-
 /* Begin PBXFrameworksBuildPhase section */
 		CD6A7E01303CF8D6000C9B65 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -32,7 +24,6 @@
 		CD6A7DFB303CF8D6000C9B65 = {
 			isa = PBXGroup;
 			children = (
-				CD6A7E06303CF8D6000C9B65 /* Lab01-IntroSwift */,
 				CD6A7E05303CF8D6000C9B65 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -59,9 +50,6 @@
 			buildRules = (
 			);
 			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				CD6A7E06303CF8D6000C9B65 /* Lab01-IntroSwift */,
 			);
 			name = "Lab01-IntroSwift";
 			packageProductDependencies = (

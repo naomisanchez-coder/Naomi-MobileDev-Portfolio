@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
+		8181F7ED303E4BF000B3C64F /* Lab01-IntroSwift.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "Lab01-IntroSwift.xcodeproj"; sourceTree = "<group>"; };
 		CD6A7DCE303CDD40000C9B65 /* Lab00-GitXcode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Lab00-GitXcode.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -29,6 +30,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8181F7F0303E4BF000B3C64F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		CD6A7DC5303CDD40000C9B65 = {
 			isa = PBXGroup;
 			children = (
@@ -97,6 +105,12 @@
 			preferredProjectObjectVersion = 77;
 			productRefGroup = CD6A7DCF303CDD40000C9B65 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 8181F7F0303E4BF000B3C64F /* Products */;
+					ProjectRef = 8181F7ED303E4BF000B3C64F /* Lab01-IntroSwift.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				CD6A7DCD303CDD40000C9B65 /* Lab00-GitXcode */,
