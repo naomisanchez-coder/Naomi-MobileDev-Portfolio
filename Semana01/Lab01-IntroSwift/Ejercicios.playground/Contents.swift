@@ -91,3 +91,45 @@ print(type(of: ciudad))
 // TODO 10: Swift infiere Bool
 let matriculado = false
 print(type(of: matriculado))
+
+// ==========================================
+// EJERCICIO 2: OPERACIONES Y CÁLCULOS
+// ==========================================
+
+// --- 2.1 CÁLCULOS BÁSICOS
+// TODO 1: Calcula el área de un rectángulo (base * altura)
+let base: Double = 12.5
+let altura: Double = 5.0
+let area = base * altura
+print("Área del rectángulo: \(area)")
+
+// TODO 2: Calcula el promedio de 3 notas
+let nota1: Double = 16.0
+let nota2: Double = 18.0
+let nota3: Double = 14.0
+let promedio = (nota1 + nota2 + nota3) / 3.0
+print("Promedio de notas: \(promedio)")
+
+// TODO 3: Uso del operador módulo (%) para saber si un número es par
+let numero = 15
+let esPar = (numero % 2 == 0)
+print("¿El número \(numero) es par?: \(esPar)")
+
+
+// --- 2.2 CORREGIR ERRORES (FIX)
+// FIX 1: Convertir Int a Double para poder sumar ambos tipos.
+let enteroNum: Int = 10
+let decimalNum: Double = 5.5
+let sumaMezclada = Double(enteroNum) + decimalNum
+print("Suma mezclada: \(sumaMezclada)")
+
+// FIX 2: Usar decimales para evitar truncamiento en división.
+let divisionDecimal = 5.0 / 2.0
+print("División exacta: \(divisionDecimal)")
+
+
+// --- 2.3 OPERADORES LÓGICOS
+let tieneMembresia = true
+let tieneCupon = false
+let aplicaDescuento = tieneMembresia || tieneCupon
+print("¿Aplica descuento?: \(aplicaDescuento)")
