@@ -262,3 +262,71 @@ do {
     let d = 0.15
     print("Descuento: S/. \(p1 * d)")      // PREDICT 6d: Descuento: S/. 15.0
 }
+
+// ==========================================
+// EJERCICIO 4: INVESTIGACIÓN Y CONVERSIONES
+// Docente: Juan León
+// ==========================================
+
+// --- 4.1 — Conversiones de tipo
+do {
+    // ===== TODO 20: Completa las conversiones =====
+    let entero = 42
+    let decimal = 9.99
+    let texto = "150"
+    let textoInvalido = "hola"
+
+    // TODO: Convierte 'entero' a Double
+    let enteroADouble = Double(entero)
+    print(enteroADouble) // Imprime: 42.0
+
+    // TODO: Convierte 'decimal' a Int
+    let decimalAEntero = Int(decimal)
+    print(decimalAEntero) // PREDICT 7: Imprime 9 (Swift trunca la parte decimal, no redondea).
+
+    // TODO: Convierte 'texto' a Int
+    let textoAEntero = Int(texto)
+    print(textoAEntero) // PREDICT 8: Imprime Optional(150) (Retorna un Int opcional porque la conversión puede fallar).
+
+    // TODO: Convierte 'textoInvalido' a Int
+    let invalido = Int(textoInvalido)
+    print(invalido) // PREDICT 9: Imprime nil (La conversión falla completamente porque el texto contiene letras).
+}
+
+// --- 4.2 — Ejercicio de investigación
+do {
+    // ===== TODO 21: Redondear un Double a 2 decimales =====
+    let piValor = 3.14159
+    let piRedondeado = String(format: "%.2f", piValor)
+    print("Pi a 2 decimales: \(piRedondeado)")
+    
+    /*
+     EXPLICACIÓN TODO 21:
+     Se utilizó el especificador de formato `String(format: "%.2f", valor)`.
+     El parámetro `%.2f` le indica a Swift que formatee el número de tipo Double
+     mostrando exactamente 2 dígitos decimales redondeados.
+    */
+
+    // ===== TODO 22: Operador += en Swift =====
+    /*
+     EXPLICACIÓN TODO 22:
+     El operador `+=` es el operador de adición y asignación combinada.
+     Suma el valor del lado derecho al valor actual de la variable y guarda
+     el resultado en esa misma variable (equivale a escribir `x = x + valor`).
+    */
+
+    // Ejemplo 1: Incrementar un contador o puntaje
+    var puntaje = 100
+    puntaje += 50
+    print("Ejemplo 1 (Puntaje): \(puntaje)")
+
+    // Ejemplo 2: Concatenar/acumular texto en un String
+    var mensaje = "Hola"
+    mensaje += " Swift"
+    print("Ejemplo 2 (Texto): \(mensaje)")
+
+    // Ejemplo 3: Acumular compras en una cuenta
+    var totalCuenta = 20.5
+    totalCuenta += 9.5
+    print("Ejemplo 3 (Cuenta): \(totalCuenta)")
+}
