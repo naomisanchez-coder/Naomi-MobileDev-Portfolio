@@ -417,3 +417,76 @@ do {
     print("==================================================") // Imprime borde inferior
 }
 
+// ==========================================
+// EJERCICIO 6: CONVERSIONES AVANZADAS (CON IA)
+// Docente: Juan León
+// ==========================================
+
+// --- Conversor de Temperatura ---
+do {
+    let c1 = 0.0 // Define la primera temperatura base en grados Celsius
+    let f1 = (c1 * 9.0 / 5.0) + 32.0 // Convierte Celsius a Fahrenheit aplicando la fórmula (C * 9/5) + 32
+    let k1 = c1 + 273.15 // Convierte Celsius a Kelvin sumando el ajuste constante de 273.15
+
+    let c2 = 25.0 // Define la segunda temperatura base en grados Celsius
+    let f2 = (c2 * 9.0 / 5.0) + 32.0 // Convierte la segunda temperatura Celsius a grados Fahrenheit
+    let k2 = c2 + 273.15 // Convierte la segunda temperatura Celsius a la escala Kelvin
+
+    let c3 = 100.0 // Define la tercera temperatura base en grados Celsius
+    let f3 = (c3 * 9.0 / 5.0) + 32.0 // Convierte la tercera temperatura Celsius a grados Fahrenheit
+    let k3 = c3 + 273.15 // Convierte la tercera temperatura Celsius a la escala Kelvin
+
+    print("==========================================") // Imprime el borde superior decorativo de la tabla
+    print("CELSIUS\t\tFAHRENHEIT\tKELVIN") // Imprime los encabezados para cada escala de temperatura
+    print("------------------------------------------") // Imprime la línea divisoria de la cabecera
+    print("\(c1)°C\t\t\(String(format: "%.1f", f1))°F\t\t\(String(format: "%.2f", k1))K") // Muestra los valores calculados de la primera muestra
+    print("\(c2)°C\t\t\(String(format: "%.1f", f2))°F\t\t\(String(format: "%.2f", k2))K") // Muestra los valores calculados de la segunda muestra
+    print("\(c3)°C\t\t\(String(format: "%.1f", f3))°F\t\t\(String(format: "%.2f", k3))K") // Muestra los valores calculados de la tercera muestra
+    print("==========================================") // Imprime el borde inferior decorativo
+}
+
+// --- Conversor de Distancia ---
+do {
+    let km1 = 5.0 // Define la primera distancia en kilómetros
+    let mi1 = km1 * 0.621371 // Convierte kilómetros a millas multiplicando por el factor constante 0.621371
+    let m1 = km1 * 1000.0 // Convierte kilómetros a metros multiplicando por el factor de 1000
+
+    let km2 = 10.0 // Define la segunda distancia en kilómetros
+    let mi2 = km2 * 0.621371 // Convierte la segunda distancia de kilómetros a millas
+    let m2 = km2 * 1000.0 // Convierte la segunda distancia de kilómetros a metros
+
+    let km3 = 42.195 // Define la tercera distancia en kilómetros
+    let mi3 = km3 * 0.621371 // Convierte la tercera distancia de kilómetros a millas
+    let m3 = km3 * 1000.0 // Convierte la tercera distancia de kilómetros a metros
+
+    print("==========================================") // Imprime el borde superior de la tabla de distancias
+    print("KILÓMETROS\tMILLAS\t\tMETROS") // Imprime los títulos de columna de las unidades de longitud
+    print("------------------------------------------") // Imprime la línea divisoria
+    print("\(km1) km\t\t\(String(format: "%.2f", mi1)) mi\t\(String(format: "%.0f", m1)) m") // Muestra las conversiones formateadas de la distancia 1
+    print("\(km2) km\t\t\(String(format: "%.2f", mi2)) mi\t\(String(format: "%.0f", m2)) m") // Muestra las conversiones formateadas de la distancia 2
+    print("\(km3) km\t\(String(format: "%.2f", mi3)) mi\t\(String(format: "%.0f", m3)) m") // Muestra las conversiones formateadas de la distancia 3
+    print("==========================================") // Imprime el borde inferior
+}
+
+// --- Conversor de Tiempo ---
+do {
+    let h1 = 1.0 // Define la primera duración en horas
+    let min1 = h1 * 60.0 // Convierte horas a minutos multiplicando por la relación de 60 minutos por hora
+    let seg1 = h1 * 3600.0 // Convierte horas a segundos multiplicando por la relación de 3600 segundos por hora
+
+    let h2 = 2.5 // Define la segunda duración en horas
+    let min2 = h2 * 60.0 // Convierte la segunda duración en horas a minutos
+    let seg2 = h2 * 3600.0 // Convierte la segunda duración en horas a segundos
+
+    let h3 = 8.0 // Define la tercera duración en horas
+    let min3 = h3 * 60.0 // Convierte la tercera duración en horas a minutos
+    let seg3 = h3 * 3600.0 // Convierte la tercera duración en horas a segundos
+
+    print("==========================================") // Imprime el borde superior de la tabla de tiempo
+    print("HORAS\t\tMINUTOS\t\tSEGUNDOS") // Imprime los encabezados de las unidades de tiempo
+    print("------------------------------------------") // Imprime la línea divisoria de tiempo
+    print("\(h1) hrs\t\t\(String(format: "%.0f", min1)) min\t\t\(String(format: "%.0f", seg1)) seg") // Muestra el desglose de tiempo para la muestra 1
+    print("\(h2) hrs\t\t\(String(format: "%.0f", min2)) min\t\t\(String(format: "%.0f", seg2)) seg") // Muestra el desglose de tiempo para la muestra 2
+    print("\(h3) hrs\t\t\(String(format: "%.0f", min3)) min\t\t\(String(format: "%.0f", seg3)) seg") // Muestra el desglose de tiempo para la muestra 3
+    print("==========================================") // Imprime el borde inferior
+}
