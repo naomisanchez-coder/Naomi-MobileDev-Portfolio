@@ -182,3 +182,83 @@ let notaPb = 13.0
 let notaFinal = 0.30 * notaPa + 0.70 * notaPb
 print("Nota final: \(notaFinal)")
 print("¿Aprueba? \(notaFinal >= 13.0)")
+
+// ==========================================
+// EJERCICIO 3: INTERPOLACIÓN DE CADENAS
+// Docente: Juan León
+// ==========================================
+
+// --- 3.1 — Completar interpolación
+do {
+    let fruta = "manzana"
+    let cantidad = 5
+    let precio = 2.50
+    print("Compré \(cantidad) \(fruta)s por S/. \(Double(cantidad) * precio)")
+
+    // --- TODO 18: Crea tu tarjeta de presentación ---
+    let nombre = "Naomi"
+    let apellido = "Sanchez"
+    let edad = 20
+    let carrera = "Diseño y Desarrollo de Software"
+    let ciclo = 3
+    let distrito = "Lima"
+
+    print("Me llamo \(nombre) \(apellido), tengo \(edad) años.")
+    print("Estudio \(carrera), ciclo \(ciclo).")
+    print("Vivo en \(distrito).")
+}
+
+// --- 3.2 — Factura con cálculos
+do {
+    // ===== TODO 19: Completa la factura =====
+    let prod1 = "Laptop"
+    let prec1 = 3500.00
+    let cant1 = 1
+
+    let prod2 = "Mouse"
+    let prec2 = 45.50
+    let cant2 = 2
+
+    let prod3 = "Teclado"
+    let prec3 = 120.00
+    let cant3 = 1
+
+    // TODO: Calcula el subtotal de cada producto
+    let sub1 = prec1 * Double(cant1)
+    let sub2 = prec2 * Double(cant2)
+    let sub3 = prec3 * Double(cant3)
+
+    // TODO: Calcula el subtotal general
+    let subtotalGeneral = sub1 + sub2 + sub3
+
+    // TODO: Calcula el IGV (18%)
+    let igv = subtotalGeneral * 0.18
+
+    // TODO: Calcula el total
+    let total = subtotalGeneral + igv
+
+    // TODO: Imprime la factura usando interpolación:
+    print("==================================")
+    print("       FACTURA DE VENTA           ")
+    print("1. \(prod1) x\(cant1): S/. \(sub1)")
+    print("2. \(prod2) x\(cant2): S/. \(sub2)")
+    print("3. \(prod3) x\(cant3): S/. \(sub3)")
+    print("----------------------------------")
+    print("Subtotal: S/. \(subtotalGeneral)")
+    print("IGV 18%:   S/. \(igv)")
+    print("TOTAL:     S/. \(total)")
+    print("==================================")
+}
+
+// --- 3.3 — Predicción de interpolación
+do {
+    let n = "Swift"
+    let v = 5
+    print("\(n) versión \(v)")             // PREDICT 6a: Swift versión 5
+    print("\(v) x \(v) = \(v * v)")         // Imprime: 5 x 5 = 25
+    print("Hay \(v + 3) alumnos")          // PREDICT 6b: Hay 8 alumnos
+
+    let p1 = 100.0                          // PREDICT 6c: Declara precio base 100.0
+    let d = 0.15
+    print("Descuento: S/. \(p1 * d)")      // PREDICT 6d: Descuento: S/. 15.0
+}
