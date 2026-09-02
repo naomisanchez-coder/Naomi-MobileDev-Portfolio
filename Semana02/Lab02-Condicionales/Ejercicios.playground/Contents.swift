@@ -85,3 +85,82 @@ if hora >= 0 && hora < 12 {
 // PREDICT 3:
 // Imprime "Es lunes O llueve".
 // Respuesta: La primera condición (esLunes && llueve) falla porque llueve es 'false'. La segunda condición (esLunes || llueve) es 'true' porque el operador '||' (Ó) solo requiere que una de las dos variables sea verdadera.
+
+// ===== EJERCICIO 2: SWITCH =====
+
+// --- Ejemplo (ya resuelto): ---
+let diaSemana = 3
+switch diaSemana {
+case 1: print("Lunes")
+case 2: print("Martes")
+case 3: print("Miércoles")
+case 4: print("Jueves")
+case 5: print("Viernes")
+case 6: print("Sábado")
+case 7: print("Domingo")
+default: print("Día inválido")
+}
+
+// --- TODO 4: Clasificar nota numérica a letra ---
+let notaSwitch = 16
+switch nota {
+case 18...20:
+    print("A")
+case 15...17:
+    print("B")
+case 13...14:
+    print("C")
+case 11...12:
+    print("D")
+case 0...10:
+    print("F")
+default:
+    print("Nota inválida")
+}
+
+// --- TODO 5: Calculadora simple con switch ---
+let num1 = 20.0
+let num2 = 5.0
+let operacion = "+"
+switch operacion {
+case "+":
+    print("Resultado: \(num1 + num2)")
+case "-":
+    print("Resultado: \(num1 - num2)")
+case "*":
+    print("Resultado: \(num1 * num2)")
+case "/":
+    if num2 != 0 {
+        print("Resultado: \(num1 / num2)")
+    } else {
+        print("Error: No se puede dividir entre 0")
+    }
+default:
+    print("Operación no válida")
+}
+
+// --- TODO 6: Categoría de producto por precio ---
+let precio = 350.0
+// Categorías: Económico (0-99), Medio (100-499), Premium (500-999), Lujo (1000+)
+switch precio {
+case 0..<100:
+    print("Económico")
+case 100..<500:
+    print("Medio")
+case 500..<1000:
+    print("Premium")
+case 1000...:
+    print("Lujo")
+default:
+    print("Precio inválido")
+}
+
+// ===== 2.2 PREDICCIONES =====
+
+// PREDICT 4:
+// ¿Qué imprime?: Imprime "28 o 29 días".
+// Explicación: La variable 'mes' vale 2, lo que coincide directamente con la evaluación del 'case 2:'.
+
+// PREDICT 5:
+// ¿Qué imprime?: Imprime "Vocal".
+// Explicación: La variable 'letra' es de tipo Character con valor "a", haciendo match directo con el primer grupo de caracteres ('case "a", "e", "i", "o", "u":').
