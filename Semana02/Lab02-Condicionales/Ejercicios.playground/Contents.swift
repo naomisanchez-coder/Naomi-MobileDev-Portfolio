@@ -384,3 +384,95 @@ print(separador)
 print("TOTAL:               S/. \(totalFinal)")
 print(separador)
 print("¡Gracias por su compra!")
+
+// ===== EJERCICIO 6: CARRITO MEJORADO CON IA =====
+
+// Se define el precio unitario del producto 1 (Laptop)
+let precioProd1 = 3500.0 // Asigna el valor flotante 3500.0 a la constante de precio
+// Se define la cantidad a comprar del producto 1
+let cantidadProd1 = 1 // Asigna el número entero 1 a la cantidad de laptops
+
+// Se define el precio unitario del producto 2 (Mouse)
+let precioProd2 = 45.50 // Asigna el valor flotante 45.50 a la constante de precio
+// Se define la cantidad a comprar del producto 2
+let cantidadProd2 = 2 // Asigna el número entero 2 a la cantidad de mouses
+
+// Se define el precio unitario del producto 3 (Teclado)
+let precioProd3 = 120.00 // Asigna el valor flotante 120.0 a la constante de precio
+// Se define la cantidad a comprar del producto 3
+let cantidadProd3 = 1 // Asigna el número entero 1 a la cantidad de teclados
+
+// Se define el precio unitario del producto 4 (Monitor)
+let precioProd4 = 890.00 // Asigna el valor flotante 890.0 a la constante de precio
+// Se define la cantidad a comprar del producto 4
+let cantidadProd4 = 1 // Asigna el número entero 1 a la cantidad de monitores
+
+// Se define el precio unitario del producto 5 (Cable USB)
+let precioProd5 = 15.00 // Asigna el valor flotante 15.0 a la constante de precio
+// Se define la cantidad a comprar del producto 5
+let cantidadProd5 = 3 // Asigna el número entero 3 a la cantidad de cables USB
+
+// Variable que almacena el código del cupón promocional a validar
+let cuponIngresado = "DESCUENTO20" // Asigna la cadena de texto con el código del cupón
+
+// Requisito 16: Evalúa si los precios son no negativos y las cantidades mayores a cero
+let esValido1 = precioProd1 >= 0 && cantidadProd1 > 0 // Retorna verdadero si el precio 1 es >= 0 y cantidad 1 es > 0
+let esValido2 = precioProd2 >= 0 && cantidadProd2 > 0 // Retorna verdadero si el precio 2 es >= 0 y cantidad 2 es > 0
+let esValido3 = precioProd3 >= 0 && cantidadProd3 > 0 // Retorna verdadero si el precio 3 es >= 0 y cantidad 3 es > 0
+let esValido4 = precioProd4 >= 0 && cantidadProd4 > 0 // Retorna verdadero si el precio 4 es >= 0 y cantidad 4 es > 0
+let esValido5 = precioProd5 >= 0 && cantidadProd5 > 0 // Retorna verdadero si el precio 5 es >= 0 y cantidad 5 es > 0
+
+// Valida mediante un operador lógico AND que todas las condiciones sean verdaderas
+let datosValidos = esValido1 && esValido2 && esValido3 && esValido4 && esValido5 // Junta las 5 validaciones en una sola bandera
+
+// Estructura condicional para detener el flujo si se encuentran datos corruptos
+if !datosValidos { // Evalúa si la bandera de datos válidos es falsa
+    print("Error: Se encontraron precios negativos o cantidades iguales o menores a 0.") // Imprime mensaje de error en consola
+} else { // Ejecuta el cálculo comercial solo si todos los datos ingresados son válidos
+
+    // Requisito 12: Descuento individual por cantidad (5% extra si la cantidad es >= 3)
+    let descProd1 = cantidadProd1 >= 3 ? 0.05 : 0.0 // Asigna 0.05 si se compraron 3 o más unidades de producto 1, si no 0.0
+    let subtotalProd1 = precioProd1 * Double(cantidadProd1) * (1.0 - descProd1) // Multiplica precio por cantidad reduciendo el porcentaje de descuento
+
+    let descProd2 = cantidadProd2 >= 3 ? 0.05 : 0.0 // Asigna 0.05 si se compraron 3 o más unidades de producto 2, si no 0.0
+    let subtotalProd2 = precioProd2 * Double(cantidadProd2) * (1.0 - descProd2) // Multiplica precio por cantidad reduciendo el porcentaje de descuento
+
+    let descProd3 = cantidadProd3 >= 3 ? 0.05 : 0.0 // Asigna 0.05 si se compraron 3 o más unidades de producto 3, si no 0.0
+    let subtotalProd3 = precioProd3 * Double(cantidadProd3) * (1.0 - descProd3) // Multiplica precio por cantidad reduciendo el porcentaje de descuento
+
+    let descProd4 = cantidadProd4 >= 3 ? 0.05 : 0.0 // Asigna 0.05 si se compraron 3 o más unidades de producto 4, si no 0.0
+    let subtotalProd4 = precioProd4 * Double(cantidadProd4) * (1.0 - descProd4) // Multiplica precio por cantidad reduciendo el porcentaje de descuento
+
+    let descProd5 = cantidadProd5 >= 3 ? 0.05 : 0.0 // Como cantidadProd5 es 3, asigna 0.05 de descuento al producto 5
+    let subtotalProd5 = precioProd5 * Double(cantidadProd5) * (1.0 - descProd5) // Multiplica precio por cantidad aplicando el 5% de descuento
+
+    // Suma el subtotal acumulado de los 5 productos para obtener el subtotal inicial
+    let subtotalBruto = subtotalProd1 + subtotalProd2 + subtotalProd3 + subtotalProd4 + subtotalProd5 // Acumula los 5 subtotales individuales
+
+    // Requisito 13: Aplicación de cupón de descuento promocional "DESCUENTO20"
+    let porcentajeCupon = (cuponIngresado == "DESCUENTO20") ? 0.20 : 0.0 // Si el cupón coincide exactamente con "DESCUENTO20" aplica 0.20 (20%)
+    let montoMontoCupon = subtotalBruto * porcentajeCupon // Obtiene el valor en soles a descontar por concepto del cupón
+    let subtotalConCupon = subtotalBruto - montoMontoCupon // Resta el monto del cupón al subtotal bruto acumulado
+
+    // Requisito 14: Determinación del costo de envío (gratis si supera S/. 3000, si no S/. 25.00)
+    let costoEnvio = subtotalConCupon > 3000.0 ? 0.0 : 25.00 // Evalúa si el monto supera 3000.0 para fijar costo en 0.0 o en 25.0
+
+    // Calcula el total final sumando el costo de envío correspondiente
+    let totalPagar = subtotalConCupon + costoEnvio // Suma el costo del envío al subtotal con cupón
+
+    // Requisito 15: Puntos de fidelidad (1 punto por cada S/. 100 de compra)
+    let puntosObtenidos = Int(totalPagar / 100.0) // Divide el total entre 100 y castea a entero descartando decimales
+
+    // Muestra en consola la cabecera del reporte final
+    print("===== TICKET DE COMPRA MEJORADO (CON IA) =====") // Imprime la línea de título
+    // Muestra el subtotal bruto calculado
+    print("Subtotal productos: S/. \(subtotalBruto)") // Muestra la sumatoria de productos con interpolación
+    // Muestra el monto descontado por la validación del cupón
+    print("Descuento cupón (\(porcentajeCupon * 100)%): -S/. \(montoMontoCupon)") // Muestra el porcentaje y valor descontado
+    // Muestra el cobro del costo de envío calculado
+    print("Costo de envío: S/. \(costoEnvio)") // Imprime si el envío es 0.0 o 25.0
+    // Muestra el importe total a pagar en soles
+    print("TOTAL A PAGAR: S/. \(totalPagar)") // Imprime el total definitivo de la transacción
+    // Muestra la cantidad entera de puntos acumulados en la compra
+    print("Puntos de fidelidad ganados: \(puntosObtenidos) pts") // Imprime los puntos calculados
+}
