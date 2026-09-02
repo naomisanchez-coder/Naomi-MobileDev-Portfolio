@@ -2,10 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-<<<<<<< HEAD
       location = "self:">
-=======
-      location = "group:">
->>>>>>> 70f2db4 (feat: Agregar Ejercicios de Clase Semana 02 - Plan de Pagos)
    </FileRef>
 </Workspace>

@@ -164,3 +164,60 @@ default:
 // PREDICT 5:
 // ¿Qué imprime?: Imprime "Vocal".
 // Explicación: La variable 'letra' es de tipo Character con valor "a", haciendo match directo con el primer grupo de caracteres ('case "a", "e", "i", "o", "u":').
+
+// ===== EJERCICIO 3: BUCLES FOR-IN =====
+
+// --- Ejemplo (ya resuelto): ---
+// Imprime los números del 1 al 5:
+for i in 1...5 {
+    print("Número: \(i)")
+}
+
+// --- TODO 7: Tabla de multiplicar del 7 ---
+// Imprime: 7 x 1 = 7, 7 x 2 = 14, ... 7 x 12 = 84
+for i in 1...12 {
+    print("7 x \(i) = \(7 * i)")
+}
+
+// --- TODO 8: Sumatoria del 1 al 100 ---
+var suma = 0
+for i in 1...100 {
+    suma = suma + i
+}
+print("La suma del 1 al 100 es: \(suma)") // Debe dar 5050
+
+// --- TODO 9: Calcular el factorial de 8 ---
+var factorial = 1
+for i in 1...8 {
+    factorial = factorial * i
+}
+print("8! = \(factorial)")
+
+// --- TODO 10: Patrón de asteriscos ---
+for i in 1...5 {
+    print(String(repeating: "*", count: i))
+}
+
+// ===== 3.2 CORREGIR BUCLES =====
+
+// FIX 4: Se quiere imprimir los números pares del 2 al 20
+for i in 1...20 {
+    if i % 2 == 0 { // Se cambió % 2 == 1 por % 2 == 0 para filtrar pares
+        print(i)
+    }
+}
+
+// FIX 5: Se quiere contar del 10 al 1 (cuenta regresiva)
+for i in stride(from: 10, through: 1, by: -1) { // Se usó stride para restar de 1 en 1
+    print(i)
+}
+
+// ===== 3.3 PREDICCIONES =====
+
+// PREDICT 6:
+// ¿Valor final de total?: 15
+// ¿Cuántas iteraciones?: 5 iteraciones (i toma los valores 1, 2, 3, 4 y 5).
+
+// PREDICT 7:
+// ¿Para qué sirve '_' en vez de 'i'?:
+// Respuesta: Se utiliza el comodín '_' cuando no se requiere usar el valor del contador dentro del bloque, indicándole a Swift que únicamente debe repetir la acción esa cantidad de veces.
