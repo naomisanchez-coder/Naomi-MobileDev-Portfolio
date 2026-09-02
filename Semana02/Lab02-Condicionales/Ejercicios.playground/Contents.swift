@@ -476,3 +476,63 @@ if !datosValidos { // Evalúa si la bandera de datos válidos es falsa
     // Muestra la cantidad entera de puntos acumulados en la compra
     print("Puntos de fidelidad ganados: \(puntosObtenidos) pts") // Imprime los puntos calculados
 }
+
+// ===== EJERCICIO 7: JUEGO DE ADIVINANZA CON IA =====
+
+// Se define el número secreto fijo a adivinar en la simulación
+let numeroSecreto = 42 // Asigna el valor entero 42 como la respuesta correcta del juego
+
+// Se simulan los 5 intentos mediante constantes independientes con nombres únicos
+let juegoIntento1 = 20 // Primer intento simulado con un valor por debajo del número secreto
+let juegoIntento2 = 50 // Segundo intento simulado con un valor por encima del número secreto
+let juegoIntento3 = 35 // Tercer intento simulado con un valor menor al secreto
+let juegoIntento4 = 42 // Cuarto intento simulado con el valor exacto del número secreto
+let juegoIntento5 = 60 // Quinto intento simulado que no debería evaluarse si ya adivinó
+
+// Se inicializan las variables de control para el flujo del bucle
+var numeroDeIntento = 1 // Contador que determina cuál intento se está evaluando actualmente
+var adivinoElNumero = false // Bandera booleana que indica si el jugador ya acertó
+var contadorIntentos = 0 // Variable acumuladora para registrar cuántos intentos fueron realizados
+
+// Bucle while que se ejecuta mientras no supere los 5 intentos y no haya adivinado aún
+while numeroDeIntento <= 5 && !adivinoElNumero { // Evalúa si el intento es <= 5 y si la bandera es falsa
+
+    // Variable temporal para almacenar el valor numérico del intento en turno
+    var valorIntentoActual = 0 // Declara la variable local e inicializa en cero
+
+    // Estructura condicional para seleccionar qué variable de intento evaluar según el turno
+    if numeroDeIntento == 1 { // Evalúa si es el primer turno del juego
+        valorIntentoActual = juegoIntento1 // Asigna el valor de juegoIntento1 a la variable temporal
+    } else if numeroDeIntento == 2 { // Evalúa si es el segundo turno del juego
+        valorIntentoActual = juegoIntento2 // Asigna el valor de juegoIntento2 a la variable temporal
+    } else if numeroDeIntento == 3 { // Evalúa si es el tercer turno del juego
+        valorIntentoActual = juegoIntento3 // Asigna el valor de juegoIntento3 a la variable temporal
+    } else if numeroDeIntento == 4 { // Evalúa si es el cuarto turno del juego
+        valorIntentoActual = juegoIntento4 // Asigna el valor de juegoIntento4 a la variable temporal
+    } else if numeroDeIntento == 5 { // Evalúa si es el quinto y último turno permitido
+        valorIntentoActual = juegoIntento5 // Asigna el valor de juegoIntento5 a la variable temporal
+    } // Cierra el bloque condicional de selección de intento
+
+    // Incrementa el registro de intentos realizados en 1 unidad
+    contadorIntentos += 1 // Suma 1 al total de intentos ejecutados hasta el momento
+
+    // Lógica de comparación entre el intento del jugador y el número secreto
+    if valorIntentoActual == numeroSecreto { // Compara si el intento es exactamente igual al secreto
+        print("Intento \(numeroDeIntento) (\(valorIntentoActual)): ¡Correcto!") // Muestra mensaje de éxito e indica el valor
+        adivinoElNumero = true // Cambia la bandera a verdadero para detener el bucle
+    } else if valorIntentoActual > numeroSecreto { // Compara si el intento es mayor que el número secreto
+        print("Intento \(numeroDeIntento) (\(valorIntentoActual)): Muy alto") // Muestra en consola que la estimación fue muy alta
+    } else { // Si no es igual ni mayor, por descarte el intento es menor al número secreto
+        print("Intento \(numeroDeIntento) (\(valorIntentoActual)): Muy bajo") // Muestra en consola que la estimación fue muy baja
+    } // Cierra la estructura condicional de comparación
+
+    // Incrementa el contador de turno para pasar a la siguiente iteración
+    numeroDeIntento += 1 // Avanza al siguiente número de intento disponible
+} // Cierra el bloque del bucle while
+
+// Condicional final para mostrar el resultado global según el estado de la bandera de victoria
+if adivinoElNumero { // Verifica si la bandera cambió a verdadero (se acertó)
+    print("¡Felicidades! Adivinaste el número en \(contadorIntentos) intentos.") // Muestra la cantidad total de intentos requeridos
+} else { // Ejecuta esta rama si pasaron los 5 intentos sin acertar
+    print("Perdiste. El número era: \(numeroSecreto)") // Imprime mensaje de derrota informando el número secreto
+} // Cierra la validación del resultado final
