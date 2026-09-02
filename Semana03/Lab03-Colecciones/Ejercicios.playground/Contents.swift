@@ -170,3 +170,85 @@ print("Mayores de 21: \(mayores)")
 // ANALYZE 1: ¿Qué hace? ¿Qué imprime?
 // Respuesta: Recorre el diccionario de edades, filtra las personas con edad mayor o igual a 21 y guarda sus nombres en el array 'mayores'.
 // Imprime: Mayores de 21: ["Luis"]
+
+// Desarrollado por: Naomi Sánchez
+// Ejercicio 3: Sets
+import Foundation
+
+// ===== Ejemplo resuelto: Alumnos en cursos =====
+var alumnosIOS: Set<String> = []
+print("===== ALUMNOS iOS =====")
+for i in 1...3 {
+    print("Alumno \(i):")
+    let nombre = readLine() ?? ""
+    alumnosIOS.insert(nombre)
+}
+
+var alumnosAndroid: Set<String> = []
+print("\n===== ALUMNOS ANDROID =====")
+for i in 1...3 {
+    print("Alumno \(i):")
+    let nombre = readLine() ?? ""
+    alumnosAndroid.insert(nombre)
+}
+
+let enAmbos = alumnosIOS.intersection(alumnosAndroid)
+let todos = alumnosIOS.union(alumnosAndroid)
+let soloIOS = alumnosIOS.subtracting(alumnosAndroid)
+let soloAndroid = alumnosAndroid.subtracting(alumnosIOS)
+
+print("\n===== RESULTADOS =====")
+print("En ambos: \(enAmbos)")
+print("Solo iOS: \(soloIOS)")
+print("Solo Android: \(soloAndroid)")
+print("Total únicos: \(todos.count)")
+
+// ===== TODO 8: Eliminar duplicados =====
+var numerosDuplicados: [Int] = []
+for i in 1...8 {
+    print("Número \(i):")
+    let n = Int(readLine() ?? "") ?? 0
+    numerosDuplicados.append(n)
+}
+print("Con duplicados: \(numerosDuplicados)")
+let sinDuplicados = Array(Set(numerosDuplicados)).sorted()
+print("Sin duplicados: \(sinDuplicados)")
+
+// ===== TODO 9: Comparar asistencia =====
+var asistenciaLunes: Set<String> = []
+print("\n===== ASISTENCIA LUNES =====")
+for i in 1...4 {
+    print("Alumno \(i) (Lunes):")
+    let nombre = readLine() ?? ""
+    asistenciaLunes.insert(nombre)
+}
+
+var asistenciaMartes: Set<String> = []
+print("\n===== ASISTENCIA MARTES =====")
+for i in 1...4 {
+    print("Alumno \(i) (Martes):")
+    let nombre = readLine() ?? ""
+    asistenciaMartes.insert(nombre)
+}
+
+print("\n===== REPORTE ASISTENCIA =====")
+print("Asistieron ambos días: \(asistenciaLunes.intersection(asistenciaMartes))")
+print("Solo lunes: \(asistenciaLunes.subtracting(asistenciaMartes))")
+print("Solo martes: \(asistenciaMartes.subtracting(asistenciaLunes))")
+
+// ===== PREDICT =====
+let setA: Set = [1, 2, 3, 4, 5]
+let setB: Set = [4, 5, 6, 7, 8]
+
+print(setA.intersection(setB))
+// PREDICT 5: Set([4, 5])
+
+print(setA.union(setB).count)
+// PREDICT 6: 8
+
+print(setA.subtracting(setB))
+// PREDICT 7: Set([1, 2, 3])
+
+var repetidos: Set = ["A", "B", "A", "C", "B"]
+print(repetidos.count)
+// PREDICT 8: 3
