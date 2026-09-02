@@ -575,3 +575,142 @@ if !diccionarioAlumnos.isEmpty {
     // Imprime en consola el porcentaje calculado de aprobados
     print("Porcentaje de aprobados: \(String(format: "%.1f", porcentajeAprobacion))%")
 }
+
+// Desarrollado por: Naomi Sánchez
+// Ejercicio 7: Inventario con menú — con IA
+import Foundation
+
+// Declaración del diccionario para guardar el precio de cada producto
+var dictPreciosProd: [String: Double] = [:]
+// Declaración del diccionario para guardar la cantidad en stock de cada producto
+var dictStocksProd: [String: Int] = [:]
+
+// Impresión de solicitud para la cantidad de productos
+print("¿Cuántos productos desea registrar?")
+// Conversión segura de la entrada del usuario a número entero
+let cantidadProductosReg = Int(readLine() ?? "") ?? 0
+
+// Verificación de que la cantidad registrada sea un número positivo
+if cantidadProductosReg > 0 {
+    // Bucle para iterar e ingresar la información de cada producto
+    for i in 1...cantidadProductosReg {
+        // Muestra el encabezado del producto actual
+        print("\n--- Producto \(i) ---")
+        // Solicita el nombre del producto al usuario
+        print("Nombre del producto:")
+        // Lee el nombre ingresado o asigna cadena vacía si es nulo
+        let nombreProd = readLine() ?? ""
+        // Solicita el precio del producto al usuario
+        print("Precio del producto:")
+        // Convierte el precio a Double de forma segura
+        let precioProd = Double(readLine() ?? "") ?? 0.0
+        // Solicita la cantidad existente en stock
+        print("Stock del producto:")
+        // Convierte el stock a Int de forma segura
+        let stockProd = Int(readLine() ?? "") ?? 0
+        
+        // Asigna el precio al diccionario correspondiente usando el nombre como clave
+        dictPreciosProd[nombreProd] = precioProd
+        // Asigna el stock al diccionario correspondiente usando el nombre como clave
+        dictStocksProd[nombreProd] = stockProd
+    }
+}
+
+// Variable booleana de control para mantener activo el menú interactivo
+var menuActivo = true
+
+// Bucle while principal que mantiene corriendo el menú hasta seleccionar la opción salir
+while menuActivo {
+    // Muestra el título principal del menú de opciones
+    print("\n===== MENÚ DE INVENTARIO =====")
+    // Muestra la opción 1 para listar todo el inventario
+    print("1) Ver inventario")
+    // Muestra la opción 2 para buscar un producto específico
+    print("2) Buscar producto")
+    // Muestra la opción 3 para reportar productos con bajo stock
+    print("3) Stock bajo (< 5)")
+    // Muestra la opción 4 para calcular el valor total acumulado
+    print("4) Valor total del inventario")
+    // Muestra la opción 5 para salir del programa
+    print("5) Salir")
+    // Solicita al usuario ingresar el número de su opción
+    print("Seleccione una opción:")
+    
+    // Lee la opción digitada por el usuario
+    let opcionEntrada = readLine() ?? ""
+    
+    // Evaluación mediante switch para ejecutar la acción de la opción elegida
+    switch opcionEntrada {
+    // Caso cuando el usuario selecciona la opción 1
+    case "1":
+        // Muestra el encabezado del reporte de inventario completo
+        print("\n--- INVENTARIO COMPLETO ---")
+        // Recorre las claves y valores guardados en el diccionario de precios
+        for (prod, precio) in dictPreciosProd {
+            // Obtiene de forma segura el stock asociado al producto actual
+            let stock = dictStocksProd[prod] ?? 0
+            // Imprime el detalle formateado del producto, su precio y stock
+            print("• \(prod) | Precio: S/. \(String(format: "%.2f", precio)) | Stock: \(stock) unidades")
+        }
+    // Caso cuando el usuario selecciona la opción 2
+    case "2":
+        // Solicita el nombre del producto a buscar
+        print("\nIngrese el nombre del producto a buscar:")
+        // Lee el texto buscado
+        let prodBuscar = readLine() ?? ""
+        // Intenta obtener el precio y stock correspondiente desde los diccionarios
+        if let precio = dictPreciosProd[prodBuscar], let stock = dictStocksProd[prodBuscar] {
+            // Imprime los datos del producto si fue encontrado
+            print("✓ Producto encontrado: \(prodBuscar) - Precio: S/. \(precio) | Stock: \(stock)")
+        } else {
+            // Notifica que el producto no existe en el sistema
+            print("✗ El producto '\(prodBuscar)' no existe en el inventario.")
+        }
+    // Caso cuando el usuario selecciona la opción 3
+    case "3":
+        // Muestra el encabezado del reporte de alerta de stock
+        print("\n--- PRODUCTOS CON STOCK BAJO (< 5) ---")
+        // Variable para verificar si se encontró algún producto con bajo stock
+        var seEncontraronBajos = false
+        // Recorre el diccionario de stocks para verificar las cantidades
+        for (prod, stock) in dictStocksProd {
+            // Comprueba si el stock actual es menor a 5 unidades
+            if stock < 5 {
+                // Obtiene el precio del producto crítico
+                let precio = dictPreciosProd[prod] ?? 0.0
+                // Imprime la alerta con la cantidad restante
+                print("⚠ \(prod): \(stock) unidades restantes (S/. \(precio) c/u)")
+                // Marca la bandera como verdadera al encontrar al menos uno
+                seEncontraronBajos = true
+            }
+        }
+        // Verifica si no hubo ningún producto con stock crítico
+        if !seEncontraronBajos {
+            // Informa que el inventario se encuentra reabastecido
+            print("Todos los productos tienen stock suficiente.")
+        }
+    // Caso cuando el usuario selecciona la opción 4
+    case "4":
+        // Variable acumuladora para almacenar la suma total en soles
+        var valorAcumulado = 0.0
+        // Recorre el diccionario de precios para realizar el cálculo por producto
+        for (prod, precio) in dictPreciosProd {
+            // Obtiene el stock del producto
+            let stock = dictStocksProd[prod] ?? 0
+            // Multiplica el precio unitario por la cantidad en stock y lo suma al total
+            valorAcumulado += precio * Double(stock)
+        }
+        // Imprime el total monetario del inventario formateado a 2 decimales
+        print("\nValor total del inventario: S/. \(String(format: "%.2f", valorAcumulado))")
+    // Caso cuando el usuario selecciona la opción 5
+    case "5":
+        // Muestra un mensaje de despedida
+        print("\n¡Saliendo del sistema de inventario!")
+        // Cambia la variable de control a false para romper el bucle while
+        menuActivo = false
+    // Captura cualquier entrada que no corresponda a los números del 1 al 5
+    default:
+        // Advierte al usuario sobre una selección inválida
+        print("\nOpción no válida. Intente nuevamente.")
+    }
+}
