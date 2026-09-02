@@ -252,3 +252,92 @@ print(setA.subtracting(setB))
 var repetidos: Set = ["A", "B", "A", "C", "B"]
 print(repetidos.count)
 // PREDICT 8: 3
+
+// Desarrollado por: Naomi Sánchez
+// Ejercicio 4: Combinación de Colecciones
+import Foundation
+
+// ===== Ejemplo resuelto: Sistema de notas =====
+var notasPa: [String: Double] = [:]
+var notasPb: [String: Double] = [:]
+
+print("¿Cuántos alumnos?")
+let cantidadAlumnos = Int(readLine() ?? "") ?? 0
+
+if cantidadAlumnos > 0 {
+    for i in 1...cantidadAlumnos {
+        print("\nAlumno \(i) - Nombre:")
+        let nombre = readLine() ?? ""
+        print("Nota Pa:")
+        let pa = Double(readLine() ?? "") ?? 0
+        print("Nota Pb:")
+        let pb = Double(readLine() ?? "") ?? 0
+        notasPa[nombre] = pa
+        notasPb[nombre] = pb
+    }
+}
+
+print("\n===== REPORTE DE NOTAS =====")
+var totalAprobados = 0
+var sumaGeneral = 0.0
+
+for (alumno, pa) in notasPa {
+    if let pb = notasPb[alumno] {
+        let notaFinal = 0.30 * pa + 0.70 * pb
+        let estado = notaFinal >= 13.0 ? "Aprobado" : "Desaprobado"
+        print("\(alumno): Pa=\(pa) Pb=\(pb) Final=\(notaFinal) -> \(estado)")
+        sumaGeneral += notaFinal
+        if notaFinal >= 13.0 {
+            totalAprobados += 1
+        }
+    }
+}
+
+if !notasPa.isEmpty {
+    print("Promedio general: \(sumaGeneral / Double(notasPa.count))")
+    print("Aprobados: \(totalAprobados) de \(notasPa.count)")
+}
+
+// ===== TODO 10: Inventario de productos =====
+var precios: [String: Double] = [:]
+var stocks: [String: Int] = [:]
+
+print("\n¿Cuántos productos desea registrar?")
+let totalProds = Int(readLine() ?? "") ?? 0
+
+if totalProds > 0 {
+    for i in 1...totalProds {
+        print("\nProducto \(i) - Nombre:")
+        let nombre = readLine() ?? ""
+        print("Precio:")
+        let precio = Double(readLine() ?? "") ?? 0
+        print("Stock:")
+        let stock = Int(readLine() ?? "") ?? 0
+        
+        precios[nombre] = precio
+        stocks[nombre] = stock
+    }
+}
+
+// Calcular valor total del inventario (precio * stock)
+var valorTotalInventario = 0.0
+for (prod, precio) in precios {
+    if let stock = stocks[prod] {
+        valorTotalInventario += precio * Double(stock)
+    }
+}
+print("\n===== INVENTARIO =====")
+print("Valor total del inventario: S/. \(valorTotalInventario)")
+
+// Mostrar productos con stock bajo (< 5)
+print("\n===== PRODUCTOS CON STOCK BAJO (< 5) =====")
+var hayStockBajo = false
+for (prod, stock) in stocks {
+    if stock < 5 {
+        print("- \(prod): \(stock) unidades (S/. \(precios[prod] ?? 0) c/u)")
+        hayStockBajo = true
+    }
+}
+if !hayStockBajo {
+    print("No hay productos con stock crítico.")
+}
