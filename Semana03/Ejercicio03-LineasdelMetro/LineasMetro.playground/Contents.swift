@@ -147,14 +147,7 @@ func mostrarDetalleEstacion(_ nombreEstacion: String) {
     }
 }
 
-// MARK: - Ejemplos de uso (esto sí lo dejamos, es la demo del ejercicio)
-mostrarEstacionesDeLinea("Línea 3")
-print("")
-mostrarDetalleEstacion("La Cultura")
-print("")
-mostrarDetalleEstacion("Angamos")
-print("")
-mostrarDetalleEstacion("Estación Inventada")
+
 
 // ================================================================
 // AGREGANDO MAS DATOS NECESARIOS
@@ -259,14 +252,97 @@ func mostrarTransbordos() {
     }
 }
 
-// MARK: - Ejemplos de uso
-calcularTarifa(origen: "Villa El Salvador", destino: "Bayóvar")
-calcularTarifa(origen: "Angamos", destino: "Evitamiento")
-print("")
-calcularTiempoEstimado(origen: "Villa El Salvador", destino: "La Cultura")
-print("")
-mostrarEstacionesAccesibles()
-print("")
-mostrarConexionesMetropolitano()
-print("")
-mostrarTransbordos()
+
+// ================================================================
+// RF8: sugerir ruta hacia un punto de interés (contexto Panamericanos)
+// ================================================================
+
+// Diccionario: punto de interés -> estación de metro más cercana para llegar
+let puntosDeInteres: [String: String] = [
+    "Estadio Nacional": "La Cultura",   // Desde La Cultura se conecta al Metropolitano
+    "Emporio Gamarra": "Gamarra",
+    "Villa Deportiva Nacional": "Villa El Salvador"
+]
+
+func sugerirRutaAPuntoInteres(_ puntoInteres: String) {
+    guard let estacionCercana = puntosDeInteres[puntoInteres] else {
+        print("No tengo información registrada sobre '\(puntoInteres)'.")
+        return
+    }
+    let linea = lineaDeEstacion[estacionCercana] ?? "?"
+
+    print("Para llegar a \(puntoInteres):")
+    print("  1. Dirígete a la estación \(estacionCercana) (\(linea)).")
+
+    // Si esa estación conecta con el Metropolitano, lo indicamos como parte de la ruta
+    if estacionesConMetropolitano.contains(estacionCercana) {
+        print("  2. En \(estacionCercana) haz transbordo al Metropolitano hacia \(puntoInteres).")
+    } else {
+        print("  2. \(estacionCercana) está a poca distancia de \(puntoInteres).")
+    }
+}
+
+// ================================================================
+// MENÚ INTERACTIVO DE CONSOLA
+// ================================================================
+func mostrarMenu() {
+    print("""
+
+    ========================================
+     SISTEMA DE INFORMACIÓN - METRO DE LIMA
+    ========================================
+    1. Ver estaciones de una línea
+    2. Ver detalle de una estación
+    3. Calcular tarifa de un viaje
+    4. Calcular tiempo estimado de un viaje
+    5. Ver estaciones accesibles (con ascensor)
+    6. Ver estaciones con conexión al Metropolitano
+    7. Ver puntos de transbordo entre líneas
+    8. Buscar ruta hacia un punto de interés
+    0. Salir
+    ========================================
+    Elige una opción:
+    """)
+}
+
+var continuar = true
+// El bucle sigue repitiéndose hasta que el usuario elija "0"
+while continuar {
+    mostrarMenu()
+    let opcion = readLine() ?? ""
+
+    switch opcion {
+    case "1":
+        print("Ingresa el nombre de la línea (Línea 1, Línea 2 o Línea 3):")
+        mostrarEstacionesDeLinea(readLine() ?? "")
+    case "2":
+        print("Ingresa el nombre de la estación:")
+        mostrarDetalleEstacion(readLine() ?? "")
+    case "3":
+        print("Estación de origen:")
+        let origen = readLine() ?? ""
+        print("Estación de destino:")
+        let destino = readLine() ?? ""
+        calcularTarifa(origen: origen, destino: destino)
+    case "4":
+        print("Estación de origen:")
+        let origen = readLine() ?? ""
+        print("Estación de destino:")
+        let destino = readLine() ?? ""
+        calcularTiempoEstimado(origen: origen, destino: destino)
+    case "5":
+        mostrarEstacionesAccesibles()
+    case "6":
+        mostrarConexionesMetropolitano()
+    case "7":
+        mostrarTransbordos()
+    case "8":
+        print("¿A qué punto de interés quieres ir? (ej. Estadio Nacional)")
+        sugerirRutaAPuntoInteres(readLine() ?? "")
+    case "0":
+        print("¡Gracias por usar el sistema! Hasta pronto.")
+        continuar = false
+    default:
+        print("Opción no válida, intenta de nuevo.")
+    }
+}
