@@ -38,12 +38,17 @@ let estacionesPorLinea: [String: [String]] = [
 // MARK: - Diccionario 2: nombre de estación -> línea a la que pertenece
 // Lo llenamos con un bucle for recorriendo el diccionario anterior
 // (esto es justo lo que vimos en Semana 2: bucles + Semana 3: diccionarios).
-var lineaDeEstacion: [String: String] = [:]
-for (linea, estaciones) in estacionesPorLinea {
-    for estacion in estaciones {
-        lineaDeEstacion[estacion] = linea
+func construirLineaDeEstacion() -> [String: String] {
+    var resultado: [String: String] = [:]
+    for (linea, estaciones) in estacionesPorLinea {
+        for estacion in estaciones {
+            resultado[estacion] = linea
+        }
     }
+    return resultado
 }
+
+let lineaDeEstacion: [String: String] = construirLineaDeEstacion()
 
 // MARK: - Diccionarios 3, 4 y 5: información general de cada línea
 let colorLinea: [String: String] = [
@@ -87,3 +92,66 @@ let conexionesEntreLineas: [String: [String]] = [
     "Los Héroes": ["Línea 1", "Línea 3"]
 ]
 
+// ================================================================
+// FUNCIONES DE CONSULTA
+// ================================================================
+
+// MARK: - RF1: estaciones de una línea
+// Recibe el nombre de la línea y muestra todas sus estaciones en orden.
+func mostrarEstacionesDeLinea(_ nombreLinea: String) {
+    // Buscamos en el diccionario; si la clave no existe, "estaciones" será nil
+    guard let estaciones = estacionesPorLinea[nombreLinea] else {
+        print("No existe la \(nombreLinea) en el sistema.")
+        return
+    }
+
+    print("Estaciones de \(nombreLinea) (\(estadoLinea[nombreLinea] ?? "?")):")
+    // Recorremos el array con un for y mostramos el número de orden junto al nombre
+    for (indice, estacion) in estaciones.enumerated() {
+        print("  \(indice + 1). \(estacion)")
+    }
+}
+
+// MARK: - RF2: detalle completo de una estación
+// Recibe el nombre de una estación y muestra toda su información.
+func mostrarDetalleEstacion(_ nombreEstacion: String) {
+    // Si la estación no está en el diccionario, avisamos y salimos de la función
+    guard let linea = lineaDeEstacion[nombreEstacion] else {
+        print("La estación '\(nombreEstacion)' no existe en el sistema.")
+        return
+    }
+
+    print("Estación: \(nombreEstacion)")
+    print("  Línea: \(linea) (\(colorLinea[linea] ?? "?"))")
+
+    // El diccionario de ascensores no tiene TODAS las estaciones como clave,
+    // así que si no aparece, asumimos "false" con el operador ??
+    let tieneAscensor = estacionesConAscensor[nombreEstacion] ?? false
+    print("  Ascensor: \(tieneAscensor ? "Sí" : "No registrado")")
+
+    // Igual con las vías cercanas: si no hay dato, mostramos un array vacío
+    let vias = viasCercanas[nombreEstacion] ?? []
+    if vias.isEmpty {
+        print("  Vías cercanas: sin datos registrados")
+    } else {
+        print("  Vías cercanas: \(vias.joined(separator: ", "))")
+    }
+
+    // El Set responde directo con true/false si la estación está en él
+    let conectaMetro = estacionesConMetropolitano.contains(nombreEstacion)
+    print("  Conexión con Metropolitano: \(conectaMetro ? "Sí" : "No")")
+
+    // Revisamos si esta estación aparece como punto de transbordo entre líneas
+    if let otrasLineas = conexionesEntreLineas[nombreEstacion] {
+        print("  Transbordo con: \(otrasLineas.joined(separator: ", "))")
+    }
+}
+
+// MARK: - Ejemplos de uso (esto sí lo dejamos, es la demo del ejercicio)
+mostrarEstacionesDeLinea("Línea 3")
+print("")
+mostrarDetalleEstacion("La Cultura")
+print("")
+mostrarDetalleEstacion("Angamos")
+print("")
+mostrarDetalleEstacion("Estación Inventada")
