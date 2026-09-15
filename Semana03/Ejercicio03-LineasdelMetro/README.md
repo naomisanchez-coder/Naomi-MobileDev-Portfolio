@@ -1,36 +1,64 @@
-# Sistema de Información - Metro de Lima
+# Sistema de Información — Metro de Lima 🚇
 
-Aplicación de consola en Swift que permite a los usuarios consultar información sobre las líneas, estaciones y conexiones del Metro de Lima con el Metropolitano.
+Aplicación de consola desarrollada en **Swift (Playground)** que permite consultar información clave sobre las estaciones, líneas y conexiones del Metro de Lima. Forma parte del ejercicio de la **Semana 03** del curso, en el marco de un módulo de información para usuarios del Metropolitano pensado para los **Juegos Panamericanos**.
 
-## Requerimientos Funcionales
+## Contexto
 
-1. **Consultar estaciones por línea**: el usuario ingresa el nombre de una línea (ej. "Línea 1") y el sistema devuelve la lista de estaciones que la componen.
-2. **Consultar detalle de una estación**: el usuario ingresa el nombre de una estación y el sistema devuelve:
-   - Línea a la que pertenece
-   - Si cuenta con ascensor
-   - Vías cercanas
-   - Conexión con el Metropolitano (si existe)
-3. **Consultar cómo llegar a un destino**: el usuario ingresa una estación/destino y el sistema indica qué línea debe tomar y, de ser el caso, con qué estación del Metropolitano conecta al llegar.
-4. **Menú interactivo por consola**: el sistema presenta un menú con las opciones disponibles y procesa la entrada del usuario en un ciclo hasta que este decida salir.
-5. **Manejo de datos no encontrados**: si el usuario consulta una línea o estación que no existe en el sistema, se muestra un mensaje indicando que no fue encontrada, en lugar de fallar.
+El sistema resuelve consultas del tipo:
+- "¿Cuáles son las estaciones de la Línea 3?"
+- "¿La estación La Cultura tiene ascensor y conecta con el Metropolitano?"
+- "Quiero ir al Estadio Nacional, ¿qué línea tomo y con qué conecto?"
 
-## Modelo de datos
+Los datos de estaciones, líneas, tarifas y estado operativo corresponden a información real del sistema (Línea 1 operativa, Línea 2 con su tramo Evitamiento–Mercado Santa Anita operativo, Línea 3 aún proyectada). Los datos de accesibilidad (ascensores) y vías cercanas se modelaron como datos de ejemplo para un grupo representativo de estaciones, con fines académicos.
 
-- `Estacion`: estructura con nombre, línea, si tiene ascensor, vías cercanas y conexión al Metropolitano.
-- `estaciones`: diccionario `[String: Estacion]` que mapea el nombre de cada estación a sus datos.
-- `estacionesPorLinea`: diccionario `[String: [String]]` que mapea cada línea a la lista de nombres de sus estaciones.
+## Requerimientos funcionales
 
-## Cómo ejecutar
+| # | Requerimiento | Función |
+|---|---|---|
+| RF1 | Consultar todas las estaciones de una línea | `mostrarEstacionesDeLinea(_:)` |
+| RF2 | Consultar el detalle completo de una estación (línea, color, ascensor, vías cercanas, conexión al Metropolitano, transbordos) | `mostrarDetalleEstacion(_:)` |
+| RF3 | Calcular la tarifa de un viaje entre dos estaciones | `calcularTarifa(origen:destino:)` |
+| RF4 | Estimar el tiempo de llegada entre dos estaciones | `calcularTiempoEstimado(origen:destino:)` |
+| RF5 | Listar las estaciones accesibles (con ascensor) | `mostrarEstacionesAccesibles()` |
+| RF6 | Listar las estaciones con conexión al Metropolitano | `mostrarConexionesMetropolitano()` |
+| RF7 | Listar los puntos de transbordo entre líneas | `mostrarTransbordos()` |
+| RF8 | Sugerir la ruta hacia un punto de interés (ej. Estadio Nacional) | `sugerirRutaAPuntoInteres(_:)` |
 
-1. Abrir `LineasMetro.playground` en Xcode (plataforma macOS, para soporte de consola).
-2. Ejecutar el Playground (▶️).
-3. Por defecto corre en modo simulado (`iniciarAppSimulada`) para pruebas dentro del editor. Para interacción real por teclado, comentar esa línea y descomentar `iniciarAppConsola()`.
+Todas las opciones son accesibles desde un **menú interactivo de consola** (`while` + `switch`) que se ejecuta al correr el programa.
 
-## Fuente de datos
+## Estructura de datos
 
-Estaciones y líneas basadas en el mapa oficial del Metro de Lima:
-https://upload.wikimedia.org/wikipedia/commons/0/05/Lima_Metro_Map.svg
+El modelo se construyó únicamente con las colecciones vistas hasta la Semana 03 (Arrays, Diccionarios y Sets), sin `struct`, `class` ni `enum`:
 
-## Autor
+- **Arrays**: `estacionesLinea1`, `estacionesLinea2`, `estacionesLinea3` — orden real de recorrido de cada línea.
+- **Diccionarios**: agrupación por línea, línea de cada estación, color/estado/tarifa por línea, ascensores, vías cercanas, transbordos entre líneas y puntos de interés (9 en total).
+- **Set**: `estacionesConMetropolitano` — estaciones con conexión directa al Metropolitano.
 
-Naomi Sánchez - TECSUP
+## Cómo ejecutarlo
+
+**Desde Xcode:**
+1. Abrir `LineasMetro.playground`.
+2. Correr con ▶ (nota: el menú con `readLine()` no funciona en el panel de resultados de Xcode, solo desde terminal).
+
+**Desde terminal (macOS):**
+```bash
+swift Semana03/Ejercicio03-LineasdelMetro/LineasMetro.playground/Contents.swift
+```
+
+## Tecnologías
+
+- Swift (Playground)
+- Sin dependencias externas
+
+## Historial de commits (Semana 03)
+
+1. `feat(semana03): modelar Estacion, Linea y datos base del Metro de Lima`
+2. `refactor(semana03): simplificar modelo a Arrays, Diccionarios y Sets`
+3. `feat(semana03): agregar busqueda por linea y detalle de estacion`
+4. `feat(semana03): agregar tarifa, tiempo estimado, accesibilidad y transbordos`
+5. `feat(semana03): implementar menu interactivo de consola`
+6. `docs(semana03): agregar README con requerimientos funcionales`
+
+## Autora
+
+Naomi Sánchez — [naomisanchez-coder](https://github.com/naomisanchez-coder)
