@@ -122,3 +122,17 @@ class SucursalExpress: Sucursal {
         super.init(nombre: nombre, ciudad: ciudad)
     }
 }
+
+// ===== PREDICT: Análisis de Ejecución =====
+
+let misteriosa: Sucursal = SucursalLima(nombre: "Lima Centro", ciudad: "Lima")
+
+// PREDICT 6: Devuelve 0.1
+// Justificación: La instancia real es SucursalLima. Swift usa despacho dinámico en tiempo de ejecución para invocar su método descuento().
+print(misteriosa.descuento())
+
+let monto = 2000.0 * (1.0 - misteriosa.descuento())
+
+// PREDICT 7: Devuelve 0.0
+// Justificación: El monto calculado es S/ 1800.0. Al evaluarse la condición (monto >= 1500.0) en SucursalLima, retorna 0.0.
+print(misteriosa.costoEnvio(monto: monto))
