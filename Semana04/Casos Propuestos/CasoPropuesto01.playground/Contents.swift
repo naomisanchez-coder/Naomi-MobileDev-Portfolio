@@ -76,4 +76,57 @@ class Estudiante {
     func totalConIGV() -> Double {
         return subtotal() + igv()
     }
+    // REGLA 1: 10% de descuento sobre el total con IGV
+    // si el estudiante lleva 3 o más cursos.
+    func descuentoPorCantidad() -> Double {
+        if cantidadDeCursos() >= 3 {
+            return totalConIGV() * 0.10
+        }
+        return 0.0
+    }
+
+    // REGLA 2: descuento especial. En la clase base devuelve 0
+    // porque un estudiante externo NO tiene beneficio institucional.
+    // Este método es el PUNTO DE EXTENSIÓN que la subclase sobreescribe.
+    func descuentoEspecial() -> Double {
+        return 0.0
+    }
+
+    // Etiqueta que aparece en la cabecera de la factura.
+    // La subclase también la sobreescribe.
+    func etiquetaAlumnoTecsup() -> String {
+        return "No"
+    }
+
+    // Monto final: al total gravado se le restan los dos descuentos.
+    // Se escribe UNA sola vez aquí y sirve para la clase base y la subclase.
+    func totalFinal() -> Double {
+        return totalConIGV() - descuentoPorCantidad() - descuentoEspecial()
+    }
+}
+
+// --- HERENCIA: EstudianteTecsup HEREDA todo el cálculo de Estudiante
+//     (cursos, subtotal, IGV, descuento por cantidad, total final)
+//     y solo REDEFINE las dos reglas que le son propias. ---
+class EstudianteTecsup: Estudiante {
+    let codigoAlumno: String    // Propiedad NUEVA que la clase base no tiene
+
+    init(nombre: String, dni: String, codigoAlumno: String) {
+        self.codigoAlumno = codigoAlumno            // 1ro: la propiedad propia
+        super.init(nombre: nombre, dni: dni)        // 2do: inicializa lo heredado
+    }
+
+    // override porque ya existe en la clase padre y cambiamos su resultado
+    override func etiquetaAlumnoTecsup() -> String {
+        return "Sí"
+    }
+
+    // REGLA 2 aplicada: S/ 400 de descuento, pero SOLO si compró 3 o más cursos.
+    // Si compró menos, el beneficio no se activa aunque sea alumno Tecsup.
+    override func descuentoEspecial() -> Double {
+        if cantidadDeCursos() >= 3 {
+            return 400.0
+        }
+        return 0.0
+    }
 }
