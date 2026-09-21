@@ -59,3 +59,57 @@ Abrir `CasoPropuesto01.playground` en Xcode y correrlo (▶). La consola
 imprime dos facturas: una de un alumno Tecsup con 4 inscripciones (activa
 ambos descuentos) y otra de un alumno externo con 1 inscripción (sin
 descuentos), para verificar que las reglas se activan correctamente.
+
+
+---
+
+## Caso Propuesto 02 — Clientes del banco (Natural / Jurídico)
+
+Conceptos de POO aplicados: **Herencia** y **Polimorfismo**
+
+### Descripción del problema
+El banco registra dos tipos de clientes: personas naturales y personas
+jurídicas (empresas). Ambos comparten datos comunes de cuenta, pero cada uno
+tiene información propia de identificación. El sistema debe poder mostrar los
+datos de cualquier cliente, sin importar su tipo, de manera uniforme.
+
+### Requerimientos funcionales
+
+| ID | Requerimiento | Descripción |
+|----|---------------|-------------|
+| RF-01 | Registrar datos comunes | El sistema almacena código, dirección, fecha de registro, número de cuenta y monto mínimo de apertura para todo cliente. |
+| RF-02 | Registrar cliente natural | El sistema permite crear un cliente natural con nombre completo y DNI, además de los datos comunes. |
+| RF-03 | Registrar cliente jurídico | El sistema permite crear un cliente jurídico con razón social, RUC y representante legal, además de los datos comunes. |
+| RF-04 | Mostrar datos según el tipo | El sistema muestra los datos propios de cada tipo de cliente (natural o jurídico) seguidos de los datos comunes de cuenta. |
+| RF-05 | Recorrido uniforme de clientes | El sistema puede recorrer una lista mixta de clientes naturales y jurídicos, mostrando los datos correctos de cada uno sin distinguir el tipo manualmente. |
+
+### Reglas de negocio
+- RN-01: Todo cliente, sin importar su tipo, tiene código, dirección, fecha de registro, número de cuenta y monto mínimo de apertura.
+- RN-02: Un cliente natural se identifica por DNI; un cliente jurídico se identifica por RUC.
+- RN-03: Al mostrar los datos de un cliente, primero se presentan sus datos propios (identificación) y después los datos comunes de cuenta.
+
+### Diseño orientado a objetos
+
+| Elemento | Tipo | Rol |
+|----------|------|-----|
+| `Cliente` | class (base) | Define los datos comunes de cuenta y el método `mostrarDatos()`. |
+| `ClienteNatural` | class (subclase) | Hereda de `Cliente`, agrega `nombreCompleto` y `dni`, sobreescribe `mostrarDatos()`. |
+| `ClienteJuridico` | class (subclase) | Hereda de `Cliente`, agrega `razonSocial`, `ruc` y `representanteLegal`, sobreescribe `mostrarDatos()`. |
+
+**Justificación de la herencia:** ambos tipos de cliente comparten los datos
+de cuenta (código, dirección, número de cuenta, etc.), así que esa
+información y su inicialización se escriben una sola vez en `Cliente`. Cada
+subclase solo añade lo que la diferencia.
+
+**Justificación del polimorfismo:** el array de clientes se declara como
+`[Cliente]`, el tipo base, aunque contiene instancias de ambas subclases. El
+recorrido usa un único `for-in` que llama siempre a `cliente.mostrarDatos()`;
+Swift decide en tiempo de ejecución cuál versión del método ejecutar según
+el tipo real de cada objeto, sin necesidad de condicionales que pregunten
+por el tipo.
+
+### Cómo ejecutar
+Abrir `CasoPropuesto02.playground` en Xcode y correrlo (▶). La consola
+imprime los datos de un cliente natural y un cliente jurídico, recorridos
+desde el mismo array `[Cliente]`, confirmando que cada uno muestra su
+información específica antes de los datos comunes de cuenta.
