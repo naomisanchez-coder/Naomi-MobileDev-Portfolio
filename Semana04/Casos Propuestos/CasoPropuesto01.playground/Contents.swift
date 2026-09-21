@@ -33,10 +33,7 @@ class Estudiante {
     let nombre: String
     let dni: String
     var cursos: [Curso] = []    // Empieza vacío, se va llenando con agregarCurso
-
-    // Porcentaje del IGV vigente en Perú. Se guarda como propiedad
-    // para no repetir el número suelto por todo el código.
-    let porcentajeIGV = 0.18
+    let porcentajeIGV = 0.18    // Porcentaje del IGV vigente en Perú
 
     init(nombre: String, dni: String) {
         self.nombre = nombre
@@ -49,7 +46,6 @@ class Estudiante {
     }
 
     // Suma las CANTIDADES de todas las líneas (no la cantidad de líneas).
-    // Esto es lo que se compara contra la regla de "3 o más cursos".
     func cantidadDeCursos() -> Int {
         var total = 0
         for curso in cursos {
@@ -76,8 +72,8 @@ class Estudiante {
     func totalConIGV() -> Double {
         return subtotal() + igv()
     }
-    // REGLA 1: 10% de descuento sobre el total con IGV
-    // si el estudiante lleva 3 o más cursos.
+
+    // REGLA 1: 10% de descuento sobre el total con IGV si lleva 3 o más cursos
     func descuentoPorCantidad() -> Double {
         if cantidadDeCursos() >= 3 {
             return totalConIGV() * 0.10
@@ -85,28 +81,57 @@ class Estudiante {
         return 0.0
     }
 
-    // REGLA 2: descuento especial. En la clase base devuelve 0
-    // porque un estudiante externo NO tiene beneficio institucional.
-    // Este método es el PUNTO DE EXTENSIÓN que la subclase sobreescribe.
+    // REGLA 2: en la clase base no hay beneficio institucional
     func descuentoEspecial() -> Double {
         return 0.0
     }
 
-    // Etiqueta que aparece en la cabecera de la factura.
-    // La subclase también la sobreescribe.
+    // Etiqueta que aparece en la cabecera de la factura
     func etiquetaAlumnoTecsup() -> String {
         return "No"
     }
 
-    // Monto final: al total gravado se le restan los dos descuentos.
-    // Se escribe UNA sola vez aquí y sirve para la clase base y la subclase.
+    // Monto final: al total gravado se le restan los dos descuentos
     func totalFinal() -> Double {
         return totalConIGV() - descuentoPorCantidad() - descuentoEspecial()
+    }
+
+    // Formatea un monto a 2 decimales, como se muestra en una boleta real
+    func montoFormateado(_ valor: Double) -> String {
+        return String(format: "%.2f", valor)
+    }
+
+    // Imprime la factura completa. Se escribe UNA sola vez en la clase base:
+    // la subclase la hereda y el resultado cambia solo por los override.
+    func mostrarFactura() {
+        print("🎓 FACTURA DE CURSOS")
+        print("Estudiante: \(nombre)")
+        print("DNI: \(dni)")
+        print("Alumno de Tecsup: \(etiquetaAlumnoTecsup())")
+        print("------------------------------")
+
+        for curso in cursos {
+            print("\(curso.nombre) x\(curso.cantidad) - S/ \(montoFormateado(curso.totalLinea()))")
+        }
+
+        print("------------------------------")
+        print("Subtotal: S/ \(montoFormateado(subtotal()))")
+        print("IGV (18%): S/ \(montoFormateado(igv()))")
+        print("Total con IGV: S/ \(montoFormateado(totalConIGV()))")
+
+        if descuentoPorCantidad() > 0.0 {
+            print("Descuento 10% por cantidad: -S/ \(montoFormateado(descuentoPorCantidad()))")
+        }
+        if descuentoEspecial() > 0.0 {
+            print("Descuento especial Tecsup: -S/ \(montoFormateado(descuentoEspecial()))")
+        }
+
+        print("💰 TOTAL FINAL A PAGAR: S/ \(montoFormateado(totalFinal()))")
     }
 }
 
 // --- HERENCIA: EstudianteTecsup HEREDA todo el cálculo de Estudiante
-//     (cursos, subtotal, IGV, descuento por cantidad, total final)
+//     (cursos, subtotal, IGV, descuento por cantidad, total final, mostrarFactura)
 //     y solo REDEFINE las dos reglas que le son propias. ---
 class EstudianteTecsup: Estudiante {
     let codigoAlumno: String    // Propiedad NUEVA que la clase base no tiene
@@ -121,8 +146,7 @@ class EstudianteTecsup: Estudiante {
         return "Sí"
     }
 
-    // REGLA 2 aplicada: S/ 400 de descuento, pero SOLO si compró 3 o más cursos.
-    // Si compró menos, el beneficio no se activa aunque sea alumno Tecsup.
+    // REGLA 2 aplicada: S/ 400 de descuento, pero SOLO si compró 3 o más cursos
     override func descuentoEspecial() -> Double {
         if cantidadDeCursos() >= 3 {
             return 400.0
@@ -130,3 +154,21 @@ class EstudianteTecsup: Estudiante {
         return 0.0
     }
 }
+
+// ===== SIMULACIÓN =====
+
+// Estudiante que SÍ es alumno de Tecsup -> se instancia la subclase
+let juan = EstudianteTecsup(nombre: "Juan León", dni: "78965412", codigoAlumno: "T-2025-001")
+
+// Se inscribe a 3 cursos distintos, uno de ellos dos veces (4 inscripciones)
+juan.agregarCurso(Curso(nombre: "Swift Avanzado", precioUnitario: 450.0, cantidad: 1, categoria: .programacion))
+juan.agregarCurso(Curso(nombre: "IA con Python", precioUnitario: 650.0, cantidad: 2, categoria: .inteligenciaArtificial))
+juan.agregarCurso(Curso(nombre: "Diseño UX/UI", precioUnitario: 500.0, cantidad: 1, categoria: .diseno))
+
+juan.mostrarFactura()
+
+// --- Prueba de contraste: el mismo flujo con la CLASE BASE ---
+print("")
+let ana = Estudiante(nombre: "Ana Rojas", dni: "70123456")
+ana.agregarCurso(Curso(nombre: "Swift Avanzado", precioUnitario: 450.0, cantidad: 1, categoria: .programacion))
+ana.mostrarFactura()
