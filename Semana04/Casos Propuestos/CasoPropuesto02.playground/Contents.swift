@@ -34,3 +34,57 @@ class Cliente {
         print("💰 Monto mínimo de apertura: S/ \(String(format: "%.2f", montoMinimoApertura))")
     }
 }
+
+// --- HERENCIA: ClienteNatural HEREDA todos los datos y el flujo base
+//     de Cliente (codigo, direccion, fechaDeRegistro, numeroCuenta,
+//     montoMinimoApertura) y AGREGA sus propios datos de persona. ---
+class ClienteNatural: Cliente {
+    let nombreCompleto: String
+    let dni: String
+
+    init(codigo: String, direccion: String, fechaDeRegistro: String,
+         numeroCuenta: String, montoMinimoApertura: Double,
+         nombreCompleto: String, dni: String) {
+        self.nombreCompleto = nombreCompleto
+        self.dni = dni
+        // Los datos comunes se delegan al init de la clase base
+        super.init(codigo: codigo, direccion: direccion, fechaDeRegistro: fechaDeRegistro,
+                   numeroCuenta: numeroCuenta, montoMinimoApertura: montoMinimoApertura)
+    }
+
+    // override porque ya existe en Cliente y aquí cambiamos su contenido:
+    // primero imprimimos los datos propios de persona natural, luego
+    // llamamos a super.mostrarDatos() para reutilizar la impresión común.
+    override func mostrarDatos() {
+        print("👤 Cliente Natural:")
+        print("Nombre: \(nombreCompleto)")
+        print("DNI: \(dni)")
+        super.mostrarDatos()
+    }
+}
+
+// --- HERENCIA: ClienteJuridico HEREDA lo mismo que ClienteNatural,
+//     pero AGREGA los datos propios de una empresa. ---
+class ClienteJuridico: Cliente {
+    let razonSocial: String
+    let ruc: String
+    let representanteLegal: String
+
+    init(codigo: String, direccion: String, fechaDeRegistro: String,
+         numeroCuenta: String, montoMinimoApertura: Double,
+         razonSocial: String, ruc: String, representanteLegal: String) {
+        self.razonSocial = razonSocial
+        self.ruc = ruc
+        self.representanteLegal = representanteLegal
+        super.init(codigo: codigo, direccion: direccion, fechaDeRegistro: fechaDeRegistro,
+                   numeroCuenta: numeroCuenta, montoMinimoApertura: montoMinimoApertura)
+    }
+
+    override func mostrarDatos() {
+        print("🏢 Cliente Jurídico:")
+        print("Razón Social: \(razonSocial)")
+        print("RUC: \(ruc)")
+        print("Representante Legal: \(representanteLegal)")
+        super.mostrarDatos()
+    }
+}
