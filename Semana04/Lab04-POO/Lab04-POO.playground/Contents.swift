@@ -152,3 +152,11 @@ struct Libro {
     let autor: String
     var estado: EstadoLibro = .disponible
 }
+
+class Biblioteca {
+    var libros: [Libro] = []
+    
+    func agregar(libro: Libro) {
+        libros.append(libro)
+    }
+}
