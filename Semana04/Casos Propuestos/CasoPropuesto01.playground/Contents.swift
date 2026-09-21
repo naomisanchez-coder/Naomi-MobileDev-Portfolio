@@ -34,6 +34,10 @@ class Estudiante {
     let dni: String
     var cursos: [Curso] = []    // Empieza vacío, se va llenando con agregarCurso
 
+    // Porcentaje del IGV vigente en Perú. Se guarda como propiedad
+    // para no repetir el número suelto por todo el código.
+    let porcentajeIGV = 0.18
+
     init(nombre: String, dni: String) {
         self.nombre = nombre
         self.dni = dni
@@ -52,5 +56,24 @@ class Estudiante {
             total += curso.cantidad
         }
         return total
+    }
+
+    // Suma el importe de todas las líneas de la factura (sin impuestos)
+    func subtotal() -> Double {
+        var suma = 0.0
+        for curso in cursos {
+            suma += curso.totalLinea()
+        }
+        return suma
+    }
+
+    // Calcula el impuesto: 18% aplicado sobre el subtotal
+    func igv() -> Double {
+        return subtotal() * porcentajeIGV
+    }
+
+    // Total gravado: es la base sobre la que se aplicarán los descuentos
+    func totalConIGV() -> Double {
+        return subtotal() + igv()
     }
 }
