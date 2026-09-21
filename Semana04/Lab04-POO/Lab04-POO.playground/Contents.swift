@@ -136,3 +136,19 @@ let monto = 2000.0 * (1.0 - misteriosa.descuento())
 // PREDICT 7: Devuelve 0.0
 // Justificación: El monto calculado es S/ 1800.0. Al evaluarse la condición (monto >= 1500.0) en SucursalLima, retorna 0.0.
 print(misteriosa.costoEnvio(monto: monto))
+
+// ===== CASO 2 — PARTE A: BIBLIOTECA (SIN IA) =====
+// Docente: Juan León
+
+// TODO 19: escribe aquí el enum, el struct, la clase y la simulación
+
+enum EstadoLibro {
+    case disponible
+    case prestado
+}
+
+struct Libro {
+    let titulo: String
+    let autor: String
+    var estado: EstadoLibro = .disponible
+}
