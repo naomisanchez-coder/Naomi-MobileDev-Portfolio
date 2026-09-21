@@ -88,3 +88,43 @@ class ClienteJuridico: Cliente {
         super.mostrarDatos()
     }
 }
+
+// ===== SIMULACIÓN =====
+
+// Se crea un cliente natural (persona)
+let clienteNatural = ClienteNatural(
+    codigo: "C001",
+    direccion: "Av. Lima 123",
+    fechaDeRegistro: "2025-04-03",
+    numeroCuenta: "001-2025-000123",
+    montoMinimoApertura: 500.0,
+    nombreCompleto: "Juan Pérez",
+    dni: "12345678"
+)
+
+// Se crea un cliente jurídico (empresa)
+let clienteJuridico = ClienteJuridico(
+    codigo: "C002",
+    direccion: "Jr. Empresas 456",
+    fechaDeRegistro: "2025-04-01",
+    numeroCuenta: "001-2025-000456",
+    montoMinimoApertura: 3000.0,
+    razonSocial: "Soluciones SAC",
+    ruc: "20123456789",
+    representanteLegal: "María León"
+)
+
+// --- POLIMORFISMO: el array se declara como [Cliente], el tipo BASE,
+//     aunque en realidad contiene instancias de las dos subclases.
+//     Swift permite esto porque ClienteNatural y ClienteJuridico
+//     SON-UN Cliente (relación de herencia). ---
+let clientes: [Cliente] = [clienteNatural, clienteJuridico]
+
+// Un SOLO bucle recorre el array y llama SIEMPRE a mostrarDatos().
+// En cada vuelta, Swift decide en TIEMPO DE EJECUCIÓN cuál versión
+// del método ejecutar, según el tipo REAL del objeto (no el tipo
+// declarado del array). Eso es polimorfismo.
+for cliente in clientes {
+    cliente.mostrarDatos()
+    print("------------------------------")
+}
