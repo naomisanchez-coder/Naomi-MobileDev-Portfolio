@@ -159,4 +159,41 @@ class Biblioteca {
     func agregar(libro: Libro) {
         libros.append(libro)
     }
+    
+    // Agrega estos métodos DENTRO de la clase Biblioteca:
+        
+    func prestar(titulo: String) -> Bool {
+        for i in 0..<libros.count {
+            if libros[i].titulo == titulo {
+                if libros[i].estado == .disponible {
+                    libros[i].estado = .prestado
+                    print("Préstamo aprobado: \(titulo)")
+                    return true
+                } else {
+                    print("Error: \(titulo) ya está prestado")
+                    return false
+                }
+            }
+        }
+        print("Error: no existe \(titulo)")
+        return false
+    }
+    
+    func devolver(titulo: String) -> Bool {
+        for i in 0..<libros.count {
+            if libros[i].titulo == titulo {
+                if libros[i].estado == .prestado {
+                    libros[i].estado = .disponible
+                    print("Devolución registrada: \(titulo)")
+                    return true
+                } else {
+                    print("Error: \(titulo) ya está disponible")
+                    return false
+                }
+            }
+        }
+        print("Error: no existe \(titulo)")
+        return false
+    }
 }
+    
