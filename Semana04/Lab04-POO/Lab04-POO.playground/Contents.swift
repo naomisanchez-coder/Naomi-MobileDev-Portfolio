@@ -195,5 +195,22 @@ class Biblioteca {
         print("Error: no existe \(titulo)")
         return false
     }
+
+
+// Agrega este método DENTRO de la clase Biblioteca:
+func inventario() {
+        print("===== INVENTARIO =====")
+        for libro in libros {
+            let estadoTexto: String
+            switch libro.estado {
+            case .disponible:
+                estadoTexto = "disponible"
+            case .prestado:
+                estadoTexto = "prestado"
+            }
+            print("\(libro.titulo) (\(libro.autor)) - \(estadoTexto)")
+        }
+    }
 }
     
+
