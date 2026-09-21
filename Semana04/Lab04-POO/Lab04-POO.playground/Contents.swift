@@ -212,5 +212,32 @@ func inventario() {
         }
     }
 }
+
+// ===== SIMULACIÓN CASO 2A (BIBLIOTECA SIN IA) =====
+
+let biblio = Biblioteca()
+
+// 1. Agregar los tres libros iniciales
+biblio.agregar(libro: Libro(titulo: "Cien años de soledad", autor: "Gabriel García Márquez"))
+biblio.agregar(libro: Libro(titulo: "La ciudad y los perros", autor: "Mario Vargas Llosa"))
+biblio.agregar(libro: Libro(titulo: "El Quijote", autor: "Miguel de Cervantes"))
+
+// 2. Prestar "La ciudad y los perros"
+_ = biblio.prestar(titulo: "La ciudad y los perros")
+
+// 3. Intentar prestarlo de nuevo (Error)
+_ = biblio.prestar(titulo: "La ciudad y los perros")
+
+// 4. Devolverlo
+_ = biblio.devolver(titulo: "La ciudad y los perros")
+
+// 5. Prestar "El Quijote"
+_ = biblio.prestar(titulo: "El Quijote")
+
+// 6. Intentar prestar "El Principito" (no existe)
+_ = biblio.prestar(titulo: "El Principito")
+
+// 7. Mostrar inventario final
+biblio.inventario()
     
 
