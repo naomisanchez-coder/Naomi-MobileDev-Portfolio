@@ -152,8 +152,18 @@ func procesarCompra(_ compra: CompraCredito) {
     }
 }
 
-let compra1 = CompraCredito(producto: "Laptop Pro", precioUnitario: 3500.00, cantidad: 1,
+let compra1 = CompraCredito(producto: "Smart TV 55 Pulgadas", precioUnitario: 1500.00, cantidad: 2,
+                             planMeses: 6, mesPagoAdelantado: 0, montoAdicional: 0,
+                             fechaInicio: "26/09/2026")
+
+let compra2 = CompraCredito(producto: "Laptop Pro", precioUnitario: 3500.00, cantidad: 1,
                              planMeses: 12, mesPagoAdelantado: 3, montoAdicional: 1000.00,
                              fechaInicio: "26/09/2026")
-procesarCompra(compra1)
 
+let compraInvalida = CompraCredito(producto: "Producto Prueba", precioUnitario: 100.00, cantidad: 1,
+                                    planMeses: 9, mesPagoAdelantado: 0, montoAdicional: 0,
+                                    fechaInicio: "26/09/2026")
+
+procesarCompra(compra1)
+procesarCompra(compra2)
+procesarCompra(compraInvalida)
