@@ -40,6 +40,30 @@ func tasaInteres(paraPlan meses: Int) -> Double {
     }
 }
 
+enum ErrorPlanPago: Error, CustomStringConvertible {
+    case planInvalido(Int)
+    case mesAdelantadoInvalido(Int, Int)
+
+    var description: String {
+        switch self {
+        case .planInvalido(let meses):
+            return "ERROR: El plan de pago de \(meses) meses no es válido. Debe elegir 6, 12 o 24."
+        case .mesAdelantadoInvalido(let mes, let planMeses):
+            return "ERROR: El mes de pago adelantado (\(mes)) debe estar entre 1 y \(planMeses), o ser 0 si no aplica."
+        }
+    }
+}
+
+func validar(_ compra: CompraCredito) throws {
+    guard [6, 12, 24].contains(compra.planMeses) else {
+        throw ErrorPlanPago.planInvalido(compra.planMeses)
+    }
+    guard compra.mesPagoAdelantado == 0 ||
+          (compra.mesPagoAdelantado >= 1 && compra.mesPagoAdelantado <= compra.planMeses) else {
+        throw ErrorPlanPago.mesAdelantadoInvalido(compra.mesPagoAdelantado, compra.planMeses)
+    }
+}
+
 func fmt(_ valor: Double) -> String { String(format: "%.2f", valor) }
 
 // MARK: - Cálculo del plan de pagos
@@ -105,9 +129,20 @@ func imprimir(_ resultado: ResultadoPlan, producto: String, planMeses: Int, titu
 }
 
 // MARK: - Caso de prueba (por ahora uno solo, sin validación todavía)
+func procesarCompra(_ compra: CompraCredito) {
+    do {
+        try validar(compra)
+        let resultado = calcularPlan(compra)
+        imprimir(resultado, producto: compra.producto, planMeses: compra.planMeses,
+                 titulo: "Plan de pago — \(compra.producto)")
+    } catch {
+        print((error as? ErrorPlanPago)?.description ?? "\(error)")
+        print()
+    }
+}
+
 let compra1 = CompraCredito(producto: "Laptop Pro", precioUnitario: 3500.00, cantidad: 1,
                              planMeses: 12, mesPagoAdelantado: 3, montoAdicional: 1000.00,
                              fechaInicio: "26/09/2026")
+procesarCompra(compra1)
 
-let resultado1 = calcularPlan(compra1)
-imprimir(resultado1, producto: compra1.producto, planMeses: compra1.planMeses, titulo: "Plan de pago")
