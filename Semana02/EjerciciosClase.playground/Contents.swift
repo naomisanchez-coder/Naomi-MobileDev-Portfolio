@@ -129,12 +129,23 @@ func imprimir(_ resultado: ResultadoPlan, producto: String, planMeses: Int, titu
 }
 
 // MARK: - Caso de prueba (por ahora uno solo, sin validación todavía)
+
 func procesarCompra(_ compra: CompraCredito) {
     do {
         try validar(compra)
-        let resultado = calcularPlan(compra)
-        imprimir(resultado, producto: compra.producto, planMeses: compra.planMeses,
+        let resultadoConAdelanto = calcularPlan(compra, aplicarAdelanto: true)
+        imprimir(resultadoConAdelanto, producto: compra.producto, planMeses: compra.planMeses,
                  titulo: "Plan de pago — \(compra.producto)")
+
+        if compra.mesPagoAdelantado != 0 {
+            let resultadoSinAdelanto = calcularPlan(compra, aplicarAdelanto: false)
+            let ahorro = resultadoSinAdelanto.totalPagado - resultadoConAdelanto.totalPagado
+            let mesesAhorrados = resultadoSinAdelanto.mesesPagados - resultadoConAdelanto.mesesPagados
+            print(">> Impacto del pago adelantado en el mes \(compra.mesPagoAdelantado):")
+            print("   Sin adelanto: S/.\(fmt(resultadoSinAdelanto.totalPagado)) en \(resultadoSinAdelanto.mesesPagados) meses")
+            print("   Con adelanto: S/.\(fmt(resultadoConAdelanto.totalPagado)) en \(resultadoConAdelanto.mesesPagados) meses")
+            print("   Ahorro: S/.\(fmt(ahorro)) — \(mesesAhorrados) mes(es) menos de deuda\n")
+        }
     } catch {
         print((error as? ErrorPlanPago)?.description ?? "\(error)")
         print()
