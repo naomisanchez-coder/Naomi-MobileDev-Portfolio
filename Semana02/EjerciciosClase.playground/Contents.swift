@@ -1,139 +1,113 @@
 import Foundation
 
-//
-// EJERCICIO 1: PLAN DE PAGO BÁSICO (COMPRA A CRÉDITO)
-//
-do {
-    // --- Entradas ---
-    let producto: String = "Smart TV 55 Pulgadas" // Nombre del producto
-    let precioUnitario: Double = 1500.00          // Precio unitario en soles
-    let cantidad: Int = 2                         // Cantidad de productos comprados
-    let planMeses: Int = 6                        // Plan elegido: 6, 12 o 24 meses
-    
-    // --- Cálculos iniciales ---
-    let montoTotalCompra = precioUnitario * Double(cantidad) // Monto total base
-    
-    // Determinar tasa de interés según el plan elegido
-    var porcentajeInteres: Double = 0.0
-    if planMeses == 6 {
-        porcentajeInteres = 0.20 // 20% de interés
-    } else if planMeses == 12 {
-        porcentajeInteres = 0.40 // 40% de interés
-    } else if planMeses == 24 {
-        porcentajeInteres = 0.60 // 60% de interés
+// MARK: - Modelo de una compra a crédito
+struct CompraCredito {
+    let producto: String
+    let precioUnitario: Double
+    let cantidad: Int
+    let planMeses: Int              // 6, 12 o 24
+    let mesPagoAdelantado: Int      // 0 = ninguno
+    let montoAdicional: Double
+    let fechaInicio: String         // "dd/MM/yyyy"
+}
+
+struct Cuota {
+    let mes: Int
+    let fecha: String
+    let montoInicial: Double
+    let pago: Double
+    let restaPorPagar: Double
+}
+
+struct ResultadoPlan {
+    let montoTotalCompra: Double
+    let porcentajeInteres: Double
+    let montoInteres: Double
+    let montoFinanciado: Double
+    let cuotaRegular: Double
+    let cuotas: [Cuota]
+    let mesesPagados: Int
+    let totalPagado: Double
+}
+
+// MARK: - Reglas de negocio
+func tasaInteres(paraPlan meses: Int) -> Double {
+    switch meses {
+    case 6:  return 0.20
+    case 12: return 0.40
+    case 24: return 0.60
+    default: return 0.0
     }
-    
-    let montoInteres = montoTotalCompra * porcentajeInteres  // Valor total en soles del interés
-    let montoFinanciado = montoTotalCompra + montoInteres   // Monto final a pagar a crédito
-    let cuotaMensual = montoFinanciado / Double(planMeses)   // Valor de cada cuota mensual
-    
-    // --- Cabecera del resumen ---
-    print("==================================================================")
-    print("                       PLAN DE PAGO BÁSICO                        ")
-    print("==================================================================")
-    print("Producto: \(producto)")
-    print("Monto Compra: S/.\(String(format: "%.2f", montoTotalCompra)) | Interés: S/.\(String(format: "%.2f", montoInteres))")
-    print("Monto Financiado: S/.\(String(format: "%.2f", montoFinanciado)) | Cuota M.: S/.\(String(format: "%.2f", cuotaMensual))")
-    print("------------------------------------------------------------------")
-    print("MES\t\tMONTO INICIAL\t\tCUOTA MENSUAL\t\tRESTA X PAGO")
-    print("------------------------------------------------------------------")
-    
-    // --- Generación de la tabla de cuotas ---
+}
+
+func fmt(_ valor: Double) -> String { String(format: "%.2f", valor) }
+
+// MARK: - Cálculo del plan de pagos
+func calcularPlan(_ compra: CompraCredito, aplicarAdelanto: Bool = true) -> ResultadoPlan {
+    let montoTotalCompra = compra.precioUnitario * Double(compra.cantidad)
+    let porcentaje = tasaInteres(paraPlan: compra.planMeses)
+    let montoInteres = montoTotalCompra * porcentaje
+    let montoFinanciado = montoTotalCompra + montoInteres
+    let cuotaRegular = montoFinanciado / Double(compra.planMeses)
+
+    let formateador = DateFormatter()
+    formateador.dateFormat = "dd/MM/yyyy"
+    var fechaActual = formateador.date(from: compra.fechaInicio) ?? Date()
+
     var saldoPendiente = montoFinanciado
-    
-    for mes in 1...planMeses {
+    var cuotas: [Cuota] = []
+    var totalPagado = 0.0
+
+    for mes in 1...compra.planMeses {
+        if saldoPendiente <= 0 { break }
         let montoInicial = saldoPendiente
-        let restaXPago = montoInicial - cuotaMensual
-        
-        print("\(mes)\t\tS/.\(String(format: "%.2f", montoInicial))\t\tS/.\(String(format: "%.2f", cuotaMensual))\t\tS/.\(String(format: "%.2f", max(0, restaXPago)))")
-        
-        saldoPendiente = restaXPago // Actualiza el saldo restante para el próximo mes
+        var pagoEsteMes = cuotaRegular
+        if aplicarAdelanto && mes == compra.mesPagoAdelantado {
+            pagoEsteMes += compra.montoAdicional
+        }
+        if pagoEsteMes > montoInicial { pagoEsteMes = montoInicial }
+
+        let resta = montoInicial - pagoEsteMes
+        cuotas.append(Cuota(mes: mes, fecha: formateador.string(from: fechaActual),
+                             montoInicial: montoInicial, pago: pagoEsteMes,
+                             restaPorPagar: max(0, resta)))
+        totalPagado += pagoEsteMes
+        saldoPendiente = resta
+
+        if let nuevaFecha = Calendar.current.date(byAdding: .month, value: 1, to: fechaActual) {
+            fechaActual = nuevaFecha
+        }
     }
-    print("==================================================================\n\n")
+
+    return ResultadoPlan(montoTotalCompra: montoTotalCompra, porcentajeInteres: porcentaje,
+                          montoInteres: montoInteres, montoFinanciado: montoFinanciado,
+                          cuotaRegular: cuotaRegular, cuotas: cuotas,
+                          mesesPagados: cuotas.count, totalPagado: totalPagado)
 }
 
-
-//
-// EJERCICIO 2: PLAN DE PAGO CON VALIDACIÓN, FECHAS Y PAGO ADELANTADO
-//
-do {
-    // --- Entradas ---
-    let producto: String = "Laptop Pro"          // Nombre del producto
-    let precioUnitario: Double = 3500.00        // Precio unitario
-    let cantidad: Int = 1                       // Cantidad
-    let planMeses: Int = 12                     // Plan elegido (6, 12, 24)
-    
-    let mesPagoAdelantado: Int = 3              // Mes en el que abonará dinero extra (0 = ninguno)
-    let montoAdicional: Double = 1000.00        // Monto extra a amortizar en ese mes
-    
-    // --- Validación del Plan de Pago ---
-    if planMeses != 6 && planMeses != 12 && planMeses != 24 {
-        print("ERROR: El plan de pago de \(planMeses) meses no es válido. Debe elegir 6, 12 o 24.")
-    } else {
-        // --- Cálculos principales ---
-        let montoTotalCompra = precioUnitario * Double(cantidad)
-        
-        var porcentajeInteres: Double = 0.0
-        switch planMeses {
-        case 6:  porcentajeInteres = 0.20
-        case 12: porcentajeInteres = 0.40
-        case 24: porcentajeInteres = 0.60
-        default: porcentajeInteres = 0.0
-        }
-        
-        let montoInteres = montoTotalCompra * porcentajeInteres
-        let montoFinanciado = montoTotalCompra + montoInteres
-        let cuotaRegular = montoFinanciado / Double(planMeses)
-        
-        print("=================================================================================")
-        print("                 PLAN DE PAGO CON AMORTIZACIÓN Y FECHAS                          ")
-        print("=================================================================================")
-        print("Producto: \(producto) | Plan: \(planMeses) meses")
-        print("Monto Compra: S/.\(String(format: "%.2f", montoTotalCompra)) | Monto Financiado: S/.\(String(format: "%.2f", montoFinanciado))")
-        print("---------------------------------------------------------------------------------")
-        print("MES\tFECHA\t\tMONTO INICIAL\tPAGO TOTAL\tRESTA POR PAGAR")
-        print("---------------------------------------------------------------------------------")
-        
-        // --- Configuración de fechas ---
-        let formateadorFecha = DateFormatter()
-        formateadorFecha.dateFormat = "dd/MM/yyyy"
-        var fechaActual = formateadorFecha.date(from: "26/09/2026") ?? Date() // Fecha de inicio fijada
-        
-        var saldoPendiente = montoFinanciado
-        var mesesRealmentePagados = 0
-        
-        for mes in 1...planMeses {
-            if saldoPendiente <= 0 { break } // Si la deuda ya está pagada en su totalidad, se corta el bucle
-            
-            mesesRealmentePagados += 1
-            let montoInicial = saldoPendiente
-            
-            // Calcular pago del mes (revisar si aplica abono adicional)
-            var pagoEsteMes = cuotaRegular
-            if mes == mesPagoAdelantado {
-                pagoEsteMes += montoAdicional
-            }
-            
-            // Ajustar pago si sobrepasa la deuda restante
-            if pagoEsteMes > montoInicial {
-                pagoEsteMes = montoInicial
-            }
-            
-            let restaPorPagar = montoInicial - pagoEsteMes
-            let fechaString = formateadorFecha.string(from: fechaActual)
-            
-            print("\(mes)\t\(fechaString)\tS/.\(String(format: "%.2f", montoInicial))\tS/.\(String(format: "%.2f", pagoEsteMes))\tS/.\(String(format: "%.2f", max(0, restaPorPagar)))")
-            
-            saldoPendiente = restaPorPagar
-            
-            // Avanzar aproximadamente 1 mes en la fecha
-            if let nuevaFecha = Calendar.current.date(byAdding: .month, value: 1, to: fechaActual) {
-                fechaActual = nuevaFecha
-            }
-        }
-        
-        print("---------------------------------------------------------------------------------")
-        print("RESULTADO FINAL: Meses Pagados \(mesesRealmentePagados) De \(planMeses)")
-        print("=================================================================================")
+// MARK: - Impresión
+func imprimir(_ resultado: ResultadoPlan, producto: String, planMeses: Int, titulo: String) {
+    print(String(repeating: "=", count: 83))
+    print(titulo.uppercased())
+    print(String(repeating: "=", count: 83))
+    print("Producto: \(producto) | Plan: \(planMeses) meses")
+    print("Monto Compra: S/.\(fmt(resultado.montoTotalCompra)) | Interés (\(Int(resultado.porcentajeInteres*100))%): S/.\(fmt(resultado.montoInteres))")
+    print("Monto Financiado: S/.\(fmt(resultado.montoFinanciado)) | Cuota Regular: S/.\(fmt(resultado.cuotaRegular))")
+    print(String(repeating: "-", count: 83))
+    print("MES\tFECHA\t\tMONTO INICIAL\tPAGO TOTAL\tRESTA POR PAGAR")
+    print(String(repeating: "-", count: 83))
+    for c in resultado.cuotas {
+        print("\(c.mes)\t\(c.fecha)\tS/.\(fmt(c.montoInicial))\tS/.\(fmt(c.pago))\tS/.\(fmt(c.restaPorPagar))")
     }
+    print(String(repeating: "-", count: 83))
+    print("Meses Pagados: \(resultado.mesesPagados) de \(planMeses) | Total Pagado: S/.\(fmt(resultado.totalPagado))")
+    print(String(repeating: "=", count: 83) + "\n")
 }
+
+// MARK: - Caso de prueba (por ahora uno solo, sin validación todavía)
+let compra1 = CompraCredito(producto: "Laptop Pro", precioUnitario: 3500.00, cantidad: 1,
+                             planMeses: 12, mesPagoAdelantado: 3, montoAdicional: 1000.00,
+                             fechaInicio: "26/09/2026")
+
+let resultado1 = calcularPlan(compra1)
+imprimir(resultado1, producto: compra1.producto, planMeses: compra1.planMeses, titulo: "Plan de pago")
