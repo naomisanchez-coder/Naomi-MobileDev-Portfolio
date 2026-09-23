@@ -1,24 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="apple_lab05_UIKit_intro" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Diseño y Desarrollo de Software" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Mm-E3-4xK">
+                                <rect key="frame" x="68" y="440.33333333333331" width="257" height="21.333333333333314"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="257" id="vyv-Fx-FFn"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <color key="textColor" name="AccentColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alumna: Naomi Sanchez" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uZ3-nL-gFV">
+                                <rect key="frame" x="104" y="547.33333333333337" width="185" height="20.333333333333371"/>
+                                <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="185" id="VhJ-Z3-UGC"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="221" id="aBf-OE-pZ6"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" systemColor="systemPurpleColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="uZ3-nL-gFV" firstAttribute="centerX" secondItem="0Mm-E3-4xK" secondAttribute="centerX" id="20W-zh-siE"/>
+                            <constraint firstItem="uZ3-nL-gFV" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="2QC-Ii-9Vm"/>
+                            <constraint firstItem="0Mm-E3-4xK" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="8yU-1b-hqO"/>
+                            <constraint firstItem="uZ3-nL-gFV" firstAttribute="top" secondItem="0Mm-E3-4xK" secondAttribute="bottom" constant="244.33333333333337" id="HA4-Dh-1DE"/>
+                            <constraint firstItem="0Mm-E3-4xK" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="SG5-1p-CPw"/>
+                            <constraint firstItem="0Mm-E3-4xK" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="UdB-oT-sdH"/>
+                            <constraint firstItem="uZ3-nL-gFV" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="bGZ-3u-99L"/>
+                            <constraint firstItem="uZ3-nL-gFV" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="ndV-po-DE5"/>
+                            <constraint firstItem="0Mm-E3-4xK" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="t8g-7t-IUn"/>
+                            <constraint firstItem="uZ3-nL-gFV" firstAttribute="top" secondItem="0Mm-E3-4xK" secondAttribute="bottom" constant="85.666666666666657" id="tju-Af-96R"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-112.67605633802818" y="90.839694656488547"/>
         </scene>
     </scenes>
+    <resources>
+        <namedColor name="AccentColor">
+            <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray5Color">
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemPurpleColor">
+            <color red="0.79607843137254897" green="0.18823529411764706" blue="0.8784313725490196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
 </document>
