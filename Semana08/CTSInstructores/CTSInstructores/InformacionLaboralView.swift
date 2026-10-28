@@ -48,13 +48,13 @@ struct InformacionLaboralView: View {
 
     private var cts: some View {
         tarjeta("CTS", subtitulo: "Compensación por Tiempo de Servicios", simbolo: "shield.lefthalf.filled") {
-            Text("Es un beneficio que brinda respaldo económico frente al desempleo.")
-            Text("Depósitos: hasta el 15 de mayo por noviembre–abril y hasta el 15 de noviembre por mayo–octubre.")
-            Text("En el régimen general privado se exige un promedio mínimo de cuatro horas diarias. Para jornadas de cinco o seis días, se dividen las horas semanales entre los días correspondientes; 23 horas semanales no determinan por sí solas el derecho.")
-            Text("Se requiere un mes de prestación efectiva. Si al cierre del semestre no se completa, la fracción se calcula y deposita junto con el siguiente período.")
+            Text("Beneficio que protege económicamente al trabajador ante el desempleo.")
+            Text("Se deposita en mayo y noviembre.")
+            Text("En el régimen general privado se requiere una jornada promedio mínima de cuatro horas diarias y cumplir las demás condiciones legales.")
+            Text("Se exige un mes completo de servicios. Si no se alcanza al cierre del semestre, la fracción se acumula al siguiente período.")
             formula("Remuneración computable = Sueldo computable + Gratificación computable ÷ 6")
             formula("CTS = Remuneración computable × (Meses ÷ 12 + Días ÷ 360)")
-            Text("La app supone remuneración fija. Otros conceptos computables, si corresponden, deben estar incorporados en la remuneración ingresada. La gratificación computable no incluye la bonificación extraordinaria.")
+            Text("Otros conceptos computables pueden integrar la remuneración ingresada. La gratificación computable excluye la bonificación extraordinaria.")
                 .foregroundStyle(.secondary)
             fuente("MTPE · Derecho a CTS", url: "https://www.gob.pe/institucion/mtpe/noticias/1383535-mtpe-trabajadores-del-regimen-privado-que-laboren-4-horas-diarias-en-promedio-tienen-derecho-a-cts")
         }
@@ -62,12 +62,13 @@ struct InformacionLaboralView: View {
 
     private var gratificaciones: some View {
         tarjeta("Gratificaciones", subtitulo: "Fiestas Patrias y Navidad", simbolo: "gift") {
-            Text("Se pagan en julio y diciembre. Los semestres de referencia son enero–junio y julio–diciembre.")
-            Text("La gratificación completa equivale a una remuneración computable si se cumplen las condiciones del semestre. Cuando corresponde un pago proporcional, se consideran los meses calendario completos trabajados, no cualquier fracción de mes.")
+            Text("Se pagan en julio y diciembre, según las condiciones laborales.")
+            Text("Si corresponde una gratificación completa, equivale a una remuneración computable.")
+            Text("Si corresponde una gratificación proporcional, se consideran los meses calendario completos del semestre: enero–junio o julio–diciembre.")
             formula("Gratificación proporcional = Remuneración computable × Meses completos ÷ 6")
-            Text("La bonificación extraordinaria es adicional: 9 % de la gratificación con EsSalud o 6.75 % con EPS, según corresponda. Es distinta del aporte mensual de salud del empleador.")
+            Text("Bonificación extraordinaria: EsSalud, 9 %; EPS, 6.75 %. Es adicional y distinta del aporte mensual de salud del empleador.")
             formula("Bonificación extraordinaria = Gratificación × Tasa aplicable")
-            Text("Estas referencias no resuelven todos los casos: deben revisarse el régimen, el tiempo computable y los conceptos remunerativos. La app solo simula dos gratificaciones completas y bonificación del 9 % cuando se activa ese supuesto; no calcula EPS ni acredita el derecho al beneficio.")
+            Text("El derecho depende del régimen y las condiciones laborales. La app simula gratificaciones y bono del 9 % solo si se activa el supuesto; no calcula EPS.")
                 .foregroundStyle(.secondary)
             fuente("SUNAFIL · Gratificaciones", url: "https://www.gob.pe/institucion/sunafil/noticias/1413450-mas-de-9-000-denuncias-recibio-la-sunafil-por-falta-de-pago-de-la-gratificacion")
         }
@@ -75,12 +76,12 @@ struct InformacionLaboralView: View {
 
     private var vacaciones: some View {
         tarjeta("Vacaciones", subtitulo: "Descanso remunerado", simbolo: "sun.max") {
-            Text("En el régimen general privado, los 30 días naturales de descanso remunerado requieren un año de servicios, el récord vacacional correspondiente y la jornada mínima aplicable. No se extiende automáticamente este plazo a otros regímenes o al tiempo parcial.")
-            Text("Remuneración vacacional: es el pago del descanso, equivalente a la remuneración habitual computable según las condiciones del trabajador. Se abona antes de iniciar las vacaciones.")
-            Text("Vacaciones truncas: son el pago proporcional que puede corresponder al cese por tiempo trabajado sin completar el período anual, sujeto a los requisitos aplicables. No son lo mismo que disfrutar el descanso anual.")
-            Text("Provisión contable: es una estimación periódica del costo del beneficio; no supone un pago mensual adicional al trabajador.")
+            Text("En el régimen general privado pueden corresponder 30 días naturales de descanso remunerado al cumplir un año de servicios, el récord vacacional y la jornada mínima aplicable.")
+            Text("Remuneración vacacional: pago correspondiente al descanso.")
+            Text("Vacaciones truncas: pago proporcional que puede corresponder al finalizar la relación laboral.")
+            Text("Provisión contable: estimación del costo del beneficio; no es un pago adicional mensual.")
             formula("Provisión mensual aproximada = Remuneración mensual ÷ 12")
-            Text("Esta referencia académica no constituye por sí sola una liquidación legal completa de vacaciones o beneficios al cese.")
+            Text("Referencia contable, no una liquidación legal completa.")
                 .foregroundStyle(.secondary)
             fuente("SUNAFIL · Derecho a vacaciones", url: "https://www.gob.pe/institucion/sunafil/noticias/889227-pensando-en-salir-de-vacaciones-sunafil-te-explica-como-acceder-a-este-derecho")
             fuente("SUNAFIL · Beneficios al cese", url: "https://www.gob.pe/institucion/sunafil/noticias/661238-liquidacion-de-beneficios-6-datos-que-debes-saber-si-renunciaste-o-te-cesaron-del-trabajo")

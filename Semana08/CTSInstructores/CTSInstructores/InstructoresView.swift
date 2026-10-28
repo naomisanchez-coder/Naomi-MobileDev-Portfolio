@@ -32,6 +32,8 @@ struct InstructoresView: View {
         .navigationTitle("Pago de instructores")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar(.visible, for: .navigationBar)
+        .toolbarBackground(Estilo.fondo, for: .navigationBar)
+        .toolbarBackground(.visible, for: .navigationBar)
         .toolbar {
             ToolbarItemGroup(placement: .keyboard) {
                 Spacer()
@@ -47,18 +49,16 @@ struct InstructoresView: View {
     }
 
     private var encabezado: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        HStack(alignment: .top, spacing: 16) {
             Image(systemName: "person.2.fill")
-                .font(.largeTitle)
+                .font(.title)
                 .foregroundStyle(Estilo.turquesa)
-                .padding(16)
-                .background(Estilo.turquesa.opacity(0.10), in: RoundedRectangle(cornerRadius: 18))
+                .padding(14)
+                .background(Estilo.turquesa.opacity(0.10), in: RoundedRectangle(cornerRadius: 16))
                 .accessibilityHidden(true)
-            Text("Pago de instructores")
-                .font(.largeTitle.bold())
-                .foregroundStyle(Estilo.azul)
             Text("Calcula tu remuneración mensual según las horas trabajadas.")
-                .foregroundStyle(.secondary)
+                .font(.body)
+                .foregroundStyle(Estilo.azul)
         }
     }
 
@@ -87,19 +87,16 @@ struct InstructoresView: View {
                     .focused($campoActivo)
                     .textFieldStyle(.roundedBorder)
                     .accessibilityLabel("Horas trabajadas por semana")
-                Text("Puedes ingresar horas decimales. Ejemplo: 12.5 = 12 horas y 30 minutos.")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
-                Text("Obligatorio. Mayor que 0 y hasta 23 horas.")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
+                Text("Admite decimales (12.5 = 12 h 30 min). Máximo: 23 h.")
+                    .font(.callout)
+                    .foregroundStyle(Estilo.azul.opacity(0.85))
             }
 
             VStack(alignment: .leading, spacing: 10) {
                 Label("Parámetros del ejercicio", systemImage: "info.circle")
                     .font(.subheadline.bold())
                 Text("Pago por hora: S/ 50.00")
-                Text("Límite semanal: 23 horas")
+                Text("Máximo semanal: 23 horas")
                 Text("Semanas consideradas: 4")
             }
             .font(.subheadline)
@@ -254,18 +251,34 @@ struct InstructoresView: View {
 
     private var supuestoTributario: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Proyección académica 2026")
+            Text("Proyección tributaria 2026")
                 .font(.headline)
                 .foregroundStyle(Estilo.azul)
-            Toggle("Considerar dos gratificaciones completas y bonificación extraordinaria de EsSalud",
-                   isOn: $considerarGratificaciones)
+            Toggle("Incluir gratificaciones anuales", isOn: $considerarGratificaciones)
                 .tint(Estilo.turquesa)
-            Text("Este supuesto de ingresos anuales no determina el derecho legal a gratificaciones. La bonificación del 9 % de cada gratificación es distinta del aporte mensual de EsSalud del empleador.")
-                .font(.footnote)
+            Text("Considera dos gratificaciones completas y su bonificación del 9 % para estimar el impuesto anual.")
+                .font(.callout)
+                .foregroundStyle(Estilo.azul.opacity(0.85))
+            Text("Simulación con sueldo constante y un empleador. Retención referencial de enero a marzo de 2026.")
+                .font(.callout)
+                .foregroundStyle(Estilo.azul.opacity(0.85))
+            Text("La opción no determina automáticamente el derecho a gratificaciones.")
+                .font(.callout)
                 .foregroundStyle(.secondary)
-            Text("Trabajo dependiente sujeto a quinta categoría, con un solo empleador y sueldo constante durante doce meses. Sin otros ingresos, retenciones anteriores ni cambios salariales. Ejemplo ordinario de enero a marzo de 2026, sin retención extraordinaria adicional del mes.")
-                .font(.footnote)
-                .foregroundStyle(.secondary)
+
+            // Sin binding: comienza cerrado y no cambia los datos del cálculo.
+            DisclosureGroup("Ver supuestos del cálculo") {
+                VStack(alignment: .leading, spacing: 12) {
+                    Text("Trabajo dependiente sujeto a quinta categoría durante doce meses. Sin otros ingresos, retenciones anteriores ni cambios salariales.")
+                    Text("Escenario ordinario de enero a marzo de 2026, sin retención extraordinaria adicional del mes. La retención real depende del mes y de los antecedentes del trabajador.")
+                    Text("Con la opción activada se proyectan 12 sueldos, 2 gratificaciones completas y el 9 % de cada gratificación. Desactivada, solo se consideran 12 sueldos.")
+                    Text("La bonificación extraordinaria es distinta del aporte mensual de EsSalud del empleador.")
+                }
+                .font(.callout)
+                .foregroundStyle(Estilo.azul.opacity(0.85))
+                .padding(.top, 10)
+            }
+            .tint(Estilo.azul)
         }
     }
 
@@ -294,10 +307,10 @@ struct InstructoresView: View {
                 Text("Impuesto anual estimado: \(moneda(tributo.impuestoAnual))")
                 Text("Retención mensual referencial enero-marzo: \(moneda(tributo.retencionMensual))")
                     .font(.headline)
-                Text("Impuesto anual ÷ 12: solo para este escenario académico de enero a marzo, no para todos los meses.")
+                Text("Impuesto anual ÷ 12: referencia exclusiva de enero–marzo para este supuesto.")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
-                Text("Simulación académica para 2026 con remuneración constante. La retención real depende del mes, de los ingresos y de las retenciones anteriores.")
+                Text("La retención real varía con el mes, los ingresos y las retenciones previas.")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
                 Link("Fuente oficial: SUNAT", destination: URL(string: "https://personas.sunat.gob.pe/trabajador-dependiente/como-me-deben-hacer-retencion-impuesto")!)
@@ -311,7 +324,8 @@ struct InstructoresView: View {
                 Text("Remuneración neta referencial")
                     .font(.title2.bold())
                 Text(moneda(neto))
-                    .font(.largeTitle.bold())
+                    .font(.system(.largeTitle, design: .rounded).bold())
+                    .padding(.vertical, 6)
                 Text("Sueldo bruto: \(moneda(bruto))")
                 Text("Aporte previsional: − \(moneda(aportes.total))")
                 Text("Retención referencial: − \(moneda(tributo.retencionMensual))")
