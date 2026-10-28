@@ -26,6 +26,8 @@ struct CTSView: View {
         .navigationTitle("Calculadora CTS")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar(.visible, for: .navigationBar)
+        .toolbarBackground(Estilo.fondo, for: .navigationBar)
+        .toolbarBackground(.visible, for: .navigationBar)
         .toolbar {
             ToolbarItemGroup(placement: .keyboard) {
                 Spacer()
@@ -37,21 +39,21 @@ struct CTSView: View {
     }
 
     private var encabezado: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        HStack(alignment: .top, spacing: 16) {
             Image(systemName: "calculator")
-                .font(.largeTitle)
+                .font(.title)
                 .foregroundStyle(Estilo.azul)
-                .padding(16)
-                .background(.white, in: RoundedRectangle(cornerRadius: 18))
+                .padding(14)
+                .background(.white, in: RoundedRectangle(cornerRadius: 16))
                 .accessibilityHidden(true)
-            Text("Calculadora CTS")
-                .font(.largeTitle.bold())
-                .foregroundStyle(Estilo.azul)
-            Text("Calcula tu compensación según tu remuneración y tiempo de servicios.")
-                .foregroundStyle(.secondary)
-            Text("Estimación para el régimen laboral general de la actividad privada del Perú. No comprende otros regímenes ni situaciones excepcionales.")
-                .font(.footnote)
-                .foregroundStyle(Estilo.azul)
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Calcula tu compensación según tu remuneración y tiempo de servicios.")
+                    .font(.body)
+                    .foregroundStyle(Estilo.azul)
+                Text("Estimación · Régimen general privado")
+                    .font(.callout.weight(.medium))
+                    .foregroundStyle(Estilo.turquesa)
+            }
         }
     }
 
@@ -62,14 +64,10 @@ struct CTSView: View {
                   decimal: false)
             campo("Remuneración mensual computable (S/)", ejemplo: "Ejemplo: 2400.00",
                   texto: $datos.sueldo)
-            campo("Gratificación computable percibida en el semestre (S/)",
-                  ejemplo: "Ingresa el importe, incluso si es 0", texto: $datos.gratificacion)
-            Text("Ingresa la gratificación efectivamente computable según el período. No se supone igual al sueldo; no incluyas el aporte EsSalud ni la bonificación extraordinaria.")
-                .font(.footnote)
-                .foregroundStyle(.secondary)
-            Text("Se supone remuneración fija. No se añaden automáticamente asignación familiar, horas extras regulares ni otros conceptos computables: si corresponden, incorpóralos en la remuneración ingresada.")
-                .font(.footnote)
-                .foregroundStyle(.secondary)
+            ayuda("Sueldo y otros conceptos computables, si corresponden.")
+            campo("Gratificación computable (S/)",
+                  ejemplo: "Importe del semestre; admite 0", texto: $datos.gratificacion)
+            ayuda("Gratificación considerada para CTS, sin bonificación extraordinaria.")
         }
         .padding(22)
         .background(.white, in: RoundedRectangle(cornerRadius: 22))
@@ -82,12 +80,7 @@ struct CTSView: View {
                   entero: true)
             campo("Días adicionales computables", ejemplo: "De 0 a 29", texto: $datos.dias,
                   entero: true)
-            Text("Ingresa tiempo efectivamente computable del semestre, no tiempo calendario sin revisar. El total debe ser mayor que cero y no superar seis meses.")
-                .font(.footnote)
-                .foregroundStyle(.secondary)
-            Text("Se requiere al menos un mes de prestación efectiva. Si al cierre del semestre aún no se completa un mes, el cálculo y depósito se acumulan al siguiente período; aquí se mostrará una explicación sin monto de depósito inmediato.")
-                .font(.footnote)
-                .foregroundStyle(.secondary)
+            ayuda("Máximo 6 meses. Si ingresas 6 meses, los días deben ser 0.")
         }
         .padding(22)
         .background(.white, in: RoundedRectangle(cornerRadius: 22))
@@ -104,9 +97,7 @@ struct CTSView: View {
                 Text("6 días").tag(6)
             }
             .pickerStyle(.segmented)
-            Text("Para esta distribución de 5 o 6 días, el promedio diario es horas semanales ÷ días semanales. Debe alcanzar al menos 4 horas. La elegibilidad no depende únicamente de trabajar 23 horas semanales.")
-                .font(.footnote)
-                .foregroundStyle(.secondary)
+            ayuda("Para jornadas de 5 o 6 días, el promedio debe ser de al menos 4 horas diarias.")
         }
         .padding(22)
         .background(.white, in: RoundedRectangle(cornerRadius: 22))
@@ -141,23 +132,28 @@ struct CTSView: View {
             titulo("Resultado de la estimación", simbolo: "checkmark.circle")
             Text(datos.nombre.trimmingCharacters(in: .whitespacesAndNewlines))
                 .font(.headline)
-            Text("Remuneración ingresada: \(moneda(valor.sueldo))")
+            VStack(alignment: .leading, spacing: 10) {
+                Text("CTS estimada")
+                    .font(.headline)
+                Text(moneda(valor.cts))
+                    .font(.system(.largeTitle, design: .rounded).bold())
+            }
+            .foregroundStyle(.white)
+            .padding(22)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(Estilo.turquesa, in: RoundedRectangle(cornerRadius: 20))
+
+            Text("Desglose computable")
+                .font(.headline)
+                .foregroundStyle(Estilo.azul)
+            Text("Sueldo computable: \(moneda(valor.sueldo))")
             Text("Gratificación computable: \(moneda(valor.gratificacion))")
             Text("Sexta parte de la gratificación: \(moneda(valor.sexto))")
             Text("Remuneración computable total: \(moneda(valor.computable))")
             Text("Período: \(valor.meses) meses completos y \(valor.dias) días adicionales")
             Text("Promedio diario: \(numero(valor.promedioDiario)) horas")
 
-            VStack(alignment: .leading, spacing: 10) {
-                Text("CTS estimada")
-                    .font(.headline)
-                Text(moneda(valor.cts))
-                    .font(.largeTitle.bold())
-            }
-            .foregroundStyle(.white)
-            .padding(22)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .background(Estilo.turquesa, in: RoundedRectangle(cornerRadius: 20))
+            Divider()
 
             Text("Desarrollo del cálculo")
                 .font(.headline)
@@ -173,6 +169,13 @@ struct CTSView: View {
         .padding(22)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(.white, in: RoundedRectangle(cornerRadius: 22))
+    }
+
+    private func ayuda(_ texto: String) -> some View {
+        Text(texto)
+            .font(.callout)
+            .foregroundStyle(Estilo.azul.opacity(0.85))
+            .fixedSize(horizontal: false, vertical: true)
     }
 
     private func titulo(_ texto: String, simbolo: String) -> some View {
@@ -294,7 +297,7 @@ enum CalculoCTS {
             return "Ingresa un período computable mayor que cero."
         }
         if meses * 30 + dias > 180 {
-            return "El período computable no puede superar seis meses."
+            return "Si ingresas 6 meses completos, los días adicionales deben ser 0."
         }
         guard let horas = decimal(datos.horas), horas > 0 else {
             return "Ingresa una jornada semanal numérica, finita y mayor que cero."
