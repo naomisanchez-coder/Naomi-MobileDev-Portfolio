@@ -8,6 +8,7 @@ struct InstructoresView: View {
     @State private var sistema: SistemaPensiones = .onp
     @State private var afp: AdministradoraAFP = .habitat
     @State private var comision: TipoComision = .flujo
+    @State private var considerarGratificaciones = true
     @FocusState private var campoActivo: Bool
 
     var body: some View {
@@ -16,8 +17,11 @@ struct InstructoresView: View {
                 encabezado
                 formulario
                 if let sueldo = sueldo {
+                    let aportes = CalculoInstructor.prevision(bruto: sueldo, sistema: sistema,
+                                                              afp: afp, comision: comision)
                     resultado(sueldo)
-                    resumenPrevisional(sueldo)
+                    resumenPrevisional(sueldo, aportes: aportes)
+                    resumenTributario(sueldo, aportes: aportes)
                 }
             }
             .padding(24)
@@ -39,6 +43,7 @@ struct InstructoresView: View {
         .onChange(of: sistema) { _, _ in invalidarResultado() }
         .onChange(of: afp) { _, _ in invalidarResultado() }
         .onChange(of: comision) { _, _ in invalidarResultado() }
+        .onChange(of: considerarGratificaciones) { _, _ in invalidarResultado() }
     }
 
     private var encabezado: some View {
@@ -104,6 +109,7 @@ struct InstructoresView: View {
             .background(Estilo.fondo, in: RoundedRectangle(cornerRadius: 14))
 
             seleccionPrevisional
+            supuestoTributario
 
             if let error = error {
                 Label(error, systemImage: "exclamationmark.circle.fill")
@@ -180,9 +186,7 @@ struct InstructoresView: View {
         .tint(Estilo.turquesa)
     }
 
-    private func resumenPrevisional(_ bruto: Double) -> some View {
-        let aportes = CalculoInstructor.prevision(bruto: bruto, sistema: sistema,
-                                                  afp: afp, comision: comision)
+    private func resumenPrevisional(_ bruto: Double, aportes: ResumenPrevisional) -> some View {
         return VStack(alignment: .leading, spacing: 24) {
             VStack(alignment: .leading, spacing: 14) {
                 Label("Resumen previsional", systemImage: "shield.lefthalf.filled")
@@ -248,6 +252,81 @@ struct InstructoresView: View {
         }
     }
 
+    private var supuestoTributario: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Proyección académica 2026")
+                .font(.headline)
+                .foregroundStyle(Estilo.azul)
+            Toggle("Considerar dos gratificaciones completas y bonificación extraordinaria de EsSalud",
+                   isOn: $considerarGratificaciones)
+                .tint(Estilo.turquesa)
+            Text("Este supuesto de ingresos anuales no determina el derecho legal a gratificaciones. La bonificación del 9 % de cada gratificación es distinta del aporte mensual de EsSalud del empleador.")
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+            Text("Trabajo dependiente sujeto a quinta categoría, con un solo empleador y sueldo constante durante doce meses. Sin otros ingresos, retenciones anteriores ni cambios salariales. Ejemplo ordinario de enero a marzo de 2026, sin retención extraordinaria adicional del mes.")
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+        }
+    }
+
+    private func resumenTributario(_ bruto: Double, aportes: ResumenPrevisional) -> some View {
+        let tributo = CalculoQuinta.proyectar(sueldo: bruto,
+                                            gratificaciones: considerarGratificaciones)
+        let neto = CalculoQuinta.netoReferencial(bruto: bruto, descuentoPrevisional: aportes.total,
+                                                retencion: tributo.retencionMensual)
+
+        return VStack(alignment: .leading, spacing: 24) {
+            VStack(alignment: .leading, spacing: 14) {
+                Label("Impuesto a la Renta — Quinta categoría", systemImage: "doc.text")
+                    .font(.title2.bold())
+                    .foregroundStyle(Estilo.azul)
+                Text("Año tributario 2026")
+                    .font(.headline)
+                Text("UIT: \(moneda(CalculoQuinta.uit))")
+                Text("Deducción anual (7 UIT): \(moneda(CalculoQuinta.deduccion))")
+                Text(considerarGratificaciones
+                     ? "Supuesto: 12 sueldos + 2 gratificaciones completas + bonificación del 9 % de cada gratificación."
+                     : "Supuesto: solamente 12 remuneraciones mensuales.")
+                    .font(.subheadline)
+                Divider()
+                Text("Ingresos anuales proyectados: \(moneda(tributo.ingresos))")
+                Text("Renta imponible anual: \(moneda(tributo.rentaImponible))")
+                Text("Impuesto anual estimado: \(moneda(tributo.impuestoAnual))")
+                Text("Retención mensual referencial enero-marzo: \(moneda(tributo.retencionMensual))")
+                    .font(.headline)
+                Text("Impuesto anual ÷ 12: solo para este escenario académico de enero a marzo, no para todos los meses.")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                Text("Simulación académica para 2026 con remuneración constante. La retención real depende del mes, de los ingresos y de las retenciones anteriores.")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                Link("Fuente oficial: SUNAT", destination: URL(string: "https://personas.sunat.gob.pe/trabajador-dependiente/como-me-deben-hacer-retencion-impuesto")!)
+                    .font(.footnote)
+            }
+            .padding(22)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(.white, in: RoundedRectangle(cornerRadius: 22))
+
+            VStack(alignment: .leading, spacing: 14) {
+                Text("Remuneración neta referencial")
+                    .font(.title2.bold())
+                Text(moneda(neto))
+                    .font(.largeTitle.bold())
+                Text("Sueldo bruto: \(moneda(bruto))")
+                Text("Aporte previsional: − \(moneda(aportes.total))")
+                Text("Retención referencial: − \(moneda(tributo.retencionMensual))")
+                Text("\(moneda(bruto)) − \(moneda(aportes.total)) − \(moneda(tributo.retencionMensual)) = \(moneda(neto))")
+                    .font(.subheadline)
+                Text("Estimación para el escenario indicado. EsSalud no se descuenta al instructor.")
+                    .font(.footnote)
+            }
+            .foregroundStyle(.white)
+            .padding(22)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(Estilo.turquesa, in: RoundedRectangle(cornerRadius: 22))
+        }
+    }
+
     private func resultado(_ sueldo: Double) -> some View {
         // Solo se presenta tras validar. Los cambios en los campos lo ocultan.
         let horasSemanales = CalculoInstructor.convertir(horas) ?? 0
@@ -308,6 +387,7 @@ struct InstructoresView: View {
         sistema = .onp
         afp = .habitat
         comision = .flujo
+        considerarGratificaciones = true
         invalidarResultado()
         campoActivo = false
     }
@@ -417,6 +497,74 @@ enum CalculoInstructor {
 
     static func sueldoBruto(horas: Double) -> Double {
         horas * 50 * 4
+    }
+}
+
+struct ProyeccionQuinta {
+    let ingresos: Double
+    let rentaImponible: Double
+    let impuestoAnual: Double
+    let retencionMensual: Double
+}
+
+enum CalculoQuinta {
+    // SUNAT: UIT 2026 y deducción de 7 UIT. Parámetros fijos del ejercicio.
+    static let uit = 5500.0
+    static let deduccion = 7 * uit
+
+    static func ingresosAnuales(sueldo: Double, gratificaciones: Bool) -> Double {
+        guard sueldo.isFinite, sueldo >= 0 else { return 0 }
+        let ingresos: Double
+        if gratificaciones {
+            ingresos = sueldo * 12 + sueldo * 2 + sueldo * 2 * 0.09
+        } else {
+            ingresos = sueldo * 12
+        }
+        return ingresos.isFinite ? ingresos : 0
+    }
+
+    static func rentaImponible(ingresos: Double) -> Double {
+        guard ingresos.isFinite else { return 0 }
+        return max(0, ingresos - deduccion)
+    }
+
+    static func impuestoAnual(renta: Double) -> Double {
+        guard renta.isFinite, renta > 0 else { return 0 }
+        // Cada tasa grava solo la parte comprendida en su tramo.
+        var impuesto = min(renta, 5 * uit) * 0.08
+        if renta > 5 * uit {
+            impuesto += min(renta - 5 * uit, 15 * uit) * 0.14
+        }
+        if renta > 20 * uit {
+            impuesto += min(renta - 20 * uit, 15 * uit) * 0.17
+        }
+        if renta > 35 * uit {
+            impuesto += min(renta - 35 * uit, 10 * uit) * 0.20
+        }
+        if renta > 45 * uit {
+            impuesto += (renta - 45 * uit) * 0.30
+        }
+        return impuesto
+    }
+
+    static func retencionEneroMarzo(impuestoAnual: Double) -> Double {
+        guard impuestoAnual.isFinite else { return 0 }
+        // Solo escenario ordinario enero-marzo, sin ajustes ni retenciones previas.
+        return max(0, impuestoAnual) / 12
+    }
+
+    static func proyectar(sueldo: Double, gratificaciones: Bool) -> ProyeccionQuinta {
+        let ingresos = ingresosAnuales(sueldo: sueldo, gratificaciones: gratificaciones)
+        let renta = rentaImponible(ingresos: ingresos)
+        let impuesto = impuestoAnual(renta: renta)
+        return ProyeccionQuinta(ingresos: ingresos, rentaImponible: renta,
+                                impuestoAnual: impuesto,
+                                retencionMensual: retencionEneroMarzo(impuestoAnual: impuesto))
+    }
+
+    static func netoReferencial(bruto: Double, descuentoPrevisional: Double,
+                                retencion: Double) -> Double {
+        bruto - descuentoPrevisional - retencion
     }
 }
 
