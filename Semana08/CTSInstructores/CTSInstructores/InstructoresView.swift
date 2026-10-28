@@ -5,6 +5,9 @@ struct InstructoresView: View {
     @State private var horas = ""
     @State private var error: String?
     @State private var sueldo: Double?
+    @State private var sistema: SistemaPensiones = .onp
+    @State private var afp: AdministradoraAFP = .habitat
+    @State private var comision: TipoComision = .flujo
     @FocusState private var campoActivo: Bool
 
     var body: some View {
@@ -14,6 +17,7 @@ struct InstructoresView: View {
                 formulario
                 if let sueldo = sueldo {
                     resultado(sueldo)
+                    resumenPrevisional(sueldo)
                 }
             }
             .padding(24)
@@ -32,6 +36,9 @@ struct InstructoresView: View {
         }
         .onChange(of: horas) { _, _ in invalidarResultado() }
         .onChange(of: nombre) { _, _ in invalidarResultado() }
+        .onChange(of: sistema) { _, _ in invalidarResultado() }
+        .onChange(of: afp) { _, _ in invalidarResultado() }
+        .onChange(of: comision) { _, _ in invalidarResultado() }
     }
 
     private var encabezado: some View {
@@ -96,6 +103,8 @@ struct InstructoresView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(Estilo.fondo, in: RoundedRectangle(cornerRadius: 14))
 
+            seleccionPrevisional
+
             if let error = error {
                 Label(error, systemImage: "exclamationmark.circle.fill")
                     .font(.subheadline)
@@ -119,6 +128,124 @@ struct InstructoresView: View {
         .padding(22)
         .background(.white, in: RoundedRectangle(cornerRadius: 22))
         .shadow(color: Estilo.azul.opacity(0.05), radius: 8, y: 4)
+    }
+
+    private var seleccionPrevisional: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            Label("Sistema de pensiones", systemImage: "shield.lefthalf.filled")
+                .font(.headline)
+                .foregroundStyle(Estilo.azul)
+            Picker("Sistema de pensiones", selection: $sistema) {
+                ForEach(SistemaPensiones.allCases, id: \.self) { opcion in
+                    Text(opcion.rawValue).tag(opcion)
+                }
+            }
+            .pickerStyle(.segmented)
+
+            if sistema == .afp {
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("Administradora")
+                        .font(.subheadline.weight(.medium))
+                    Picker("Administradora", selection: $afp) {
+                        ForEach(AdministradoraAFP.allCases, id: \.self) { opcion in
+                            Text(opcion.rawValue).tag(opcion)
+                        }
+                    }
+                    .pickerStyle(.menu)
+                    .frame(minHeight: 44)
+                }
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("Tipo de comisión")
+                        .font(.subheadline.weight(.medium))
+                    Picker("Tipo de comisión", selection: $comision) {
+                        ForEach(TipoComision.allCases, id: \.self) { opcion in
+                            Text(opcion.rawValue).tag(opcion)
+                        }
+                    }
+                    .pickerStyle(.menu)
+                    .frame(minHeight: 44)
+                }
+                Text("Tasas AFP: octubre de 2026. No se actualizan automáticamente.")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                if comision == .saldo {
+                    Text("La comisión sobre remuneración es 0. Existe una comisión anual sobre el saldo administrado que esta calculadora no estima.")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                }
+                Link("Fuente oficial: SBS", destination: URL(string: "https://www.sbs.gob.pe/app/spp/empleadores/comisiones_spp/Paginas/comision_prima.aspx")!)
+                    .font(.footnote)
+            }
+        }
+        .tint(Estilo.turquesa)
+    }
+
+    private func resumenPrevisional(_ bruto: Double) -> some View {
+        let aportes = CalculoInstructor.prevision(bruto: bruto, sistema: sistema,
+                                                  afp: afp, comision: comision)
+        return VStack(alignment: .leading, spacing: 24) {
+            VStack(alignment: .leading, spacing: 14) {
+                Label("Resumen previsional", systemImage: "shield.lefthalf.filled")
+                    .font(.title2.bold())
+                    .foregroundStyle(Estilo.azul)
+                Text("Sistema seleccionado: \(sistema.rawValue)")
+                    .font(.headline)
+                if sistema == .afp {
+                    Text("AFP: \(afp.rawValue)")
+                    Text(comision.rawValue)
+                    Text("Aporte obligatorio (10 %): \(moneda(aportes.aporte))")
+                    Text("Prima de seguro (1.37 %): \(moneda(aportes.seguro))")
+                    Text("Comisión mensual sobre remuneración: \(moneda(aportes.comision))")
+                    if comision == .flujo {
+                        Text("Tasa de comisión: \(numero(afp.tasaFlujo * 100)) %")
+                            .font(.footnote)
+                    } else {
+                        Text("Existe una comisión anual sobre el saldo administrado que no se está estimando en esta calculadora.")
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
+                    }
+                    Text("Tasas AFP de octubre de 2026. No se actualizan automáticamente.")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                } else {
+                    Text("Aporte obligatorio ONP (13 %): \(moneda(aportes.aporte))")
+                }
+                Divider()
+                Text("Total de descuento previsional: \(moneda(aportes.total))")
+                    .font(.headline)
+            }
+            .padding(22)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(.white, in: RoundedRectangle(cornerRadius: 22))
+
+            VStack(alignment: .leading, spacing: 12) {
+                Label("EsSalud · Empleador", systemImage: "cross.case")
+                    .font(.headline)
+                    .foregroundStyle(Estilo.azul)
+                Text("9 % del sueldo bruto: \(moneda(aportes.essalud))")
+                Text("Aporte del empleador. No se descuenta al instructor")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+            }
+            .padding(22)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(.white, in: RoundedRectangle(cornerRadius: 22))
+
+            VStack(alignment: .leading, spacing: 12) {
+                Text("Remuneración después de aportes previsionales")
+                    .font(.headline)
+                Text(moneda(aportes.remuneracion))
+                    .font(.largeTitle.bold())
+                Text("\(moneda(bruto)) − \(moneda(aportes.total)) = \(moneda(aportes.remuneracion))")
+                    .font(.subheadline)
+                Text("Importe previo a la retención de quinta categoría, si corresponde")
+                    .font(.footnote)
+            }
+            .foregroundStyle(.white)
+            .padding(22)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(Estilo.azul, in: RoundedRectangle(cornerRadius: 22))
+        }
     }
 
     private func resultado(_ sueldo: Double) -> some View {
@@ -178,6 +305,9 @@ struct InstructoresView: View {
     private func limpiar() {
         nombre = ""
         horas = ""
+        sistema = .onp
+        afp = .habitat
+        comision = .flujo
         invalidarResultado()
         campoActivo = false
     }
@@ -197,8 +327,59 @@ struct InstructoresView: View {
     }
 }
 
+enum SistemaPensiones: String, CaseIterable {
+    case onp = "ONP"
+    case afp = "AFP"
+}
+
+enum AdministradoraAFP: String, CaseIterable {
+    case habitat = "Habitat"
+    case integra = "Integra"
+    case prima = "Prima"
+    case profuturo = "Profuturo"
+
+    // SBS, mes de devengue octubre de 2026. Tasas fijas del ejercicio.
+    var tasaFlujo: Double {
+        switch self {
+        case .habitat: return 0.0147
+        case .integra: return 0.0155
+        case .prima: return 0.0160
+        case .profuturo: return 0.0169
+        }
+    }
+}
+
+enum TipoComision: String, CaseIterable {
+    case flujo = "Comisión sobre flujo"
+    case saldo = "Comisión sobre saldo"
+}
+
+struct ResumenPrevisional {
+    let bruto: Double
+    let aporte: Double
+    let seguro: Double
+    let comision: Double
+
+    var total: Double { aporte + seguro + comision }
+    var essalud: Double { bruto * 0.09 }
+    var remuneracion: Double { bruto - total }
+}
+
 // Funciones puras y sencillas que permiten comprobar las reglas del ejercicio.
 enum CalculoInstructor {
+    // Base académica: sueldo bruto positivo, hasta S/ 4,600.
+    // SBS: https://www.sbs.gob.pe/app/spp/empleadores/comisiones_spp/Paginas/comision_prima.aspx
+    static func prevision(bruto: Double, sistema: SistemaPensiones,
+                          afp: AdministradoraAFP, comision: TipoComision) -> ResumenPrevisional {
+        if sistema == .onp {
+            return ResumenPrevisional(bruto: bruto, aporte: bruto * 0.13,
+                                      seguro: 0, comision: 0)
+        }
+        let comisionMensual = comision == .flujo ? bruto * afp.tasaFlujo : 0
+        return ResumenPrevisional(bruto: bruto, aporte: bruto * 0.10,
+                                  seguro: bruto * 0.0137, comision: comisionMensual)
+    }
+
     static func validarNombre(_ nombre: String) -> String? {
         if nombre.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             return "Ingresa el nombre del instructor"
