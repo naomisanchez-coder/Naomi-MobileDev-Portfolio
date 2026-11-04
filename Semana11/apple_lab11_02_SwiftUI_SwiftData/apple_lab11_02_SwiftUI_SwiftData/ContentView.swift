@@ -48,6 +48,13 @@ struct ContentView: View {
                         Label("Nuevo Alumno", systemImage: "plus")
                     }
                 }
+                ToolbarItem {
+                    Button {
+                        asignarCursoDemo()
+                    } label: {
+                        Label("Curso demo", systemImage: "book")
+                    }
+                }
             }
         } detail: {
             if let alumno = alumnoSeleccionado {
@@ -57,6 +64,7 @@ struct ContentView: View {
                     Text("Nombre: \(alumno.nombre)")
                     Text("Apellido: \(alumno.apellido)")
                     Text("DNI: \(alumno.dni)")
+                    Text("Curso: \(alumno.curso?.nombre ?? "Sin curso")")
                     Button("Editar") {
                         alumnoAEditar = alumno
                     }
@@ -76,6 +84,15 @@ struct ContentView: View {
         }
     }
 
+    // DEMOSTRACIÓN de relación: crea un curso y se lo asigna a todos los alumnos
+    private func asignarCursoDemo() {
+        let curso = Curso(nombre: "Programación en Móviles")
+        modelContext.insert(curso)
+        for alumno in alumnos {
+            alumno.curso = curso
+        }
+    }
+
     // DELETE: eliminar uno o más alumnos desde la lista
     private func deleteAlumnos(offsets: IndexSet) {
         withAnimation {
@@ -90,5 +107,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .modelContainer(for: [Alumno.self], inMemory: true)
+        .modelContainer(for: [Alumno.self, Curso.self], inMemory: true)
 }
