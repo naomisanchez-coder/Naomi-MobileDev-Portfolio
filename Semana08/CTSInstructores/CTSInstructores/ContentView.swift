@@ -1,6 +1,6 @@
 import SwiftUI
 
-// Colores compartidos para mantener la identidad visual en las cuatro vistas.
+// Colores compartidos para mantener la identidad visual de la aplicación.
 enum Estilo {
     static let azul = Color(red: 0.10, green: 0.24, blue: 0.48)
     static let fondo = Color(red: 0.94, green: 0.97, blue: 1.00)
@@ -27,6 +27,14 @@ struct ContentView: View {
                             TarjetaBeneficio(titulo: "Pago de instructores",
                                              detalle: "Conoce los componentes de tu pago.",
                                              simbolo: "person.2.fill", color: Estilo.turquesa)
+                        }
+
+                        NavigationLink {
+                            VacacionesView()
+                        } label: {
+                            TarjetaBeneficio(titulo: "Calculadora de vacaciones",
+                                             detalle: "Estima tu remuneración vacacional y conoce tus beneficios.",
+                                             simbolo: "calendar.badge.clock", color: Estilo.violeta)
                         }
 
                         NavigationLink {
@@ -68,10 +76,10 @@ struct ContentView: View {
                 .padding(14)
                 .background(.white, in: RoundedRectangle(cornerRadius: 16))
                 .accessibilityHidden(true)
-            Text("CTS Instructores")
+            Text("¡Bienvenido a CTSInstructores!")
                 .font(.largeTitle.bold())
                 .foregroundStyle(Estilo.azul)
-            Text("Tus cálculos laborales, de forma sencilla")
+            Text("Calcula y comprende tus beneficios laborales de forma sencilla.")
                 .font(.body)
                 .foregroundStyle(.secondary)
         }
