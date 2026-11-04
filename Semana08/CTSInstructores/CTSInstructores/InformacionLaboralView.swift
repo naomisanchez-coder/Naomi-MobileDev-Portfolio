@@ -81,7 +81,7 @@ struct InformacionLaboralView: View {
             Text("Vacaciones truncas: pago proporcional que puede corresponder al finalizar la relación laboral.")
             Text("Provisión contable: estimación del costo del beneficio; no es un pago adicional mensual.")
             formula("Provisión mensual aproximada = Remuneración mensual ÷ 12")
-            Text("Referencia contable, no una liquidación legal completa.")
+            Text("La Calculadora de vacaciones estima descanso completo con requisitos declarados, truncas al cese y provisión mensual. El tiempo parcial tiene tratamiento distinto y queda fuera del monto de 30 días. La CTS y las vacaciones dependen del régimen y las condiciones laborales.")
                 .foregroundStyle(.secondary)
             fuente("SUNAFIL · Derecho a vacaciones", url: "https://www.gob.pe/institucion/sunafil/noticias/889227-pensando-en-salir-de-vacaciones-sunafil-te-explica-como-acceder-a-este-derecho")
             fuente("SUNAFIL · Beneficios al cese", url: "https://www.gob.pe/institucion/sunafil/noticias/661238-liquidacion-de-beneficios-6-datos-que-debes-saber-si-renunciaste-o-te-cesaron-del-trabajo")
@@ -100,6 +100,7 @@ struct InformacionLaboralView: View {
 
     private var aportes: some View {
         tarjeta("Descuentos y aportes", subtitulo: "Identifica quién los asume", simbolo: "doc.text") {
+            Text("Asignación familiar: 10 % de la RMV para quienes acrediten los requisitos legales. La app permite declararlo con una opción desactivada inicialmente: S/ 123 sobre RMV de S/ 1,230, referencia noviembre de 2026. Integra el bruto una sola vez.")
             Text("ONP: el aporte del trabajador es el 13 % de la remuneración asegurable.")
             Text("AFP: el descuento reúne aporte obligatorio, prima de seguro y comisión correspondiente. La app usa las tasas fijas de octubre de 2026. Con comisión sobre saldo, no estima la comisión anual del fondo ni añade una comisión sobre el sueldo.")
             Text("EsSalud: en el ejemplo académico se calcula el 9 % del bruto a cargo del empleador; no se resta de la remuneración del instructor.")
@@ -108,6 +109,8 @@ struct InformacionLaboralView: View {
             Text("La división del impuesto anual entre 12 en la app corresponde únicamente al supuesto ordinario de enero–marzo de 2026, con sueldo constante, un empleador y sin otros ingresos ni retenciones previas. No es una retención exacta para cualquier mes.")
             Text("Las tasas tributarias y previsionales pueden cambiar. Los parámetros de esta app no se actualizan automáticamente.")
                 .foregroundStyle(.secondary)
+            fuente("MTPE · Asignación familiar", url: "https://www.gob.pe/institucion/mtpe/noticias/601761-quienes-tienen-derecho-a-percibir-la-asignacion-familiar/")
+            fuente("El Peruano · RMV desde octubre de 2026", url: "https://busquedas.elperuano.pe/dispositivo/EX/2559163-1")
             fuente("ONP · Aportes al SNP", url: "https://www.gob.pe/institucion/onp/noticias/1190488-como-saber-si-tu-empleador-esta-pagando-tus-aportes-al-snp")
             fuente("SUNAT · EsSalud y ONP", url: "https://ww1.sunat.gob.pe/ol-ti-itmoddatruc/TIENEEMP.html")
             fuente("SBS · Comisiones y primas AFP", url: "https://www.sbs.gob.pe/app/spp/empleadores/comisiones_spp/Paginas/comision_prima.aspx")

@@ -9,6 +9,7 @@ struct InstructoresView: View {
     @State private var afp: AdministradoraAFP = .habitat
     @State private var comision: TipoComision = .flujo
     @State private var considerarGratificaciones = true
+    @State private var incluirAsignacionFamiliar = false
     @FocusState private var campoActivo: Bool
 
     var body: some View {
@@ -46,6 +47,7 @@ struct InstructoresView: View {
         .onChange(of: afp) { _, _ in invalidarResultado() }
         .onChange(of: comision) { _, _ in invalidarResultado() }
         .onChange(of: considerarGratificaciones) { _, _ in invalidarResultado() }
+        .onChange(of: incluirAsignacionFamiliar) { _, _ in invalidarResultado() }
     }
 
     private var encabezado: some View {
@@ -105,6 +107,7 @@ struct InstructoresView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(Estilo.fondo, in: RoundedRectangle(cornerRadius: 14))
 
+            opcionAsignacionFamiliar
             seleccionPrevisional
             supuestoTributario
 
@@ -131,6 +134,31 @@ struct InstructoresView: View {
         .padding(22)
         .background(.white, in: RoundedRectangle(cornerRadius: 22))
         .shadow(color: Estilo.azul.opacity(0.05), radius: 8, y: 4)
+    }
+
+    private var opcionAsignacionFamiliar: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Toggle("Incluir asignación familiar", isOn: $incluirAsignacionFamiliar)
+                .tint(Estilo.turquesa)
+            Text("Beneficio remunerativo para trabajadores que cumplen los requisitos legales.")
+                .font(.callout).foregroundStyle(Estilo.azul.opacity(0.85))
+            if incluirAsignacionFamiliar {
+                Text("Asignación: \(moneda(CalculoInstructor.asignacionFamiliar(incluir: true))) · 10 % de RMV \(moneda(CalculoInstructor.rmvNoviembre2026)).")
+                    .font(.callout.weight(.medium)).foregroundStyle(Estilo.turquesa)
+                Text("Al activar, declaro cumplir los requisitos y haberlos acreditado ante el empleador. No se concede por ingresar un nombre ni se multiplica por el número de hijos.")
+                    .font(.callout).foregroundStyle(.secondary)
+                DisclosureGroup("Requisitos y referencia") {
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("Régimen privado: hijos menores de 18 años, extensión por estudios superiores hasta seis años después de la mayoría de edad o supuesto legal de discapacidad severa certificada. Requiere acreditación y revisar la cobertura de la negociación colectiva para evitar duplicar un beneficio equivalente.")
+                        Text("RMV verificada al 4 de noviembre de 2026: S/ 1,230, vigente desde octubre por D.S. 015-2026-TR. Monto fijo, sin actualización automática. La proyección tributaria mantiene esta remuneración constante todo el año; no reconstruye los cambios históricos de RMV.")
+                        Link("MTPE · Asignación familiar", destination: URL(string: "https://www.gob.pe/institucion/mtpe/noticias/601761-quienes-tienen-derecho-a-percibir-la-asignacion-familiar/")!)
+                        Link("El Peruano · RMV vigente", destination: URL(string: "https://busquedas.elperuano.pe/dispositivo/EX/2559163-1")!)
+                    }
+                    .font(.callout).foregroundStyle(Estilo.azul.opacity(0.85))
+                    .padding(.top, 10)
+                }
+            }
+        }
     }
 
     private var seleccionPrevisional: some View {
@@ -359,7 +387,7 @@ struct InstructoresView: View {
             Text("Pago por hora: S/ 50.00")
 
             VStack(alignment: .leading, spacing: 8) {
-                Text("Sueldo bruto mensual")
+                Text(incluirAsignacionFamiliar ? "Remuneración bruta total" : "Sueldo bruto mensual")
                     .font(.headline)
                 Text(moneda(sueldo))
                     .font(.largeTitle.bold())
@@ -370,8 +398,18 @@ struct InstructoresView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(Estilo.turquesa, in: RoundedRectangle(cornerRadius: 18))
 
-            Text("\(numero(horasSemanales)) × 50 × 4 = \(moneda(sueldo))")
-                .font(.body.weight(.medium))
+            if incluirAsignacionFamiliar {
+                let sueldoPorHoras = CalculoInstructor.sueldoBruto(horas: horasSemanales)
+                let asignacion = CalculoInstructor.asignacionFamiliar(incluir: true)
+                Text("Sueldo por horas: \(moneda(sueldoPorHoras))")
+                Text("Asignación familiar: \(moneda(asignacion))")
+                Text("\(numero(horasSemanales)) × 50 × 4 = \(moneda(sueldoPorHoras))")
+                Text("Bruto total: \(moneda(sueldoPorHoras)) + \(moneda(asignacion)) = \(moneda(sueldo))")
+                    .font(.body.weight(.medium))
+            } else {
+                Text("\(numero(horasSemanales)) × 50 × 4 = \(moneda(sueldo))")
+                    .font(.body.weight(.medium))
+            }
             Text("Cálculo académico basado en cuatro semanas por mes.")
                 .font(.footnote)
                 .foregroundStyle(.secondary)
@@ -386,7 +424,7 @@ struct InstructoresView: View {
         sueldo = nil
         error = CalculoInstructor.validarNombre(nombre) ?? CalculoInstructor.validar(horas)
         if error == nil, let valor = CalculoInstructor.convertir(horas) {
-            sueldo = CalculoInstructor.sueldoBruto(horas: valor)
+            sueldo = CalculoInstructor.remuneracionBrutaTotal(horas: valor, incluirAsignacion: incluirAsignacionFamiliar)
         }
     }
 
@@ -402,6 +440,7 @@ struct InstructoresView: View {
         afp = .habitat
         comision = .flujo
         considerarGratificaciones = true
+        incluirAsignacionFamiliar = false
         invalidarResultado()
         campoActivo = false
     }
@@ -461,7 +500,18 @@ struct ResumenPrevisional {
 
 // Funciones puras y sencillas que permiten comprobar las reglas del ejercicio.
 enum CalculoInstructor {
-    // Base académica: sueldo bruto positivo, hasta S/ 4,600.
+    // D.S. 015-2026-TR: RMV desde octubre 2026; verificada en fuente oficial 04/11/2026.
+    static let rmvNoviembre2026 = 1230.0
+
+    static func asignacionFamiliar(incluir: Bool) -> Double {
+        incluir ? rmvNoviembre2026 * 0.10 : 0
+    }
+
+    static func remuneracionBrutaTotal(horas: Double, incluirAsignacion: Bool) -> Double {
+        sueldoBruto(horas: horas) + asignacionFamiliar(incluir: incluirAsignacion)
+    }
+
+    // Base académica: sueldo por horas hasta S/ 4,600 más asignación familiar opcional.
     // SBS: https://www.sbs.gob.pe/app/spp/empleadores/comisiones_spp/Paginas/comision_prima.aspx
     static func prevision(bruto: Double, sistema: SistemaPensiones,
                           afp: AdministradoraAFP, comision: TipoComision) -> ResumenPrevisional {

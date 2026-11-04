@@ -64,7 +64,7 @@ struct CTSView: View {
                   decimal: false)
             campo("Remuneración mensual computable (S/)", ejemplo: "Ejemplo: 2400.00",
                   texto: $datos.sueldo)
-            ayuda("Sueldo y otros conceptos computables, si corresponden.")
+            ayuda("Sueldo y otros conceptos computables, incluida asignación familiar si corresponde. Ingresa el total: no se añade automáticamente.")
             campo("Gratificación computable (S/)",
                   ejemplo: "Importe del semestre; admite 0", texto: $datos.gratificacion)
             ayuda("Gratificación considerada para CTS, sin bonificación extraordinaria.")
