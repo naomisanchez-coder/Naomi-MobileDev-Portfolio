@@ -1,21 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="nav-11-main">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <scene sceneID="nav-11-scene">
+            <objects>
+                <navigationController id="nav-11-main" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="nav-11-bar"><rect key="frame" x="0.0" y="0.0" width="393" height="44"/><autoresizingMask key="autoresizingMask"/></navigationBar>
+                    <connections><segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="nav-11-root"/></connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nav-11-responder" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="55" estimatedRowHeight="55" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="table-11-contacts">
+                                <rect key="frame" x="0.0" y="103" width="393" height="715"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="cell-11-name" detailTextLabel="cell-11-detail" style="IBUITableViewCellStyleSubtitle" id="cell-11-contact">
+                                        <rect key="frame" x="0.0" y="50" width="393" height="55"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cell-11-contact" id="cell-11-content">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="55"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Nombre" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cell-11-name"><rect key="frame" x="16" y="7" width="361" height="22"/><autoresizingMask key="autoresizingMask"/><fontDescription key="fontDescription" type="system" pointSize="17"/><nil key="textColor"/><nil key="highlightedColor"/></label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Telefono | Direccion" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cell-11-detail"><rect key="frame" x="16" y="30" width="361" height="15"/><autoresizingMask key="autoresizingMask"/><fontDescription key="fontDescription" type="system" pointSize="12"/><nil key="textColor"/><nil key="highlightedColor"/></label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <constraints>
+                            <constraint firstItem="table-11-contacts" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="table-11-top"/>
+                            <constraint firstItem="table-11-contacts" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="table-11-left"/>
+                            <constraint firstItem="table-11-contacts" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="table-11-right"/>
+                            <constraint firstItem="table-11-contacts" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="table-11-bottom"/>
+                        </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Lista de Contactos - Tecsup" id="nav-11-title">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="button-11-add"><connections><action selector="agregarContacto:" destination="BYZ-38-t0r" id="action-11-add"/></connections></barButtonItem>
+                    </navigationItem>
+                    <connections><outlet property="TablaContacto" destination="table-11-contacts" id="outlet-11-table"/></connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
