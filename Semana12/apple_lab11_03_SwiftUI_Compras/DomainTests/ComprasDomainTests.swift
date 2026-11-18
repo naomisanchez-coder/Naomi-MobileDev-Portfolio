@@ -122,4 +122,62 @@ final class ComprasDomainTests: XCTestCase {
         XCTAssertEqual(try f.context.fetchCount(FetchDescriptor<Usuario>()), 1)
     }
 
+    @MainActor private func productRejected(_ name: String = "Monitor Dell P2422H", category: String = "Monitores", stock: Int = 2, cost: Double = 900) throws {
+        let f = try Fixture(); f.session.entrar(f.supervisor)
+        let count = try f.context.fetchCount(FetchDescriptor<Producto>())
+        XCTAssertThrowsError(try f.service.product(nil, nombre: name, categoria: category, stock: stock, costo: cost))
+        XCTAssertEqual(try f.context.fetchCount(FetchDescriptor<Producto>()), count)
+        XCTAssertFalse(f.context.hasChanges)
+    }
+    @MainActor func test13ProductEmptyName() throws { try productRejected("") }
+    @MainActor func test14ProductWhitespaceName() throws { try productRejected("  \n ") }
+    @MainActor func test15ProductNameLength() throws {
+        try productRejected("X"); try productRejected(String(repeating: "Ab", count: 61))
+    }
+    @MainActor func test16ProductObviousPlaceholders() throws {
+        for name in ["XXXxxx", "aaaaaa", "Prueba", "TEST", "producto de prueba"] { try productRejected(name) }
+    }
+    @MainActor func test17ProductCommercialCodes() throws {
+        let f = try Fixture(); f.session.entrar(f.supervisor)
+        for name in ["3M", "HP", "WD", "AAAA", "X100", "iPhone 17 Pro", "ASUS ROG", "Tornillo M3 x 20"] {
+            try f.service.product(nil, nombre: name, categoria: "Catálogo", stock: 0, costo: 0)
+        }
+        XCTAssertEqual(try f.context.fetchCount(FetchDescriptor<Producto>()), 9)
+    }
+    @MainActor func test18ProductDuplicateNormalization() throws {
+        let f = try Fixture(); f.session.entrar(f.supervisor)
+        XCTAssertThrowsError(try f.service.product(nil, nombre: "  LAPTOP   qa  ", categoria: "  eQUIPOS ", stock: 1, costo: 1))
+        try f.service.product(nil, nombre: "Laptop QA", categoria: "Accesorios", stock: 1, costo: 1)
+        let other = try XCTUnwrap(f.context.fetch(FetchDescriptor<Producto>()).first { $0.categoria == "Accesorios" })
+        XCTAssertThrowsError(try f.service.product(other, nombre: "laptop QA", categoria: "Equipos", stock: 1, costo: 1))
+        XCTAssertEqual(other.categoria, "Accesorios")
+    }
+    @MainActor func test19ProductCategoryValidation() throws {
+        for category in ["", "   ", "A", String(repeating: "C", count: 61)] { try productRejected(category: category) }
+    }
+    @MainActor func test20ProductNegativeStock() throws { try productRejected(stock: -1) }
+    func test21ProductStockParsing() throws {
+        for stock in ["abc", "1.5", "9223372036854775808", "999999999999999999999999", "-1"] {
+            XCTAssertThrowsError(try ProductValidation.numbers(stock: stock, costo: "1"))
+        }
+        XCTAssertEqual(try ProductValidation.numbers(stock: String(Int.max), costo: "0").stock, Int.max)
+    }
+    @MainActor func test22ProductInvalidCost() throws {
+        for cost in [Double.nan, .infinity, -.infinity, -1, .greatestFiniteMagnitude] { try productRejected(cost: cost) }
+        for text in ["NaN", "inf", "1e309", "abc", "-1"] { XCTAssertThrowsError(try ProductValidation.numbers(stock: "1", costo: text)) }
+        XCTAssertEqual(try ProductValidation.numbers(stock: " 2 ", costo: " 10,50 ").costo, 10.5)
+    }
+    @MainActor func test23ProductValidEditExcludesSelf() throws {
+        let f = try Fixture(); f.session.entrar(f.supervisor)
+        try f.service.product(f.product, nombre: " LAPTOP   QA ", categoria: " Equipos ", stock: 45, costo: 115)
+        XCTAssertEqual(f.product.nombre, "LAPTOP QA"); XCTAssertEqual(f.product.stock, 45)
+        XCTAssertEqual(try f.context.fetchCount(FetchDescriptor<Producto>()), 1)
+    }
+    @MainActor func test24ProductValidCreationNormalizesSpaces() throws {
+        let f = try Fixture(); f.session.entrar(f.supervisor)
+        try f.service.product(nil, nombre: "  Monitor   Dell P2422H ", categoria: " Monitores   LED ", stock: 2, costo: 899.5)
+        let p = try XCTUnwrap(f.context.fetch(FetchDescriptor<Producto>()).first { $0.nombre == "Monitor Dell P2422H" })
+        XCTAssertEqual(p.categoria, "Monitores LED"); XCTAssertEqual(p.costoPromedio, 899.5)
+    }
+
 }

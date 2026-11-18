@@ -85,3 +85,11 @@ Las nueve pantallas conservan su funcionalidad y usan encabezados, tarjetas, bot
 El esquema incluye ahora ComprasDomainTests (12 casos XCTest iOS) además del verificador macOS de 36 comprobaciones y los recorridos UI. Para la suite nueva usa `zsh Scripts/test-redesign.sh UDID_QA` con un dispositivo separado llamado Compras Rediseño QA. El recorrido persistente escribe únicamente en ese dispositivo y verifica cuentas/compras tras cerrar y abrir la app. Los otros recorridos usan memoria. La guarda del caso persistente evita ejecutarlo en un simulador personal.
 
 Se conservan las evidencias anteriores. Las nuevas capturas, manifiestos, resultados y prueba de integridad están bajo `Evidence/Redesign-2026-11-18/`. No hay base SQLite publicada; la auditoría explica cómo obtener una copia de lectura local. El prompt nuevo autoriza transferencia selectiva a main y una base de procedencia asistida para manual; no autoriza fusionar historias completas ni atribuir desarrollo asistido a trabajo manual.
+
+## Validación de productos · cierre de entrega
+
+`ProductValidation` en `Business.swift` normaliza espacios y valida tanto altas como ediciones antes de modificar el contexto. Nombre: 2–120 caracteres; categoría: 2–60. Se rechazan únicamente los marcadores exactos `test`, `prueba`, `asdf`, `qwerty`, `producto de prueba` y nombres de seis o más letras idénticas sin distinguir mayúsculas (por ejemplo, `XXXxxx`). Es una heurística limitada, no una comprobación de existencia comercial. Se admiten marcas/códigos como 3M, HP, WD, AAAA (formato de pila) y X100.
+
+El stock debe poder convertirse a `Int` y ser no negativo; el costo debe ser finito, no negativo y producir una valoración finita. Se acepta coma decimal. La combinación nombre/categoría es única tras normalizar espacios y mayúsculas; editar excluye el propio registro. Las categorías existentes se ofrecen como sugerencias, manteniendo texto libre. No se sanea ni migra ningún registro previo automáticamente. Las fórmulas de compras, permisos y modelos no cambian.
+
+Los casos XCTest 13–24 cubren entradas vacías, espacios, límites de longitud, marcadores, marcas legítimas, duplicados en alta/edición, categorías, stock negativo/no numérico/overflow, costo no finito y alta/edición válidas. Usan contenedores aislados.

@@ -42,6 +42,7 @@ struct ProductsView: View {
 }
 struct ProductEditor: View {
     let product: Producto?
+    @Query(sort: \Producto.categoria) private var catalog: [Producto]
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var context
     @Environment(Sesion.self) private var sesion
@@ -53,7 +54,17 @@ struct ProductEditor: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section("Producto") { TextField("Nombre", text: $nombre); TextField("Categoría", text: $categoria) }
+                Section("Producto") {
+                    TextField("Nombre", text: $nombre)
+                    TextField("Categoría", text: $categoria)
+                    if !catalog.isEmpty {
+                        Menu("Usar categoría existente") {
+                            ForEach(Array(Set(catalog.map { $0.categoria })).sorted(), id: \.self) { value in
+                                Button(value) { categoria = value }
+                            }
+                        }
+                    }
+                }
                 Section { TextField("Stock inicial", text: $stock).keyboardType(.numberPad); TextField("Costo promedio (S/)", text: $costo).keyboardType(.decimalPad) }
                 header: { Text("Inventario") }
                 if let error { ErrorNotice(text: error) }
@@ -62,7 +73,7 @@ struct ProductEditor: View {
                     ToolbarItem(placement: .cancellationAction) { Button("Cancelar") { dismiss() } }
                     ToolbarItem(placement: .confirmationAction) { Button("Guardar") {
                         do {
-                            guard let s = Int(stock), let c = Double(costo.replacingOccurrences(of: ",", with: ".")) else { throw AppError("Ingresa stock entero y costo numérico.") }
+                            let (s, c) = try ProductValidation.numbers(stock: stock, costo: costo)
                             try ComprasService(context, sesion).product(product, nombre: nombre, categoria: categoria, stock: s, costo: c); dismiss()
                         } catch { self.error = error.localizedDescription }
                     } }

@@ -11,20 +11,13 @@ struct LoginView: View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 28) {
-                    HStack { Label("TECSUP · GRUPO B", systemImage: "square.stack.3d.up").font(.caption.bold()).tracking(1.4); Spacer() }.foregroundStyle(Brand.emphasis)
-                    HStack(alignment: .center, spacing: 20) {
-                        Logo()
-                        VStack(alignment: .leading, spacing: 6) {
-                            Text("GESTIÓN DE COMPRAS").font(.caption.bold()).tracking(1).foregroundStyle(Brand.emphasis)
-                            Text("Decisiones claras.\nInventario al día.").font(.title2.bold()).foregroundStyle(Brand.ink)
-                        }
-                    }.padding(.top, 16).frame(maxWidth: .infinity, alignment: .leading)
+                    ShoppingHero()
                     VStack(spacing: 8) { Text("Compras Tecsup").font(.largeTitle.bold()).foregroundStyle(Brand.ink); Text("Bienvenido. Ingresa para continuar con tus compras.").foregroundStyle(.secondary) }
                     VStack(alignment: .leading, spacing: 18) {
-                        Text("Usuario").font(.caption.weight(.semibold)).foregroundStyle(.secondary)
+                        Label("Usuario", systemImage: "person.crop.circle").font(.caption.weight(.semibold)).foregroundStyle(.secondary)
                         TextField("Usuario", text: $usuario, prompt: Text("Ingresa tu usuario").foregroundStyle(.secondary)).foregroundStyle(Brand.ink).textContentType(.username).textInputAutocapitalization(.never).autocorrectionDisabled().accessibilityIdentifier("login.usuario")
                         Divider()
-                        Text("Clave").font(.caption.weight(.semibold)).foregroundStyle(.secondary)
+                        Label("Clave", systemImage: "lock.shield").font(.caption.weight(.semibold)).foregroundStyle(.secondary)
                         SecureField("Clave", text: $clave, prompt: Text("Ingresa tu clave").foregroundStyle(.secondary)).foregroundStyle(Brand.ink).textContentType(.password).accessibilityIdentifier("login.clave")
                     }.surfaceCard()
                     if let error { ErrorNotice(text: error) }
