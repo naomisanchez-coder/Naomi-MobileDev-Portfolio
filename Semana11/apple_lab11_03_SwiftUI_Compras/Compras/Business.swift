@@ -48,6 +48,36 @@ enum Password {
     }
 }
 
+// Validación común de alta y edición; no modifica registros existentes.
+enum ProductValidation {
+    static func spaces(_ text: String) -> String {
+        text.split(whereSeparator: \.isWhitespace).joined(separator: " ")
+    }
+    static func key(_ text: String) -> String { spaces(text).lowercased() }
+    static func fields(nombre: String, categoria: String, stock: Int, costo: Double) throws -> (nombre: String, categoria: String) {
+        let name = spaces(nombre), category = spaces(categoria)
+        guard (2...120).contains(name.count) else { throw AppError("El nombre del producto debe tener entre 2 y 120 caracteres.") }
+        let lower = name.lowercased()
+        let markers: Set<String> = ["test", "prueba", "asdf", "qwerty", "producto de prueba"]
+        let repeatedLetter = lower.count >= 4 && lower.allSatisfy(\.isLetter) && Set(lower).count == 1
+        guard !markers.contains(lower), !repeatedLetter else { throw AppError("Ingresa un nombre de producto descriptivo; evita marcadores de prueba o letras repetidas.") }
+        guard (2...60).contains(category.count) else { throw AppError("La categoría debe tener entre 2 y 60 caracteres.") }
+        guard stock >= 0 else { throw AppError("El stock debe ser un entero mayor o igual a cero.") }
+        guard costo.isFinite, costo >= 0, (Double(stock) * costo).isFinite else { throw AppError("El costo debe ser un número finito no negativo y permitir una valoración válida del inventario.") }
+        return (name, category)
+    }
+    static func numbers(stock: String, costo: String) throws -> (stock: Int, costo: Double) {
+        guard let quantity = Int(stock.trimmingCharacters(in: .whitespacesAndNewlines)) else {
+            throw AppError("Ingresa un stock entero dentro del rango admitido por el dispositivo.")
+        }
+        guard let cost = Double(costo.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: ",", with: ".")), cost.isFinite, cost >= 0 else {
+            throw AppError("Ingresa un costo numérico, finito y mayor o igual a cero.")
+        }
+        guard quantity >= 0 else { throw AppError("El stock no puede ser negativo.") }
+        return (quantity, cost)
+    }
+}
+
 @MainActor final class ComprasService {
     let context: ModelContext
     let sesion: Sesion
@@ -133,12 +163,16 @@ enum Password {
     }
     func product(_ p: Producto?, nombre: String, categoria: String, stock: Int, costo: Double) throws {
         _ = try require(.supervisor)
-        guard !nombre.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty, !categoria.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
-              stock >= 0, costo.isFinite, costo >= 0 else { throw AppError("Completa nombre y categoría; stock y costo no pueden ser negativos.") }
+        if let p, p.modelContext !== context { throw AppError("Producto inválido.") }
+        let values = try ProductValidation.fields(nombre: nombre, categoria: categoria, stock: stock, costo: costo)
+        let nameKey = ProductValidation.key(values.nombre), categoryKey = ProductValidation.key(values.categoria)
+        let products = try context.fetch(FetchDescriptor<Producto>())
+        guard !products.contains(where: { item in
+            item.persistentModelID != p?.persistentModelID && ProductValidation.key(item.nombre) == nameKey && ProductValidation.key(item.categoria) == categoryKey
+        }) else { throw AppError("Ya existe un producto con ese nombre y categoría.") }
         if let p {
-            guard p.modelContext === context else { throw AppError("Producto inválido.") }
-            p.nombre = nombre; p.categoria = categoria; p.stock = stock; p.costoPromedio = costo
-        } else { context.insert(Producto(nombre: nombre, categoria: categoria, stock: stock, costoPromedio: costo)) }
+            p.nombre = values.nombre; p.categoria = values.categoria; p.stock = stock; p.costoPromedio = costo
+        } else { context.insert(Producto(nombre: values.nombre, categoria: values.categoria, stock: stock, costoPromedio: costo)) }
         try save()
     }
     func supplier(_ p: Proveedor?, nombre: String, ruc: String) throws {
