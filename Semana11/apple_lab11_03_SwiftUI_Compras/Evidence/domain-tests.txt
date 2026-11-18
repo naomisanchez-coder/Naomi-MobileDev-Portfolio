@@ -1,0 +1,36 @@
+PASS: 1 registro normalizado, sesión y hash
+PASS: 1 duplicado normalizado
+PASS: clave corta
+PASS: confirmación distinta
+PASS: 2 login genérico sin sesión
+PASS: 3 crédito, importes, stock, promedio y 30 días
+PASS: 4 contado pagado sin deuda
+PASS: 5 base independiente 40/110, pendiente sin efectos
+PASS: comprador no aprueba
+PASS: 6 aprobación 90 y 115.56
+PASS: reaprobación bloqueada
+PASS: aprobación exactamente una vez
+PASS: 7 rechazo sin motivo
+PASS: 7 rechazo con motivo sin efectos
+PASS: rechazada no se aprueba
+PASS: 8 vencimiento pasado
+PASS: 8 pago reduce deuda sin reaplicar stock
+PASS: doble pago
+PASS: pago de rechazada
+PASS: 9 otro comprador no ve compras ajenas
+PASS: 9 solo compras propias
+PASS: 9 comprador no paga
+PASS: comprador no crea producto
+PASS: comprador no elimina proveedor
+PASS: deny producto con compras
+PASS: deny proveedor con compras
+PASS: deny usuario con compras
+PASS: frontera 5000 exactos
+PASS: compra en frontera sin efectos
+PASS: cantidad cero
+PASS: costo infinito
+PASS: stock inicial cero
+PASS: crédito fiscal solo aprobadas: 216 + 216 + 1080
+PASS: cierre de sesión
+PASS: persistencia y relaciones tras reabrir contenedor
+RESULTADO: 35 comprobaciones correctas
