@@ -5,6 +5,16 @@
 	};
 	objectVersion = 77;
 	objects = {
+        A20000000000000000000001 = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ComprasDomainTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+        A20000000000000000000002 = {isa = PBXFileSystemSynchronizedRootGroup; path = DomainTests; sourceTree = "<group>"; };
+        A20000000000000000000003 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+        A20000000000000000000004 = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+        A20000000000000000000005 = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+        A20000000000000000000006 = {isa = PBXNativeTarget; buildConfigurationList = A20000000000000000000009; buildPhases = (A20000000000000000000003, A20000000000000000000004, A20000000000000000000005); buildRules = (); dependencies = (A1000000000000000000000B); fileSystemSynchronizedGroups = (A20000000000000000000002); name = ComprasDomainTests; productName = ComprasDomainTests; productReference = A20000000000000000000001; productType = "com.apple.product-type.bundle.unit-test"; };
+        A20000000000000000000007 = {isa = XCBuildConfiguration; buildSettings = { CODE_SIGN_STYLE = Automatic; GENERATE_INFOPLIST_FILE = YES; IPHONEOS_DEPLOYMENT_TARGET = 17.0; PRODUCT_BUNDLE_IDENTIFIER = edu.pe.tecsup.naomisanchez.compras.domaintests; PRODUCT_NAME = "$(TARGET_NAME)"; SDKROOT = iphoneos; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = "1,2"; BUNDLE_LOADER = "$(TEST_HOST)"; TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Compras.app/Compras"; }; name = Debug; };
+        A20000000000000000000008 = {isa = XCBuildConfiguration; buildSettings = { CODE_SIGN_STYLE = Automatic; GENERATE_INFOPLIST_FILE = YES; IPHONEOS_DEPLOYMENT_TARGET = 17.0; PRODUCT_BUNDLE_IDENTIFIER = edu.pe.tecsup.naomisanchez.compras.domaintests; PRODUCT_NAME = "$(TARGET_NAME)"; SDKROOT = iphoneos; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = "1,2"; BUNDLE_LOADER = "$(TEST_HOST)"; TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Compras.app/Compras"; }; name = Release; };
+        A20000000000000000000009 = {isa = XCConfigurationList; buildConfigurations = (A20000000000000000000007, A20000000000000000000008); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+
         A10000000000000000000001 = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ComprasUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
         A10000000000000000000002 = {isa = PBXFileSystemSynchronizedRootGroup; path = UITests; sourceTree = "<group>"; };
         A10000000000000000000003 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
@@ -46,6 +56,7 @@
 			children = (
 				816A60E4309B846100433D21 /* Compras */,
                 A10000000000000000000002,
+                A20000000000000000000002,
 				816A60E3309B846100433D21 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -55,6 +66,7 @@
 			children = (
 				816A60E2309B846100433D21 /* Compras.app */,
                 A10000000000000000000001,
+                A20000000000000000000001,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -113,6 +125,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+                A20000000000000000000006,
                 A10000000000000000000006,
 				816A60E1309B846100433D21 /* Compras */,
 			);
