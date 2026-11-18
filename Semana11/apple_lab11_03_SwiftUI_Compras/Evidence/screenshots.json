@@ -1,0 +1,121 @@
+[
+  {
+    "archivo": "b2-registro-datos-1.png",
+    "captura": "B2 Registro datos",
+    "timestamp": 1794980067.716,
+    "origen": "ComprasUITests-4.xcresult",
+    "device": "iPhone 17 Pro"
+  },
+  {
+    "archivo": "b2-registro-rol-1.png",
+    "captura": "B2 Registro rol",
+    "timestamp": 1794980069.094,
+    "origen": "ComprasUITests-4.xcresult",
+    "device": "iPhone 17 Pro"
+  },
+  {
+    "archivo": "b3-productos-1.png",
+    "captura": "B3 Productos",
+    "timestamp": 1794980096.646,
+    "origen": "ComprasUITests-4.xcresult",
+    "device": "iPhone 17 Pro"
+  },
+  {
+    "archivo": "b4-proveedores-1.png",
+    "captura": "B4 Proveedores",
+    "timestamp": 1794980106.987,
+    "origen": "ComprasUITests-4.xcresult",
+    "device": "iPhone 17 Pro"
+  },
+  {
+    "archivo": "b2-registro-datos-2.png",
+    "captura": "B2 Registro datos",
+    "timestamp": 1794980125.211,
+    "origen": "ComprasUITests-4.xcresult",
+    "device": "iPhone 17 Pro"
+  },
+  {
+    "archivo": "b2-registro-rol-2.png",
+    "captura": "B2 Registro rol",
+    "timestamp": 1794980126.417,
+    "origen": "ComprasUITests-4.xcresult",
+    "device": "iPhone 17 Pro"
+  },
+  {
+    "archivo": "b5-nueva-compra-1.png",
+    "captura": "B5 Nueva compra",
+    "timestamp": 1794980147.506,
+    "origen": "ComprasUITests-4.xcresult",
+    "device": "iPhone 17 Pro"
+  },
+  {
+    "archivo": "b5-nueva-compra-2.png",
+    "captura": "B5 Nueva compra",
+    "timestamp": 1794980171.987,
+    "origen": "ComprasUITests-4.xcresult",
+    "device": "iPhone 17 Pro"
+  },
+  {
+    "archivo": "b6-mis-compras-1.png",
+    "captura": "B6 Mis compras",
+    "timestamp": 1794980177.913,
+    "origen": "ComprasUITests-4.xcresult",
+    "device": "iPhone 17 Pro"
+  },
+  {
+    "archivo": "b7-aprobar-1.png",
+    "captura": "B7 Aprobar",
+    "timestamp": 1794980192.397,
+    "origen": "ComprasUITests-4.xcresult",
+    "device": "iPhone 17 Pro"
+  },
+  {
+    "archivo": "b8-por-pagar-1.png",
+    "captura": "B8 Por pagar",
+    "timestamp": 1794980198.527,
+    "origen": "ComprasUITests-4.xcresult",
+    "device": "iPhone 17 Pro"
+  },
+  {
+    "archivo": "b9-resumen-1.png",
+    "captura": "B9 Resumen",
+    "timestamp": 1794980205.855,
+    "origen": "ComprasUITests-4.xcresult",
+    "device": "iPhone 17 Pro"
+  },
+  {
+    "archivo": "b9-barras-y-equipo-1.png",
+    "captura": "B9 Barras y equipo",
+    "timestamp": 1794980207.26,
+    "origen": "ComprasUITests-4.xcresult",
+    "device": "iPhone 17 Pro"
+  },
+  {
+    "archivo": "inicio-icono-compras-1.png",
+    "captura": "Inicio icono Compras",
+    "timestamp": 1794980210.393,
+    "origen": "ComprasUITests-4.xcresult",
+    "device": "iPhone 17 Pro"
+  },
+  {
+    "archivo": "b1-error-generico-1.png",
+    "captura": "B1 Error generico",
+    "origen": "ComprasLoginVerified.xcresult",
+    "timestamp": 1794980380.987,
+    "device": "iPhone 17 Pro"
+  },
+  {
+    "archivo": "b1-login-oscuro-1.png",
+    "captura": "B1 Login oscuro",
+    "origen": "ComprasLoginVerified.xcresult",
+    "timestamp": 1794980376.394,
+    "device": "iPhone 17 Pro"
+  },
+  {
+    "archivo": "b1-login-1.png",
+    "captura": "B1 Login",
+    "origen": "ComprasLoginVerified.xcresult",
+    "timestamp": 1794980370.595,
+    "device": "iPhone 17 Pro"
+  }
+]

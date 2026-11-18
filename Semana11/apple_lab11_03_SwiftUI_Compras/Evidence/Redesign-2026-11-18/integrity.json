@@ -1,0 +1,33 @@
+{
+  "baseline": "0ee9171",
+  "protected": [
+    {
+      "path": "Semana11/apple_lab11_03_SwiftUI_Compras/Compras/Models.swift",
+      "sha256": "f9c19c2f6aaad663a602c92c456c6b70a40b14609cf40b5ba1fe57f3f60ee214",
+      "unchanged": true
+    },
+    {
+      "path": "Semana11/apple_lab11_03_SwiftUI_Compras/Compras/Business.swift",
+      "sha256": "ba36e381c32245e928351ad0fb6a6e98ccf24f95e76f226cc01dabd1c49d0623",
+      "unchanged": true
+    },
+    {
+      "path": "Semana11/apple_lab11_03_SwiftUI_Compras/Compras/ComprasApp.swift",
+      "sha256": "9fbfdcdb5fbb08ce88202bd5bfdc8bf2bb5934ac8b64e553a8099ad4bc6918a5",
+      "unchanged": true
+    },
+    {
+      "path": "Semana11/apple_lab11_03_SwiftUI_Compras/Compras/Assets.xcassets/AppIcon.appiconset/AppIcon.png",
+      "sha256": "2c63135fccab486873e2d332e59eaef36edc9aa300bee07f8a4202a210e46ed9",
+      "unchanged": true
+    },
+    {
+      "path": "Semana11/apple_lab11_03_SwiftUI_Compras/Compras/Assets.xcassets/AppIcon.appiconset/Contents.json",
+      "sha256": "852920cb36e95beb53771138a4b8195a16fcce1cc31250632f246081cc638f9a",
+      "unchanged": true
+    }
+  ],
+  "outside_diff_preserved": true,
+  "outside_diff_sha256": "4e834d66bea580d4409917f313ed441a5df58b493a11d8103c0bf3f4b2d0abc5",
+  "previous_activities_equal_main": true
+}
