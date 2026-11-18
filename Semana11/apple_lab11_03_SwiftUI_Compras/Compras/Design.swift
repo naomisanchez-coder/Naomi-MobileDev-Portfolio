@@ -47,7 +47,7 @@ struct Screen<Content: View>: View {
     let title: String
     @ViewBuilder let content: Content
     var body: some View {
-        NavigationStack { content.navigationTitle(title).toolbar { ToolbarItem(placement: .topBarTrailing) { AccountMenu() } } }
+        NavigationStack { content.navigationTitle(title).appToolbar { ToolbarItem(placement: .topBarTrailing) { AccountMenu() } } }
     }
 }
 struct ErrorNotice: View {
@@ -63,5 +63,11 @@ struct PurchaseRow: View {
             HStack { Text(c.fecha, style: .date); Spacer(); Text(Brand.money(c.total)).bold().monospacedDigit() }.font(.subheadline)
             if let motivo = c.motivoRechazo { Label(motivo, systemImage: "text.bubble").font(.callout).foregroundStyle(.red) }
         }.padding(.vertical, 8)
+    }
+}
+
+extension View {
+    func appToolbar<T: ToolbarContent>(@ToolbarContentBuilder content: () -> T) -> some View {
+        toolbar(content: content)
     }
 }
