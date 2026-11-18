@@ -24,7 +24,7 @@ Implementar y ejecutar nueve pruebas PDF: duplicado mtorres; login erróneo; 40/
 
 ### Restricciones
 
-Solo desarrollar en ai-assisted, sin crear ramas equivalentes, modificar manual/integrador o integrar/publicar a main. No reset --hard, clean, stash, force push, rebase destructivo, sudo, chmod ni desactivar seguridad. No perder cambios locales. No modificar otras semanas ni contenido de actividades01/02. Antes de escribir enumerar alcance. Staging de rutas explícitas con revisión de nombres y diff --cached --check; nunca add ., add -A ni commit -a. Commits progresivos descriptivos, idealmente por pantalla, al menos nueve. Push solo origin/ai-assisted con autorización adicional si corresponde. Si existe un bloqueo, detener solo esa operación e informar sin solución insegura.
+Solo desarrollar en ai-assisted, sin crear ramas equivalentes, modificar manual/integrador o integrar/publicar a main. No reset --hard, clean, stash, force push, rebase destructivo, sudo, chmod ni desactivar seguridad. No perder cambios locales. No modificar otras semanas ni contenido de actividades 01/02. Antes de escribir enumerar alcance. Staging de rutas explícitas con revisión de nombres y diff --cached --check; nunca add ., add -A ni commit -a. Commits progresivos descriptivos, idealmente por pantalla, al menos nueve. Push solo origin/ai-assisted con autorización adicional si corresponde. Si existe un bloqueo, detener solo esa operación e informar sin solución insegura.
 
 Actualizar README Semana11 conservando actividades anteriores y PROMPTS con Contexto/Tarea/Restricciones/Formato/uso de respuesta. No crear documento Word ni diagramas académicos ahora ni inventar expediente/visto bueno docente. Terminar app y validaciones antes de pedir revisión final. Pausa obligatoria antes de integración a main.
 
@@ -61,7 +61,7 @@ Crear AUDITORIA_TECNICA.md con arquitectura real, SwiftData, registro/autenticac
 
 ### Restricciones
 
-Ningún cambio propio fuera de Semana11 ni en actividades01/02; no alterar registros existentes; no modificar modelos, relaciones, servicios o seguridad por estética. No borrar datos de simulador, usar staging global, reset/clean/force push ni fusionar historias completas. Integrador intocable. Solicitar acceso a .git por el mecanismo autorizado. Conservar trabajo local independiente. No presentar código asistido como manual. Las pruebas persistentes deben usar un dispositivo QA separado con cuentas ficticias únicas.
+Ningún cambio propio fuera de Semana11 ni en actividades 01/02; no alterar registros existentes; no modificar modelos, relaciones, servicios o seguridad por estética. No borrar datos de simulador, usar staging global, reset/clean/force push ni fusionar historias completas. Integrador intocable. Solicitar acceso a .git por el mecanismo autorizado. Conservar trabajo local independiente. No presentar código asistido como manual. Las pruebas persistentes deben usar un dispositivo QA separado con cuentas ficticias únicas.
 
 ### Formato esperado
 
@@ -70,3 +70,10 @@ Auditoría explicativa A–H y un informe detallado en español con mejoras por 
 ### Qué se hizo con la respuesta
 
 Se auditó y preservó el trabajo previo ajeno; se realizaron seis commits visuales compilados y publicados progresivamente. Los modelos, servicios, punto de entrada y recursos del icono permanecen idénticos al inicio. Se creó el simulador Compras Rediseño QA, separado del dispositivo de la estudiante. Se agregó XCTest de dominio iOS sobre los mismos servicios, manteniendo también el ejecutable de36 comprobaciones. Los casos UI usan memoria salvo el relanzamiento persistente, protegido por una guarda de nombre de dispositivo QA y credenciales ficticias con sufijo único. Los fallos de automatización por el teclado se investigaron con el árbol de accesibilidad; se ajustó el recorrido, sin cambiar reglas de compra. Los resultados definitivos y transferencias se registran en INFORME_REDISENO.md. No se usaron subagentes ni se inventaron pruebas manuales realizadas por el agente.
+
+
+### Cierre de ramas y validación efectiva
+
+El verificador conservado pasó 36 comprobaciones; XCTest de dominio pasó 12 casos. UI de login y recorrido B1–B9 pasaron en Tests-3 y el caso persistente definitivo, con navegación comprobada y artefactos nuevos, pasó en Persistence-6 (104.124 s). Se registran resultados por caso en ejecuciones separadas; no se llama verde a la ejecución intermedia que tenía un fallo de automatización. Se generaron 26 capturas nuevas y se conservaron las 17 anteriores. La copia SQLite se limita a QA y no se publica.
+
+Manual se preparó en `bbda928d0b36a9ed1bbd413a272ccd448d7d84ed` desde ai-assisted@8c90a91, mediante un único commit de base que reconoce la asistencia de IA. Main recibió transferencia selectiva en `d3116012aa0253f9f57e4824def1277d7c5e2607`, con README anterior preservado y actividades 01/02 intactas. Ambos pushes se completaron; main compiló desde su worktree antes y después. Integrador no se tocó. El cierre documental se publica también en main, conforme al nuevo prompt, sin modificar código ni atribuir cambios manuales inexistentes. Las seis eliminaciones locales previas ajenas se conservan exactamente.

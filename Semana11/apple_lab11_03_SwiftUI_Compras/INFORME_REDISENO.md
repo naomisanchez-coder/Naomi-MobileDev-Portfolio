@@ -68,7 +68,22 @@ Los nueve casos siguen la guía: registro duplicado, login genérico,10×120 cr�
 
 ## Preparación de manual e integración a main
 
-Estado al congelar la base asistida para transferencia: las pruebas y el rediseño están validados. La preparación de manual y la integración selectiva a main están autorizadas y se ejecutan después de este snapshot; sus hashes y verificaciones se registrarán al cerrar la entrega. Esta versión no afirma que esas operaciones ya se hayan publicado. Manual conservará este snapshot como procedencia; main recibirá la actualización final del informe.
+Operaciones realizadas y publicadas, sin fusionar historias completas:
+
+| Rama | Commit de transferencia | Resultado |
+|---|---|---|
+| manual | `bbda928d0b36a9ed1bbd413a272ccd448d7d84ed` | Un único commit hijo de 38c680a; base completa de 116 rutas de Semana11 desde 8c90a91, de procedencia asistida explícita |
+| main | `d3116012aa0253f9f57e4824def1277d7c5e2607` | Commit hijo de cce498d; 90 rutas limitadas a actividad03, README y PROMPTS de Semana11 |
+
+Manual compiló Debug desde `/private/tmp/compras-redesign/manual`. Main compiló Debug antes y después del commit desde `/private/tmp/compras-redesign/main`. Ambos pushes fueron correctos. El README de main se amplió comprobando que conservaba byte a byte todo su contenido anterior. Actividades 01/02 permanecieron idénticas. Se revisaron ramas limpias en sus worktrees y relación con origin antes de transferir.
+
+El snapshot de transferencia fue ai-assisted@8c90a91. Manual conserva ese snapshot como base para trabajo manual genuino posterior; no recibe el historial de 17 commits anteriores ni los commits de rediseño. El commit no atribuye el desarrollo a trabajo manual. Se conservaron los espacios preexistentes de AppDelegate/SceneDelegate de actividad 01: el check normal los señaló y se verificó igualdad exacta con la fuente; la comprobación alternativa de whitespace se aplicó solo a esa invocación, sin cambiar configuración permanente.
+
+El cierre documental se actualiza después en ai-assisted y main mediante commits de documentación, sin cambios funcionales. Manual conserva un solo commit de base y su documento congelado describe correctamente el momento previo a la transferencia; la explicación del código se conserva, con una aclaración final sobre consulta de contenedor apagado, y el cierre actualizado está en main/ai-assisted. Las únicas diferencias posteriores con manual serán los cuatro documentos de cierre, no código, pruebas ni evidencia.
+
+Integrador sigue en ba8346c05852833fa66722fd7ed00e26f81eef1d. Las historias originales de main y manual se conservan como padres de sus nuevos commits. No se modificaron otras semanas en ningún commit. Las seis eliminaciones previas siguen intactas en el árbol principal, que se mantiene en ai-assisted para no cambiar de rama sobre ellas; los worktrees de manual y main quedan limpios.
+
+Los hashes finales de los commits documentales y referencias remotas se entregan en el chat y pueden comprobarse con git log/branch; se evita introducir un hash autorreferencial dentro de su propio commit.
 
 ## Auditoría para defensa y datos
 
@@ -77,3 +92,16 @@ Estado al congelar la base asistida para transferencia: las pruebas y el redise�
 ## Comprobaciones manuales recomendadas
 
 La estudiante comunica validación manual de la versión anterior. Para este rediseño quedan recomendadas VoiceOver de todas las pantallas, texto máximo en dispositivos pequeños, orientación, contraste de estados vacíos/errores y gestos de edición/borrado. No se presentan como pruebas manuales ejecutadas por el agente. Consultar los resultados UI para distinguir acciones efectivamente automatizadas de las comprobaciones del servicio.
+
+
+### Otros commits de esta continuación
+
+| Rama | Hash | Mensaje |
+|---|---|---|
+|ai-assisted|507bbf4|test: revalidar dominio iOS y persistencia con XCTest aislado|
+|ai-assisted|7241bb5|test: verificar interfaz rediseñada y relanzamiento persistente en QA|
+|ai-assisted|8c90a91|docs: auditar arquitectura y documentar rediseño y validación QA|
+|manual|bbda928|chore: preparar base de Semana11 para futuras mejoras manuales|
+|main|d311601|feat(semana11): integrar Compras Tecsup con rediseño validado|
+
+Las rutas completas de cada commit están en COMMITS.md; el inventario nuevo/modificado y las 90 rutas de entrega están en ARCHIVOS.md. Los commits documentales finales actualizan solo PROMPTS.md, COMMITS.md, AUDITORIA_TECNICA.md e INFORME_REDISENO.md.

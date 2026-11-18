@@ -82,7 +82,7 @@ XCTest apagó QA al terminar; se localizó el contenedor por su metadata de bund
 
 SwiftData proporciona la API de objetos; el almacén local observado utiliza SQLite. La aplicación no construye tablas ni ejecuta SQL manualmente. Los nombres físicos de tablas/columnas son detalles de la persistencia y no deben confundirse con un contrato de API. Las relaciones y metadatos aparecen en el esquema del almacén generado.
 
-Para localizar el directorio de una instalación propia, consultar `xcrun simctl get_app_container DEVICE_UDID edu.pe.tecsup.naomisanchez.compras data`. Después buscar el archivo del almacén bajo Library/Application Support. Consultar no requiere borrar ni reinstalar la aplicación.
+Para localizar el directorio de una instalación propia, consultar `xcrun simctl get_app_container DEVICE_UDID edu.pe.tecsup.naomisanchez.compras data`. Ese comando requiere el dispositivo arrancado; en estado Shutdown puede devolver el error405 observado en esta ejecución. No hace falta borrar ni reinstalar. Con QA apagado se localizó la carpeta leyendo su metadata de bundle. Después buscar el archivo del almacén bajo Library/Application Support. Consultar no requiere borrar ni reinstalar la aplicación.
 
 Para inspeccionar sin cambiar la base activa, usar SQLite en modo solo lectura y generar un snapshot con `.backup` hacia un archivo temporal distinto. No copiar únicamente el archivo principal mientras hay escrituras: WAL/SHM pueden contener transacciones recientes. Ejemplo, sustituyendo rutas verificadas:
 
