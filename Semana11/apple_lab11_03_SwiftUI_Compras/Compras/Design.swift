@@ -74,12 +74,24 @@ struct ErrorNotice: View {
 struct PurchaseRow: View {
     let c: Compra
     var body: some View {
-        VStack(alignment: .leading, spacing: 9) {
-            HStack { Text(c.proveedor?.nombre ?? "Sin proveedor").font(.headline); Spacer(); StatusBadge(text: c.estado) }
-            Text("\(c.producto?.nombre ?? "Sin producto") · \(c.cantidad) unidades").foregroundStyle(.secondary)
-            HStack { Text(c.fecha, style: .date); Spacer(); Text(Brand.money(c.total)).bold().monospacedDigit() }.font(.subheadline)
-            if let motivo = c.motivoRechazo { Label(motivo, systemImage: "text.bubble").font(.callout).foregroundStyle(Brand.danger) }
-        }.padding(.vertical, 8)
+        VStack(alignment: .leading, spacing: 14) {
+            HStack(alignment: .top, spacing: 12) {
+                IconTile(symbol: "doc.text", color: c.estado == "Rechazada" ? Brand.danger : c.estado == "Pendiente" ? Brand.warning : Brand.emphasis)
+                VStack(alignment: .leading, spacing: 5) {
+                    Text(c.proveedor?.nombre ?? "Sin proveedor").font(.headline).foregroundStyle(Brand.ink)
+                    Text(c.producto?.nombre ?? "Sin producto").font(.subheadline).foregroundStyle(.secondary)
+                }
+                Spacer(minLength: 0)
+            }
+            HStack { StatusBadge(text: c.estado); Spacer(); Text("\(c.cantidad) unidades").font(.caption.bold()).foregroundStyle(.secondary) }
+            Divider()
+            HStack(alignment: .bottom) {
+                Label { Text(c.fecha, style: .date) } icon: { Image(systemName: "calendar") }.font(.caption).foregroundStyle(.secondary)
+                Spacer()
+                Text(Brand.money(c.total)).font(.title3.bold()).monospacedDigit().foregroundStyle(Brand.ink)
+            }
+            if let motivo = c.motivoRechazo { Label(motivo, systemImage: "text.bubble").font(.callout).foregroundStyle(Brand.danger).padding(12).frame(maxWidth: .infinity, alignment: .leading).background(Brand.danger.opacity(0.06), in: RoundedRectangle(cornerRadius: 12)) }
+        }.padding(.vertical, 4)
     }
 }
 
