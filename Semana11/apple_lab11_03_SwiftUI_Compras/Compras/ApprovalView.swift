@@ -29,7 +29,7 @@ struct ApprovalView: View {
                                 }.font(.callout).foregroundStyle(Brand.emphasis).padding(.vertical, 8)
                             }
                             HStack {
-                                Button("Rechazar", role: .destructive) { reason = ""; rejecting = c }.buttonStyle(.bordered)
+                                Button("Rechazar", role: .destructive) { reason = ""; rejecting = c }.buttonStyle(.bordered).tint(Brand.danger)
                                 Spacer()
                                 Button("Aprobar") { approving = c }.buttonStyle(.borderedProminent).accessibilityIdentifier("aprobar.compra")
                             }

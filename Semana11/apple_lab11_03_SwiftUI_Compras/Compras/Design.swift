@@ -8,6 +8,7 @@ enum Brand {
     static let background = Color(uiColor: UIColor { traits in
         traits.userInterfaceStyle == .dark ? .systemGroupedBackground : UIColor(red: 246/255, green: 248/255, blue: 250/255, alpha: 1)
     })
+    static let card = Color(uiColor: .secondarySystemGroupedBackground)
     static let ink = Color(uiColor: UIColor { traits in
         traits.userInterfaceStyle == .dark ? .label : UIColor(red: 36/255, green: 52/255, blue: 73/255, alpha: 1)
     })
@@ -43,7 +44,7 @@ struct Metric: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             Label(title, systemImage: symbol).font(.subheadline).foregroundStyle(.secondary)
-            Text(value).font(.title2.bold()).monospacedDigit().minimumScaleFactor(0.65)
+            Text(value).foregroundStyle(Brand.ink).font(.title2.bold()).monospacedDigit().minimumScaleFactor(0.65)
         }.frame(maxWidth: .infinity, alignment: .leading).padding(16).background(.background, in: RoundedRectangle(cornerRadius: 16))
     }
 }
@@ -63,7 +64,7 @@ struct Screen<Content: View>: View {
     let title: String
     @ViewBuilder let content: Content
     var body: some View {
-        NavigationStack { content.foregroundStyle(Brand.ink).navigationTitle(title).appToolbar { ToolbarItem(placement: .topBarTrailing) { AccountMenu() } } }
+        NavigationStack { content.navigationTitle(title).appToolbar { ToolbarItem(placement: .topBarTrailing) { AccountMenu() } } }
     }
 }
 struct ErrorNotice: View {

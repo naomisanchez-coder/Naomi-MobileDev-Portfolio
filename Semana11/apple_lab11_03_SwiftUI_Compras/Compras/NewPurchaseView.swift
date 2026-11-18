@@ -14,6 +14,7 @@ struct NewPurchaseView: View {
     @State private var error: String?
     @State private var success = false
     @State private var saving = false
+    @FocusState private var inputFocused: Bool
     var amounts: (subtotal: Double, igv: Double, total: Double)? { try? ComprasService.amounts(cantidad: Int(quantity) ?? 0, costo: Double(cost.replacingOccurrences(of: ",", with: ".")) ?? 0) }
     var body: some View {
         Screen(title: "Nueva compra") {
@@ -30,8 +31,8 @@ struct NewPurchaseView: View {
                         ForEach(products) { Text($0.nombre).tag(Optional($0.persistentModelID)) }
                     }
                     .accessibilityIdentifier("compra.producto")
-                    TextField("Cantidad", text: $quantity).keyboardType(.numberPad)
-                    TextField("Costo unitario (S/)", text: $cost).keyboardType(.decimalPad)
+                    LabeledContent("Cantidad") { TextField("Cantidad", text: $quantity).keyboardType(.numberPad).multilineTextAlignment(.trailing).focused($inputFocused) }
+                    LabeledContent("Costo unitario") { TextField("Costo unitario (S/)", text: $cost).keyboardType(.decimalPad).multilineTextAlignment(.trailing).focused($inputFocused) }
                 }
                 Section("Condición de pago") {
                     Picker("Pago", selection: $credit) { Text("Contado").tag(false); Text("Crédito 30 días").tag(true) }.pickerStyle(.segmented)
@@ -51,7 +52,9 @@ struct NewPurchaseView: View {
                     Button((amounts?.total ?? 0) >= 5000 ? "Enviar a aprobación" : "Registrar compra", action: submit)
                         .buttonStyle(.borderedProminent).frame(maxWidth: .infinity).disabled(saving || amounts == nil || supplierID == nil || productID == nil)
                 }
-            }.alert("Compra guardada", isPresented: $success) { Button("Aceptar", role: .cancel) {} } message: { Text("Puedes consultar su estado en Mis compras.") }
+            }.scrollDismissesKeyboard(.immediately)
+            .appToolbar { ToolbarItemGroup(placement: .keyboard) { Spacer(); Button("Listo") { inputFocused = false } } }
+            .alert("Compra guardada", isPresented: $success) { Button("Aceptar", role: .cancel) {} } message: { Text("Puedes consultar su estado en Mis compras.") }
         }
     }
     func submit() {
