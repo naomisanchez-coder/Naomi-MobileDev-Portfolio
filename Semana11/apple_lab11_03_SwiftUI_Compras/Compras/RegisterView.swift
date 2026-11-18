@@ -13,14 +13,15 @@ struct RegisterView: View {
     @State private var duplicado = false
     var body: some View {
         Form {
-            Section { Label("Crea tu espacio de compras", systemImage: "person.badge.plus").font(.headline).foregroundStyle(Brand.green) }
-            Section("Tus datos") {
+            Section { VisualHeader(eyebrow: "Tu nueva cuenta", title: "Crea tu espacio de compras", subtitle: "Configura tu perfil y empieza a trabajar con tu equipo.", symbol: "person.badge.plus") }.floatingRow()
+            Section { Label("Datos personales", systemImage: "person.text.rectangle").font(.subheadline.bold()).foregroundStyle(Brand.emphasis)
                 TextField("Nombre completo", text: $nombre).textContentType(.name)
                 TextField("Usuario único", text: $usuario).textContentType(.username).textInputAutocapitalization(.never).autocorrectionDisabled()
                     .onChange(of: usuario) { _, value in duplicado = (try? ComprasService(context, sesion).exists(value)) ?? false }
                 if duplicado { ErrorNotice(text: "Este usuario ya existe.") }
             }
             Section("Protege tu cuenta") {
+                Label("Acceso seguro", systemImage: "lock.shield").font(.subheadline.bold()).foregroundStyle(Brand.emphasis)
                 SecureField("Clave · mínimo 6 caracteres", text: $clave).textContentType(.newPassword)
                 SecureField("Confirmar clave", text: $confirmacion).textContentType(.newPassword)
             }
@@ -32,8 +33,8 @@ struct RegisterView: View {
                 Button("Registrarme") {
                     do { try ComprasService(context, sesion).register(nombre: nombre, usuario: usuario, clave: clave, confirmacion: confirmacion, rol: rol); clave = ""; confirmacion = "" }
                     catch { self.error = error.localizedDescription }
-                }.buttonStyle(.borderedProminent).frame(maxWidth: .infinity).disabled(duplicado)
+                }.buttonStyle(PrimaryActionStyle()).frame(maxWidth: .infinity).disabled(duplicado)
             }
-        }.navigationTitle("Crear cuenta").navigationBarTitleDisplayMode(.inline).tint(Brand.green)
+        }.scrollContentBackground(.hidden).background(Brand.background).navigationTitle("Crear cuenta").navigationBarTitleDisplayMode(.inline).tint(Brand.green)
     }
 }

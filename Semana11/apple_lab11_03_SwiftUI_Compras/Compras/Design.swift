@@ -88,3 +88,70 @@ extension View {
         toolbar(content: content)
     }
 }
+
+// Presentación compartida: no consulta ni modifica modelos.
+struct SurfaceCard: ViewModifier {
+    var accent: Color = Brand.green
+    func body(content: Content) -> some View {
+        content.padding(20).frame(maxWidth: .infinity, alignment: .leading)
+            .background(Brand.card, in: RoundedRectangle(cornerRadius: 24, style: .continuous))
+            .overlay(RoundedRectangle(cornerRadius: 24).stroke(accent.opacity(0.10), lineWidth: 1))
+            .shadow(color: .black.opacity(0.045), radius: 12, x: 0, y: 5)
+    }
+}
+struct VisualHeader: View {
+    let eyebrow: String
+    let title: String
+    let subtitle: String
+    let symbol: String
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Text(eyebrow.uppercased()).font(.caption.bold()).tracking(1.5)
+                Spacer()
+                Image(systemName: symbol).font(.title2).accessibilityHidden(true)
+            }.foregroundStyle(Brand.emphasis)
+            Text(title).font(.title2.bold()).foregroundStyle(Brand.ink)
+            Text(subtitle).font(.subheadline).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+        }.modifier(SurfaceCard())
+    }
+}
+struct IconTile: View {
+    let symbol: String
+    var color: Color = Brand.emphasis
+    var body: some View {
+        Image(systemName: symbol).font(.title3.weight(.semibold)).foregroundStyle(color)
+            .frame(width: 46, height: 46).background(color.opacity(0.10), in: RoundedRectangle(cornerRadius: 14)).accessibilityHidden(true)
+    }
+}
+struct PrimaryActionStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label.font(.headline).foregroundStyle(.white)
+            .frame(maxWidth: .infinity, minHeight: 52)
+            .background(LinearGradient(colors: [Brand.green, Brand.green.opacity(0.88)], startPoint: .leading, endPoint: .trailing), in: RoundedRectangle(cornerRadius: 16))
+            .opacity(configuration.isPressed ? 0.8 : 1)
+    }
+}
+struct EmptyPanel: View {
+    let title: String
+    let message: String
+    let symbol: String
+    var body: some View {
+        VStack(spacing: 16) {
+            Image(systemName: symbol).font(.system(size: 36)).foregroundStyle(Brand.emphasis)
+                .padding(22).background(Brand.emphasis.opacity(0.08), in: Circle())
+            Text(title).font(.title3.bold()).foregroundStyle(Brand.ink)
+            Text(message).font(.subheadline).foregroundStyle(.secondary).multilineTextAlignment(.center)
+        }.frame(maxWidth: .infinity).padding(.vertical, 24).modifier(SurfaceCard())
+    }
+}
+extension View {
+    func surfaceCard(accent: Color = Brand.green) -> some View { modifier(SurfaceCard(accent: accent)) }
+    func floatingRow() -> some View {
+        listRowBackground(Color.clear).listRowSeparator(.hidden)
+            .listRowInsets(EdgeInsets(top: 7, leading: 16, bottom: 7, trailing: 16))
+    }
+    func catalogBackground() -> some View {
+        scrollContentBackground(.hidden).background(Brand.background).listStyle(.plain)
+    }
+}
