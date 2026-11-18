@@ -88,7 +88,7 @@ Se conservan las evidencias anteriores. Las nuevas capturas, manifiestos, result
 
 ## Validación de productos · cierre de entrega
 
-`ProductValidation` en `Business.swift` normaliza espacios y valida tanto altas como ediciones antes de modificar el contexto. Nombre: 2–120 caracteres; categoría: 2–60. Se rechazan únicamente los marcadores exactos `test`, `prueba`, `asdf`, `qwerty`, `producto de prueba` y nombres de cuatro o más letras idénticas sin distinguir mayúsculas (por ejemplo, `XXXxxx`). Es una heurística limitada, no una comprobación de existencia comercial. Se admiten marcas/códigos como 3M, HP, WD y X100.
+`ProductValidation` en `Business.swift` normaliza espacios y valida tanto altas como ediciones antes de modificar el contexto. Nombre: 2–120 caracteres; categoría: 2–60. Se rechazan únicamente los marcadores exactos `test`, `prueba`, `asdf`, `qwerty`, `producto de prueba` y nombres de seis o más letras idénticas sin distinguir mayúsculas (por ejemplo, `XXXxxx`). Es una heurística limitada, no una comprobación de existencia comercial. Se admiten marcas/códigos como 3M, HP, WD, AAAA (formato de pila) y X100.
 
 El stock debe poder convertirse a `Int` y ser no negativo; el costo debe ser finito, no negativo y producir una valoración finita. Se acepta coma decimal. La combinación nombre/categoría es única tras normalizar espacios y mayúsculas; editar excluye el propio registro. Las categorías existentes se ofrecen como sugerencias, manteniendo texto libre. No se sanea ni migra ningún registro previo automáticamente. Las fórmulas de compras, permisos y modelos no cambian.
 

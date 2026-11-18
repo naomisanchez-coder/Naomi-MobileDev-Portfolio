@@ -59,7 +59,7 @@ enum ProductValidation {
         guard (2...120).contains(name.count) else { throw AppError("El nombre del producto debe tener entre 2 y 120 caracteres.") }
         let lower = name.lowercased()
         let markers: Set<String> = ["test", "prueba", "asdf", "qwerty", "producto de prueba"]
-        let repeatedLetter = lower.count >= 4 && lower.allSatisfy(\.isLetter) && Set(lower).count == 1
+        let repeatedLetter = lower.count >= 6 && lower.allSatisfy(\.isLetter) && Set(lower).count == 1
         guard !markers.contains(lower), !repeatedLetter else { throw AppError("Ingresa un nombre de producto descriptivo; evita marcadores de prueba o letras repetidas.") }
         guard (2...60).contains(category.count) else { throw AppError("La categoría debe tener entre 2 y 60 caracteres.") }
         guard stock >= 0 else { throw AppError("El stock debe ser un entero mayor o igual a cero.") }

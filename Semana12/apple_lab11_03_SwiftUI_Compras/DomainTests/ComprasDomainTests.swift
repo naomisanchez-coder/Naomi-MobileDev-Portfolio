@@ -135,14 +135,14 @@ final class ComprasDomainTests: XCTestCase {
         try productRejected("X"); try productRejected(String(repeating: "Ab", count: 61))
     }
     @MainActor func test16ProductObviousPlaceholders() throws {
-        for name in ["XXXxxx", "aaaa", "Prueba", "TEST", "producto de prueba"] { try productRejected(name) }
+        for name in ["XXXxxx", "aaaaaa", "Prueba", "TEST", "producto de prueba"] { try productRejected(name) }
     }
     @MainActor func test17ProductCommercialCodes() throws {
         let f = try Fixture(); f.session.entrar(f.supervisor)
-        for name in ["3M", "HP", "WD", "X100", "iPhone 17 Pro", "ASUS ROG", "Tornillo M3 x 20"] {
+        for name in ["3M", "HP", "WD", "AAAA", "X100", "iPhone 17 Pro", "ASUS ROG", "Tornillo M3 x 20"] {
             try f.service.product(nil, nombre: name, categoria: "Catálogo", stock: 0, costo: 0)
         }
-        XCTAssertEqual(try f.context.fetchCount(FetchDescriptor<Producto>()), 8)
+        XCTAssertEqual(try f.context.fetchCount(FetchDescriptor<Producto>()), 9)
     }
     @MainActor func test18ProductDuplicateNormalization() throws {
         let f = try Fixture(); f.session.entrar(f.supervisor)
