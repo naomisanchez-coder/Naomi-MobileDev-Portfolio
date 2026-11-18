@@ -1,0 +1,46 @@
+# Uso de IA · Semana11 · Compras Tecsup
+
+## 18 de noviembre de 2026 · Prompt maestro del usuario
+
+Registro estructurado de la solicitud recibida en este chat. Fuente de requisitos: PDF local `LAB11-MÓVILESS.docx.pdf`, Grupo B, instrucciones generales, maquetas, casos, ícono y rúbrica. Se extrajeron los textos y se revisaron visualmente las páginas PDF 30–33. No se desarrolló Grupo A.
+
+### Contexto
+
+Actuar como desarrollador senior iOS especializado en SwiftUI, SwiftData y Git. Repositorio Naomi-MobileDev-Portfolio, localizado bajo `/Users/naomisanchez/Desktop/SanchezNaomi`. Área exclusiva Semana11. Actividades 01 UIKit/Core Data y 02 SwiftUI/SwiftData intocables. Proyecto nuevo propuesto `Semana11/apple_lab11_03_SwiftUI_Compras`. Ramas reales main, ai-assisted, manual e integrador, con historias divergentes; conservar todos los commits. ai-assisted es desarrollo, main entrega futura. Mantener seguridad de escritura en workspace y solicitar autorización adicional para operaciones legítimas sobre .git.
+
+### Tarea
+
+Completar en esta ejecución el caso Compras del Grupo B, sin backend ni dependencias innecesarias. Leer requisitos generales y B íntegros, pruebas, maquetas, icono y rúbrica antes de desarrollar. Auditar raíz, status, tracked/untracked/ignored, upstream, remotos, fetch y divergencias. Integrar únicamente la base Semana11 desde main de forma limitada y auditable.
+
+Implementar cuatro modelos @Model: Usuario (nombre, usuario, clave, rol; compras .deny inversa), Proveedor (nombre/ruc y compras .deny inversa), Producto (nombre/categoria/stock/costoPromedio y compras .deny inversa), Compra (fecha/cantidad/costoUnitario/igv/total/alCredito/vence/estado/pagada/motivoRechazo opcional y tres relaciones opcionales). Contenedor persistente, queries, sesión @Observable y lógica separada. Usuario único sin distinguir mayúsculas y normalizando espacios, clave mínimo seis y confirmación idéntica, error genérico de login, ingreso inmediato al registrar, sesión de proceso y logout. Proteger clave con solución local simple sin romper modelo. Validar permisos en servicios.
+
+Implementar B1 login; B2 registro; B3 productos con búsqueda, stock, costo, valoración y CRUD supervisor; B4 proveedores con búsqueda, RUC, total comprado, deuda y CRUD supervisor; B5 compra con sesión, proveedor, producto, cantidad, costo, condición de pago, importes y aviso 5000; B6 compras propias y filtros; B7 aprobación/rechazo con motivo y proyección antes/después; B8 filtros Pendientes/Vencidas/Pagadas, búsqueda por proveedor, total y pago confirmado; B9 resumen, crédito fiscal, inventario, deuda, pendientes y barras por proveedor. Comprador tiene cuatro pestañas y Supervisor cinco según PDF, con menú de avatar y ninguna pestaña de cuenta adicional.
+
+Reglas: IGV 18 %, total subtotal + IGV, aprobación automática por debajo de 5000, pendiente desde 5000 sin efectos hasta aprobación. Promedio ponderado sin redondear almacenamiento; validar stock cero, overflow y finitud. Aplicar efectos una sola vez, sin carreras ni doble pulsación; rechazo sin stock. Contado pagada al aprobar; crédito vence fecha + 30 días calendario, solo aprobada no pagada genera deuda; vencimiento pasado se etiqueta VENCIDA. Pago supervisor una vez, sin nuevo efecto stock. Crédito fiscal solo aprobadas. .deny y alerta amigable con compras en cualquiera de los padres. Guardar y conservar consistencia al reiniciar, sin datos ficticios como resultados reales ni carga demo automática.
+
+Diseño profesional consistente en petróleo #087F76, turquesa #19AD9C, blanco humo #F6F8FA, pizarra #243449 y ámbar #F0B54C; semántica accesible claro/oscuro, SF Symbols, navegación nativa, formularios, confirmaciones, errores, estados vacíos y S/ dos decimales. AppIcon propio PNG 1024 cuadrado opaco sin esquinas redondeadas, caja/documento en verde y turquesa. Display Name Compras y bundle coherente.
+
+Implementar y ejecutar nueve pruebas PDF: duplicado mtorres; login erróneo; 40/110 + 10 a 120 crédito da 1200/216/1416, 50/112, 30 días; contado pagada; 50 a 120 total 7080 pendiente con stock40; aprobar da90/115.56; rechazo con motivo obligatorio sin efecto; vencida pagada reduce deuda; propias y sin permiso pagar. Añadir frontera5000, borrado, una sola aprobación, registro y roles. Casos5/6 con precondiciones independientes. Compilar para destino de simulador instalado, ejecutar tests y comprobar icono/arranque sin borrar datos. No afirmar pruebas no ejecutadas.
+
+### Restricciones
+
+Solo desarrollar en ai-assisted, sin crear ramas equivalentes, modificar manual/integrador o integrar/publicar a main. No reset --hard, clean, stash, force push, rebase destructivo, sudo, chmod ni desactivar seguridad. No perder cambios locales. No modificar otras semanas ni contenido de actividades01/02. Antes de escribir enumerar alcance. Staging de rutas explícitas con revisión de nombres y diff --cached --check; nunca add ., add -A ni commit -a. Commits progresivos descriptivos, idealmente por pantalla, al menos nueve. Push solo origin/ai-assisted con autorización adicional si corresponde. Si existe un bloqueo, detener solo esa operación e informar sin solución insegura.
+
+Actualizar README Semana11 conservando actividades anteriores y PROMPTS con Contexto/Tarea/Restricciones/Formato/uso de respuesta. No crear documento Word ni diagramas académicos ahora ni inventar expediente/visto bueno docente. Terminar app y validaciones antes de pedir revisión final. Pausa obligatoria antes de integración a main.
+
+### Formato esperado
+
+Informe en español con estado final, resultados reales, ruta del proyecto y apertura, árbol, tabla B1–B9, modelos/relaciones/delete rules, reglas y cifras, ramas/hashes/mensajes/rutas por commit, pushes y estado remoto, confirmación de alcance, capturas/defensa pendientes y limitaciones veraces. Presentar exactamente los archivos candidatos a main y pedir revisión sin integrar.
+
+### Qué se hizo con la respuesta
+
+Se aceptó el alcance del usuario y se contrastó con el PDF. Se eligió copiar solo la base de Semana11 desde main, idéntica byte a byte, a ai-assisted; no se mezclaron otras semanas ni reescribieron commits. La guía menciona `ia-asistida`, pero se usó la rama real `ai-assisted` solicitada. El expediente/visto bueno académico se documenta como pendiente sin inventarlo, siguiendo la instrucción explícita de implementar ahora.
+
+Se implementaron modelos, servicios, nueve pantallas, icono y scripts. Se escogió PBKDF2-HMAC-SHA256 para conservar clave String sin texto plano. Se dividieron filas y se explicitó ToolbarContent para resolver diagnósticos del compilador de SwiftUI. Se corrigieron selectores de XCTest para distinguir los menús de proveedor/producto y el botón Aprobar de su pestaña. Se retiró una restricción extra inicial de edición de inventario: el supervisor conserva edición completa; solo el borrado se bloquea por compras. Se ajustaron los colores semánticos para contraste claro/oscuro. Se añadió un modo DEBUG `--ui-testing`, explícito y sin carga de datos, que usa base en memoria solo para pruebas de interfaz. Se ejecutaron inicialmente 35 comprobaciones de dominio y persistencia aislada; tras añadir el caso de edición autorizada, las 36 comprobaciones finales pasaron; los resultados de XCTest y capturas se consignan en el informe final.
+
+Git fetch autorizado funcionó. El primer push fue rechazado por credencial inválida de GitHub; `gh auth status` confirmó HTTP401. Se detuvieron los pushes y se solicitó al usuario renovar su autenticación, sin pedir ni exponer tokens. El usuario la renovó y autorizó reintentar exclusivamente ai-assisted; se verificaron puntas y contenido antes de publicar los 11 commits pendientes y se continuó publicando los siguientes commits verificados. Las operaciones locales con .git se hicieron mediante autorización adicional. No hubo consultas adicionales a otros servicios de IA, subagentes ni búsqueda web; los refinamientos y verificaciones se realizaron en este mismo chat. No se atribuyen aportes manuales ni aprobación docente que no consten.
+
+
+### Verificación final de la respuesta
+
+El recorrido iOS B1–B9 final pasó (170.651 s), y una prueba adicional de login claro/oscuro y credenciales incorrectas pasó (16.605 s). El primer filtro del caso adicional seleccionó cero pruebas y se descartó; se corrigió al identificador completo con `()`. Se exportaron 17 capturas reales y resúmenes de xcresult; se revisaron para corregir teclado, contraste y captura de Inicio en transición. Debug y Release compilaron. No se confunden las 36 comprobaciones de dominio macOS con los casos XCTest iOS. Se conservan pendientes las pruebas manuales que no se ejecutaron y el expediente/defensa académicos.
