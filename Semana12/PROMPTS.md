@@ -95,3 +95,7 @@ Informe real de cambios, pruebas, commits, ramas, rutas y limitaciones.
 
 ### Uso de la respuesta
 Asistencia de IA en el mismo chat. Se reutilizó el rediseño, se agregó ProductValidation y 12 casos XCTest, y se organizó el traslado con git mv de rutas versionadas. No se detecta universalmente la existencia comercial de un nombre. La organización en Semana12 no cambia la denominación oficial del Laboratorio 11. Los resultados finales e integración se registran en INFORME_CIERRE.md. No se atribuye este trabajo a desarrollo manual.
+
+### Resultado final de esta continuación
+
+Se publicaron el rediseño, las validaciones y el traslado mediante commits separados. La heurística se afinó a seis letras repetidas para no rechazar códigos legítimos como AAAA. Debug y Release desde Semana12 en main compilaron; la suite final pasó 27 casos (24 dominio y 3 UI), sin fallos ni omitidos. Las 36 comprobaciones CLI también pasaron desde main. Los datos de la estudiante no se usaron en pruebas. Manual/integrador y actividades01/02 permanecen intactos. Se preparó y verificó una integración selectiva a main, sin merge completo ni reescritura de historial; el estado de publicación se entrega en el informe final. No hubo subagentes ni consultas externas de IA.

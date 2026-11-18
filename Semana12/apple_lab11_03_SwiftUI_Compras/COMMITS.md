@@ -587,3 +587,8 @@ Semana12/apple_lab11_03_SwiftUI_Compras/AUDITORIA_TECNICA.md
 Semana12/apple_lab11_03_SwiftUI_Compras/COMMITS.md
 Semana12/apple_lab11_03_SwiftUI_Compras/INFORME_REDISENO.md
 ```
+
+
+## Organización final
+
+La actividad se trasladó a Semana12 sin reescribir el historial Git. Las rutas documentales de esta lista se actualizaron a la ubicación vigente; los commits históricos conservan sus rutas originales. El inventario y los commits de este cierre se detallan en INFORME_CIERRE.md.
