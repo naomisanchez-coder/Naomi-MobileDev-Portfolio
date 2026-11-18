@@ -87,6 +87,9 @@ import SwiftData
         let all = try ctx.fetch(FetchDescriptor<Compra>())
         let igv = all.filter { $0.estado == "Aprobada" }.reduce(0) { $0 + $1.igv }
         try check(igv == 1512, "crédito fiscal solo aprobadas: 216 + 216 + 1080")
+        session.entrar(supervisor)
+        try service.product(p5, nombre: "Producto editado", categoria: "Actualizado", stock: 91, costo: 116)
+        try check(p5.stock == 91 && p5.costoPromedio == 116 && p5.nombre == "Producto editado", "supervisor puede editar producto con compras sin borrarlo")
         session.entrar(other); session.salir(); try check(session.usuario == nil, "cierre de sesión")
         // Persistencia aislada en disco; nunca se abre ni borra la base de uso normal.
         let url = FileManager.default.temporaryDirectory.appendingPathComponent("ComprasTests-\(UUID()).sqlite")

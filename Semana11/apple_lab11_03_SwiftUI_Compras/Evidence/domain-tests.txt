@@ -31,6 +31,7 @@ PASS: cantidad cero
 PASS: costo infinito
 PASS: stock inicial cero
 PASS: crédito fiscal solo aprobadas: 216 + 216 + 1080
+PASS: supervisor puede editar producto con compras sin borrarlo
 PASS: cierre de sesión
 PASS: persistencia y relaciones tras reabrir contenedor
-RESULTADO: 35 comprobaciones correctas
+RESULTADO: 36 comprobaciones correctas
