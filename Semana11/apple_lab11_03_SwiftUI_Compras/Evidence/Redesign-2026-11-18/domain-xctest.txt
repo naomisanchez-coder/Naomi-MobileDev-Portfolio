@@ -1,0 +1,30 @@
+Extracto del target ComprasDomainTests en Tests-3.xcresult. La ejecución completa tenía un fallo UI separado; este target pasó sus 12 casos.
+
+Test Suite 'ComprasDomainTests.xctest' started at 2026-11-18 02:44:43.371.
+Test Suite 'ComprasDomainTests' started at 2026-11-18 02:44:43.371.
+Test Case '-[ComprasDomainTests.ComprasDomainTests test01RegistrationAndDuplicate]' started.
+Test Case '-[ComprasDomainTests.ComprasDomainTests test01RegistrationAndDuplicate]' passed (0.075 seconds).
+Test Case '-[ComprasDomainTests.ComprasDomainTests test02IncorrectLogin]' started.
+Test Case '-[ComprasDomainTests.ComprasDomainTests test02IncorrectLogin]' passed (0.078 seconds).
+Test Case '-[ComprasDomainTests.ComprasDomainTests test03CreditPurchase]' started.
+Test Case '-[ComprasDomainTests.ComprasDomainTests test03CreditPurchase]' passed (0.055 seconds).
+Test Case '-[ComprasDomainTests.ComprasDomainTests test04CashPurchase]' started.
+Test Case '-[ComprasDomainTests.ComprasDomainTests test04CashPurchase]' passed (0.042 seconds).
+Test Case '-[ComprasDomainTests.ComprasDomainTests test05PendingHasNoEffects]' started.
+Test Case '-[ComprasDomainTests.ComprasDomainTests test05PendingHasNoEffects]' passed (0.042 seconds).
+Test Case '-[ComprasDomainTests.ComprasDomainTests test06ApproveExactlyOnce]' started.
+Test Case '-[ComprasDomainTests.ComprasDomainTests test06ApproveExactlyOnce]' passed (0.042 seconds).
+Test Case '-[ComprasDomainTests.ComprasDomainTests test07RejectRequiresReason]' started.
+Test Case '-[ComprasDomainTests.ComprasDomainTests test07RejectRequiresReason]' passed (0.042 seconds).
+Test Case '-[ComprasDomainTests.ComprasDomainTests test08OverdueAndPayOnce]' started.
+Test Case '-[ComprasDomainTests.ComprasDomainTests test08OverdueAndPayOnce]' passed (0.043 seconds).
+Test Case '-[ComprasDomainTests.ComprasDomainTests test09OwnPurchasesAndRoles]' started.
+Test Case '-[ComprasDomainTests.ComprasDomainTests test09OwnPurchasesAndRoles]' passed (0.062 seconds).
+Test Case '-[ComprasDomainTests.ComprasDomainTests test10BoundaryAndDeletionGuards]' started.
+Test Case '-[ComprasDomainTests.ComprasDomainTests test10BoundaryAndDeletionGuards]' passed (0.042 seconds).
+Test Case '-[ComprasDomainTests.ComprasDomainTests test11PersistentReopen]' started.
+Test Case '-[ComprasDomainTests.ComprasDomainTests test11PersistentReopen]' passed (0.084 seconds).
+Test Case '-[ComprasDomainTests.ComprasDomainTests test12SupervisorCatalogCRUD]' started.
+Test Case '-[ComprasDomainTests.ComprasDomainTests test12SupervisorCatalogCRUD]' passed (0.043 seconds).
+Test Suite 'ComprasDomainTests' passed at 2026-11-18 02:44:44.026.
+Test Suite 'ComprasDomainTests.xctest' passed at 2026-11-18 02:44:44.027.

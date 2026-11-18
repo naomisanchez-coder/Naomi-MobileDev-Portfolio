@@ -1,0 +1,14 @@
+{
+  "scope": "Solo simulador QA nuevo; no base de la estudiante",
+  "device": "ABA6697D-2B9A-419C-85C8-759A286D2AC7",
+  "store": "/Users/naomisanchez/Library/Developer/CoreSimulator/Devices/ABA6697D-2B9A-419C-85C8-759A286D2AC7/data/Containers/Data/Application/DE54AE8F-4F3C-435A-92D7-C114DCE6DB1A/Library/Application Support/Compras.store",
+  "snapshot": "/private/tmp/compras-redesign/qa-final-snapshot.sqlite",
+  "sqlite_header": "SQLite format 3",
+  "quick_check": "ok",
+  "usuarios": 12,
+  "compras": 4,
+  "roles": {
+    "Comprador": 6,
+    "Supervisor": 6
+  }
+}

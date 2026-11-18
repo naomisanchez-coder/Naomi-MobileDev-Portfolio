@@ -1,0 +1,210 @@
+[
+  {
+    "file": "b1-login-1.png",
+    "capture": "B1 Login",
+    "case": "ComprasUITests/testLoginAppearanceAndInvalidCredentials()",
+    "timestamp": 1794987542.533,
+    "device": "Compras Rediseño QA",
+    "source": "Tests-3.xcresult"
+  },
+  {
+    "file": "b1-login-oscuro-1.png",
+    "capture": "B1 Login oscuro",
+    "case": "ComprasUITests/testLoginAppearanceAndInvalidCredentials()",
+    "timestamp": 1794987547.33,
+    "device": "Compras Rediseño QA",
+    "source": "Tests-3.xcresult"
+  },
+  {
+    "file": "b1-error-generico-1.png",
+    "capture": "B1 Error generico",
+    "case": "ComprasUITests/testLoginAppearanceAndInvalidCredentials()",
+    "timestamp": 1794987552.517,
+    "device": "Compras Rediseño QA",
+    "source": "Tests-3.xcresult"
+  },
+  {
+    "file": "b1-login-2.png",
+    "capture": "B1 Login",
+    "case": "ComprasUITests/testScreensAndRoles()",
+    "timestamp": 1794987661.083,
+    "device": "Compras Rediseño QA",
+    "source": "Tests-3.xcresult"
+  },
+  {
+    "file": "b2-registro-datos-1.png",
+    "capture": "B2 Registro datos",
+    "case": "ComprasUITests/testScreensAndRoles()",
+    "timestamp": 1794987678.554,
+    "device": "Compras Rediseño QA",
+    "source": "Tests-3.xcresult"
+  },
+  {
+    "file": "b2-registro-rol-1.png",
+    "capture": "B2 Registro rol",
+    "case": "ComprasUITests/testScreensAndRoles()",
+    "timestamp": 1794987679.949,
+    "device": "Compras Rediseño QA",
+    "source": "Tests-3.xcresult"
+  },
+  {
+    "file": "b3-productos-1.png",
+    "capture": "B3 Productos",
+    "case": "ComprasUITests/testScreensAndRoles()",
+    "timestamp": 1794987706.516,
+    "device": "Compras Rediseño QA",
+    "source": "Tests-3.xcresult"
+  },
+  {
+    "file": "b3-detalle-catalogo-1.png",
+    "capture": "B3 Detalle catalogo",
+    "case": "ComprasUITests/testScreensAndRoles()",
+    "timestamp": 1794987707.763,
+    "device": "Compras Rediseño QA",
+    "source": "Tests-3.xcresult"
+  },
+  {
+    "file": "b4-proveedores-1.png",
+    "capture": "B4 Proveedores",
+    "case": "ComprasUITests/testScreensAndRoles()",
+    "timestamp": 1794987718.302,
+    "device": "Compras Rediseño QA",
+    "source": "Tests-3.xcresult"
+  },
+  {
+    "file": "b2-registro-datos-2.png",
+    "capture": "B2 Registro datos",
+    "case": "ComprasUITests/testScreensAndRoles()",
+    "timestamp": 1794987738.434,
+    "device": "Compras Rediseño QA",
+    "source": "Tests-3.xcresult"
+  },
+  {
+    "file": "b2-registro-rol-2.png",
+    "capture": "B2 Registro rol",
+    "case": "ComprasUITests/testScreensAndRoles()",
+    "timestamp": 1794987739.813,
+    "device": "Compras Rediseño QA",
+    "source": "Tests-3.xcresult"
+  },
+  {
+    "file": "b5-nueva-compra-1.png",
+    "capture": "B5 Nueva compra",
+    "case": "ComprasUITests/testScreensAndRoles()",
+    "timestamp": 1794987761.064,
+    "device": "Compras Rediseño QA",
+    "source": "Tests-3.xcresult"
+  },
+  {
+    "file": "b5-nueva-compra-2.png",
+    "capture": "B5 Nueva compra",
+    "case": "ComprasUITests/testScreensAndRoles()",
+    "timestamp": 1794987784.511,
+    "device": "Compras Rediseño QA",
+    "source": "Tests-3.xcresult"
+  },
+  {
+    "file": "b5-nueva-compra-3.png",
+    "capture": "B5 Nueva compra",
+    "case": "ComprasUITests/testScreensAndRoles()",
+    "timestamp": 1794987807.34,
+    "device": "Compras Rediseño QA",
+    "source": "Tests-3.xcresult"
+  },
+  {
+    "file": "b5-nueva-compra-4.png",
+    "capture": "B5 Nueva compra",
+    "case": "ComprasUITests/testScreensAndRoles()",
+    "timestamp": 1794987828.896,
+    "device": "Compras Rediseño QA",
+    "source": "Tests-3.xcresult"
+  },
+  {
+    "file": "b6-mis-compras-1.png",
+    "capture": "B6 Mis compras",
+    "case": "ComprasUITests/testScreensAndRoles()",
+    "timestamp": 1794987835.052,
+    "device": "Compras Rediseño QA",
+    "source": "Tests-3.xcresult"
+  },
+  {
+    "file": "b7-aprobar-1.png",
+    "capture": "B7 Aprobar",
+    "case": "ComprasUITests/testScreensAndRoles()",
+    "timestamp": 1794987849.381,
+    "device": "Compras Rediseño QA",
+    "source": "Tests-3.xcresult"
+  },
+  {
+    "file": "b7-todo-al-dia-1.png",
+    "capture": "B7 Todo al dia",
+    "case": "ComprasUITests/testScreensAndRoles()",
+    "timestamp": 1794987856.259,
+    "device": "Compras Rediseño QA",
+    "source": "Tests-3.xcresult"
+  },
+  {
+    "file": "b8-por-pagar-1.png",
+    "capture": "B8 Por pagar",
+    "case": "ComprasUITests/testScreensAndRoles()",
+    "timestamp": 1794987859.644,
+    "device": "Compras Rediseño QA",
+    "source": "Tests-3.xcresult"
+  },
+  {
+    "file": "b8-vencidas-vacio-1.png",
+    "capture": "B8 Vencidas vacio",
+    "case": "ComprasUITests/testScreensAndRoles()",
+    "timestamp": 1794987861.442,
+    "device": "Compras Rediseño QA",
+    "source": "Tests-3.xcresult"
+  },
+  {
+    "file": "b8-pagadas-1.png",
+    "capture": "B8 Pagadas",
+    "case": "ComprasUITests/testScreensAndRoles()",
+    "timestamp": 1794987867.255,
+    "device": "Compras Rediseño QA",
+    "source": "Tests-3.xcresult"
+  },
+  {
+    "file": "b9-resumen-1.png",
+    "capture": "B9 Resumen",
+    "case": "ComprasUITests/testScreensAndRoles()",
+    "timestamp": 1794987870.165,
+    "device": "Compras Rediseño QA",
+    "source": "Tests-3.xcresult"
+  },
+  {
+    "file": "b9-barras-y-equipo-1.png",
+    "capture": "B9 Barras y equipo",
+    "case": "ComprasUITests/testScreensAndRoles()",
+    "timestamp": 1794987872.956,
+    "device": "Compras Rediseño QA",
+    "source": "Tests-3.xcresult"
+  },
+  {
+    "file": "inicio-icono-compras-1.png",
+    "capture": "Inicio icono Compras",
+    "case": "ComprasUITests/testScreensAndRoles()",
+    "timestamp": 1794987875.88,
+    "device": "Compras Rediseño QA",
+    "source": "Tests-3.xcresult"
+  },
+  {
+    "file": "b1-login-oscuro-2.png",
+    "capture": "B1 Login oscuro",
+    "case": "ComprasUITests/testScreensAndRoles()",
+    "timestamp": 1794987880.706,
+    "device": "Compras Rediseño QA",
+    "source": "Tests-3.xcresult"
+  },
+  {
+    "file": "persistencia-real-qa.png",
+    "capture": "Persistencia real tras reiniciar QA",
+    "case": "ComprasUITests/testPersistentRelaunchWithVerifiedNavigation()",
+    "source": "Persistence-6.xcresult",
+    "device": "Compras Rediseño QA",
+    "timestamp": 1794988593.605
+  }
+]
