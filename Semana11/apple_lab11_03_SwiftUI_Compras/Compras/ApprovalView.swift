@@ -26,12 +26,12 @@ struct ApprovalView: View {
                                     Label("Si apruebas", systemImage: "arrow.up.right.circle").font(.subheadline.bold())
                                     Text("Stock: \(p.stock) → \(preview.stock)")
                                     Text("Costo: \(Brand.money(p.costoPromedio)) → \(Brand.money(preview.costo))")
-                                }.font(.callout).foregroundStyle(Brand.green).padding(.vertical, 8)
+                                }.font(.callout).foregroundStyle(Brand.emphasis).padding(.vertical, 8)
                             }
                             HStack {
                                 Button("Rechazar", role: .destructive) { reason = ""; rejecting = c }.buttonStyle(.bordered)
                                 Spacer()
-                                Button("Aprobar") { approving = c }.buttonStyle(.borderedProminent)
+                                Button("Aprobar") { approving = c }.buttonStyle(.borderedProminent).accessibilityIdentifier("aprobar.compra")
                             }
                         }
                     }

@@ -54,8 +54,7 @@ struct ProductEditor: View {
             Form {
                 Section("Producto") { TextField("Nombre", text: $nombre); TextField("Categoría", text: $categoria) }
                 Section { TextField("Stock inicial", text: $stock).keyboardType(.numberPad); TextField("Costo promedio (S/)", text: $costo).keyboardType(.decimalPad) }
-                header: { Text("Inventario") } footer: { if !(product?.compras.isEmpty ?? true) { Text("Con compras registradas, stock y costo solo cambian mediante compras aprobadas.") } }
-                    .disabled(!(product?.compras.isEmpty ?? true))
+                header: { Text("Inventario") }
                 if let error { ErrorNotice(text: error) }
             }.navigationTitle(product == nil ? "Nuevo producto" : "Editar producto").navigationBarTitleDisplayMode(.inline)
                 .appToolbar {
@@ -74,12 +73,12 @@ struct ProductEditor: View {
 
 struct ProductRow: View {
     let product: Producto
-    var stockColor: Color { product.stock == 0 ? .red : product.stock < 10 ? .orange : Brand.green }
+    var stockColor: Color { product.stock == 0 ? Brand.danger : product.stock < 10 ? Brand.warning : Brand.emphasis }
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack { Label(product.nombre, systemImage: "cube.box.fill").font(.headline); Spacer(); Text("\(product.stock) u.").font(.caption.bold()).foregroundStyle(stockColor) }
             HStack { Text(product.categoria); Spacer(); Text(Brand.money(product.costoPromedio)) }.font(.subheadline).foregroundStyle(.secondary)
             Text("Valor: \(Brand.money(Double(product.stock) * product.costoPromedio))").font(.caption).foregroundStyle(.secondary)
-        }.padding(.vertical, 6).foregroundStyle(.primary)
+        }.padding(.vertical, 6).foregroundStyle(Brand.ink)
     }
 }

@@ -138,8 +138,6 @@ enum Password {
               stock >= 0, costo.isFinite, costo >= 0 else { throw AppError("Completa nombre y categoría; stock y costo no pueden ser negativos.") }
         if let p {
             guard p.modelContext === context else { throw AppError("Producto inválido.") }
-            // El inventario con movimientos solo cambia mediante compras aprobadas.
-            guard p.compras.isEmpty || (p.stock == stock && p.costoPromedio == costo) else { throw AppError("El stock y costo de un producto con compras solo cambian al aprobar compras.") }
             p.nombre = nombre; p.categoria = categoria; p.stock = stock; p.costoPromedio = costo
         } else { context.insert(Producto(nombre: nombre, categoria: categoria, stock: stock, costoPromedio: costo)) }
         try save()

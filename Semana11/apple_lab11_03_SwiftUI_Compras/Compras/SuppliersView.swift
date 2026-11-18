@@ -77,6 +77,6 @@ struct SupplierRow: View {
             }
             Text("RUC · \(supplier.ruc)").font(.subheadline).foregroundStyle(.secondary)
             Text("Total comprado: \(Brand.money(total))").font(.subheadline).monospacedDigit()
-        }.foregroundStyle(.primary).padding(.vertical, 8)
+        }.foregroundStyle(Brand.ink).padding(.vertical, 8)
     }
 }

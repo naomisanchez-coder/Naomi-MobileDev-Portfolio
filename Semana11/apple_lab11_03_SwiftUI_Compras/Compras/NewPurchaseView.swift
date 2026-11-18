@@ -24,10 +24,12 @@ struct NewPurchaseView: View {
                         Text("Selecciona un proveedor").tag(nil as PersistentIdentifier?)
                         ForEach(suppliers) { Text($0.nombre).tag(Optional($0.persistentModelID)) }
                     }
+                    .accessibilityIdentifier("compra.proveedor")
                     Picker("Producto", selection: $productID) {
                         Text("Selecciona un producto").tag(nil as PersistentIdentifier?)
                         ForEach(products) { Text($0.nombre).tag(Optional($0.persistentModelID)) }
                     }
+                    .accessibilityIdentifier("compra.producto")
                     TextField("Cantidad", text: $quantity).keyboardType(.numberPad)
                     TextField("Costo unitario (S/)", text: $cost).keyboardType(.decimalPad)
                 }
@@ -41,7 +43,7 @@ struct NewPurchaseView: View {
                     LabeledContent("Total", value: Brand.money(amounts?.total ?? 0)).font(.headline)
                 }
                 if let a = amounts, ComprasService.needsApproval(total: a.total) {
-                    Section { Label("Desde S/ 5 000 requiere aprobación. Hasta entonces no cambia el inventario ni genera deuda.", systemImage: "exclamationmark.shield").foregroundStyle(.orange).font(.callout) }
+                    Section { Label("Desde S/ 5 000 requiere aprobación. Hasta entonces no cambia el inventario ni genera deuda.", systemImage: "exclamationmark.shield").foregroundStyle(Brand.warning).font(.callout) }
                 }
                 if suppliers.isEmpty || products.isEmpty { Section { Text("Un supervisor debe registrar proveedores y productos antes de realizar una compra.").foregroundStyle(.secondary) } }
                 if let error { Section { ErrorNotice(text: error) } }

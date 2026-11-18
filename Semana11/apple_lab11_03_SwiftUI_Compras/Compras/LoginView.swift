@@ -12,7 +12,7 @@ struct LoginView: View {
             ScrollView {
                 VStack(spacing: 24) {
                     Logo().padding(.top, 44)
-                    VStack(spacing: 8) { Text("Compras Tecsup").font(.largeTitle.bold()); Text("Tu inventario, bajo control").foregroundStyle(.secondary) }
+                    VStack(spacing: 8) { Text("Compras Tecsup").font(.largeTitle.bold()).foregroundStyle(Brand.ink); Text("Tu inventario, bajo control").foregroundStyle(.secondary) }
                     VStack(alignment: .leading, spacing: 18) {
                         TextField("Usuario", text: $usuario).textContentType(.username).textInputAutocapitalization(.never).autocorrectionDisabled().accessibilityIdentifier("login.usuario")
                         Divider()
@@ -27,7 +27,7 @@ struct LoginView: View {
                     NavigationLink("Crear cuenta") { RegisterView() }
                     Label("Datos locales en este dispositivo", systemImage: "iphone.gen3").font(.footnote).foregroundStyle(.secondary)
                 }.frame(maxWidth: 480).padding(24).frame(maxWidth: .infinity)
-            }.background(Color(.systemGroupedBackground)).tint(Brand.green)
+            }.background(Brand.background).tint(Brand.green)
         }
     }
 }

@@ -1,9 +1,25 @@
 import SwiftUI
 import SwiftData
+import UIKit
 
 enum Brand {
     static let green = Color(red: 8/255, green: 127/255, blue: 118/255)
     static let turquoise = Color(red: 25/255, green: 173/255, blue: 156/255)
+    static let background = Color(uiColor: UIColor { traits in
+        traits.userInterfaceStyle == .dark ? .systemGroupedBackground : UIColor(red: 246/255, green: 248/255, blue: 250/255, alpha: 1)
+    })
+    static let ink = Color(uiColor: UIColor { traits in
+        traits.userInterfaceStyle == .dark ? .label : UIColor(red: 36/255, green: 52/255, blue: 73/255, alpha: 1)
+    })
+    static let emphasis = Color(uiColor: UIColor { traits in
+        traits.userInterfaceStyle == .dark ? UIColor(red: 25/255, green: 173/255, blue: 156/255, alpha: 1) : UIColor(red: 8/255, green: 127/255, blue: 118/255, alpha: 1)
+    })
+    static let warning = Color(uiColor: UIColor { traits in
+        traits.userInterfaceStyle == .dark ? UIColor(red: 240/255, green: 181/255, blue: 76/255, alpha: 1) : UIColor(red: 128/255, green: 84/255, blue: 0, alpha: 1)
+    })
+    static let danger = Color(uiColor: UIColor { traits in
+        traits.userInterfaceStyle == .dark ? UIColor(red: 1, green: 0.62, blue: 0.58, alpha: 1) : UIColor(red: 0.70, green: 0.10, blue: 0.08, alpha: 1)
+    })
     static let amber = Color(red: 240/255, green: 181/255, blue: 76/255)
     static func money(_ value: Double) -> String { "S/ " + value.formatted(.number.precision(.fractionLength(2))) }
 }
@@ -17,7 +33,7 @@ struct Logo: View {
 }
 struct StatusBadge: View {
     let text: String
-    var color: Color { text == "Rechazada" || text == "VENCIDA" ? .red : text == "Pendiente" || text == "Por pagar" ? .orange : Brand.green }
+    var color: Color { text == "Rechazada" || text == "VENCIDA" ? Brand.danger : text == "Pendiente" || text == "Por pagar" ? Brand.warning : Brand.emphasis }
     var body: some View { Text(text).font(.caption.weight(.semibold)).foregroundStyle(color).padding(.horizontal, 9).padding(.vertical, 5).background(color.opacity(0.12), in: Capsule()) }
 }
 struct Metric: View {
@@ -47,12 +63,12 @@ struct Screen<Content: View>: View {
     let title: String
     @ViewBuilder let content: Content
     var body: some View {
-        NavigationStack { content.navigationTitle(title).appToolbar { ToolbarItem(placement: .topBarTrailing) { AccountMenu() } } }
+        NavigationStack { content.foregroundStyle(Brand.ink).navigationTitle(title).appToolbar { ToolbarItem(placement: .topBarTrailing) { AccountMenu() } } }
     }
 }
 struct ErrorNotice: View {
     let text: String
-    var body: some View { Label(text, systemImage: "exclamationmark.circle.fill").foregroundStyle(.red).font(.callout).accessibilityAddTraits(.updatesFrequently) }
+    var body: some View { Label(text, systemImage: "exclamationmark.circle.fill").foregroundStyle(Brand.danger).font(.callout).accessibilityAddTraits(.updatesFrequently) }
 }
 struct PurchaseRow: View {
     let c: Compra
@@ -61,7 +77,7 @@ struct PurchaseRow: View {
             HStack { Text(c.proveedor?.nombre ?? "Sin proveedor").font(.headline); Spacer(); StatusBadge(text: c.estado) }
             Text("\(c.producto?.nombre ?? "Sin producto") · \(c.cantidad) unidades").foregroundStyle(.secondary)
             HStack { Text(c.fecha, style: .date); Spacer(); Text(Brand.money(c.total)).bold().monospacedDigit() }.font(.subheadline)
-            if let motivo = c.motivoRechazo { Label(motivo, systemImage: "text.bubble").font(.callout).foregroundStyle(.red) }
+            if let motivo = c.motivoRechazo { Label(motivo, systemImage: "text.bubble").font(.callout).foregroundStyle(Brand.danger) }
         }.padding(.vertical, 8)
     }
 }
