@@ -1,5 +1,7 @@
 # Informe de implementación · Compras Tecsup · Grupo B
 
+> **Informe histórico de la implementación inicial.** El prompt posterior autoriza el rediseño y la integración selectiva. El estado actual y las verificaciones nuevas están en [INFORME_REDISENO.md](INFORME_REDISENO.md); la explicación para defensa, en [AUDITORIA_TECNICA.md](AUDITORIA_TECNICA.md). Las restricciones de integración descritas más abajo pertenecen a la fase anterior.
+
 ## Entrega y alcance
 
 Proyecto: `/Users/naomisanchez/Desktop/SanchezNaomi/Semana11/apple_lab11_03_SwiftUI_Compras/Compras.xcodeproj`. Abrir con Xcode, esquema Compras, iPhone 17 Pro / iOS 26.5 y ⌘R. Mínimo iOS 17. La implementación B1–B9, arquitectura, modelos, permisos, reglas y ejemplos se describen en [README del proyecto](README.md); el uso de IA, en [PROMPTS](../PROMPTS.md).

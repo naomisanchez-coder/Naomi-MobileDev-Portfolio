@@ -44,3 +44,29 @@ Git fetch autorizado funcionó. El primer push fue rechazado por credencial inv�
 ### Verificación final de la respuesta
 
 El recorrido iOS B1–B9 final pasó (170.651 s), y una prueba adicional de login claro/oscuro y credenciales incorrectas pasó (16.605 s). El primer filtro del caso adicional seleccionó cero pruebas y se descartó; se corrigió al identificador completo con `()`. Se exportaron 17 capturas reales y resúmenes de xcresult; se revisaron para corregir teclado, contraste y captura de Inicio en transición. Debug y Release compilaron. No se confunden las 36 comprobaciones de dominio macOS con los casos XCTest iOS. Se conservan pendientes las pruebas manuales que no se ejecutaron y el expediente/defensa académicos.
+
+## 18 de noviembre de 2026 · Continuación: rediseño, pruebas y entrega selectiva
+
+### Contexto
+
+La estudiante comunica que la aplicación anterior ya fue validada manualmente. Se parte de ai-assisted/0ee9171 y se comprueba de nuevo el estado, sin asumir que los antecedentes sean el estado actual. Main y manual tienen historias diferentes e integrador queda excluido. Se encontraron seis eliminaciones locales previas fuera de Semana11; se preservan sin incluirlas.
+
+### Tarea
+
+Rediseñar B1–B9 con identidad petróleo/turquesa/pizarra/humo/ámbar, tarjetas, encabezados, jerarquía, estados semánticos, claro/oscuro y Dynamic Type. Conservar icono, nombre, bundle y toda la funcionalidad. Realizar seis grupos visuales progresivos, compilar y publicar cada uno solamente en ai-assisted. Revalidar Debug/Release, dominio, XCTest iOS, roles, formularios, compras al contado/crédito, rechazo, aprobación única, deuda y persistencia tras relanzar.
+
+Preparar después manual mediante un único commit de base limitada de Semana11, reconociendo expresamente la procedencia asistida, sin llevar los commits de IA a su historia ni inventar trabajo manual. Integrar en main exclusivamente actividad03, sección README y PROMPTS/documentación mediante transferencia selectiva. El nuevo prompt autoriza esta integración limitada y reemplaza la pausa obligatoria del prompt anterior. No se autoriza un merge completo.
+
+Crear AUDITORIA_TECNICA.md con arquitectura real, SwiftData, registro/autenticación/PBKDF2, ubicación y lectura segura de SQLite, reglas/funciones, permisos, calidad y al menos15 respuestas en primera persona para defensa. Entregar resultados reales, commits/rutas/ramas, evidencias, limitaciones y estado final remoto.
+
+### Restricciones
+
+Ningún cambio propio fuera de Semana11 ni en actividades01/02; no alterar registros existentes; no modificar modelos, relaciones, servicios o seguridad por estética. No borrar datos de simulador, usar staging global, reset/clean/force push ni fusionar historias completas. Integrador intocable. Solicitar acceso a .git por el mecanismo autorizado. Conservar trabajo local independiente. No presentar código asistido como manual. Las pruebas persistentes deben usar un dispositivo QA separado con cuentas ficticias únicas.
+
+### Formato esperado
+
+Auditoría explicativa A–H y un informe detallado en español con mejoras por pantalla, inventario de archivos, hashes/mensajes/ramas, pushes, resultados de pruebas y ejemplos, capturas reales, almacenamiento local e integración controlada. Conservar documentos y evidencias anteriores como historial, identificando versiones nuevas.
+
+### Qué se hizo con la respuesta
+
+Se auditó y preservó el trabajo previo ajeno; se realizaron seis commits visuales compilados y publicados progresivamente. Los modelos, servicios, punto de entrada y recursos del icono permanecen idénticos al inicio. Se creó el simulador Compras Rediseño QA, separado del dispositivo de la estudiante. Se agregó XCTest de dominio iOS sobre los mismos servicios, manteniendo también el ejecutable de36 comprobaciones. Los casos UI usan memoria salvo el relanzamiento persistente, protegido por una guarda de nombre de dispositivo QA y credenciales ficticias con sufijo único. Los fallos de automatización por el teclado se investigaron con el árbol de accesibilidad; se ajustó el recorrido, sin cambiar reglas de compra. Los resultados definitivos y transferencias se registran en INFORME_REDISENO.md. No se usaron subagentes ni se inventaron pruebas manuales realizadas por el agente.

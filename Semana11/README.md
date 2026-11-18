@@ -190,4 +190,9 @@ Aplicación independiente en `apple_lab11_03_SwiftUI_Compras/Compras.xcodeproj` 
 - **Ejecución:** abrir el proyecto y ejecutar en simulador iOS 17+. Registrar Supervisor para crear catálogos; cerrar sesión y registrar Comprador. No hay datos demo automáticos.
 - **Pruebas:** `zsh apple_lab11_03_SwiftUI_Compras/Scripts/test-domain.sh` ejecuta escenarios aislados en memoria y disco temporal. El esquema Compras también incluye pruebas XCTest de interfaz con base en memoria.
 
-Consulta [la documentación técnica de Compras](apple_lab11_03_SwiftUI_Compras/README.md) y [el registro de IA](PROMPTS.md). Las comprobaciones reales y límites de validación se detallan en el informe de la actividad. No se realizó integración final a main; la revisión del usuario precede a esa operación.
+Consulta [la documentación técnica de Compras](apple_lab11_03_SwiftUI_Compras/README.md) y [el registro de IA](PROMPTS.md). Las comprobaciones reales y límites de validación se detallan en el informe de la actividad. El estado de integración selectiva se registra en el informe del rediseño; no se fusionan historias completas.
+
+
+### Rediseño y auditoría de Compras
+
+La actividad 03 incorpora una presentación renovada B1–B9 sin cambiar modelos, autenticación ni reglas. Se conserva el icono aprobado. [Auditoría técnica](apple_lab11_03_SwiftUI_Compras/AUDITORIA_TECNICA.md) explica arquitectura, persistencia, permisos, PBKDF2 y 22 preguntas de sustentación. [Informe de rediseño](apple_lab11_03_SwiftUI_Compras/INFORME_REDISENO.md) registra pruebas reales y las transferencias selectivas autorizadas a manual y main, con procedencia asistida explícita. Las actividades 01/02 y sus descripciones se mantienen.

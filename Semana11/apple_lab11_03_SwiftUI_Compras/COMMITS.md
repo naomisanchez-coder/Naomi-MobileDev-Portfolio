@@ -226,3 +226,118 @@ Semana11/apple_lab11_03_SwiftUI_Compras/INFORME.md
 Semana11/apple_lab11_03_SwiftUI_Compras/COMMITS.md
 Semana11/apple_lab11_03_SwiftUI_Compras/ARCHIVOS.md
 ```
+
+
+## Continuación: rediseño del 18 de noviembre de 2026
+
+El bloque anterior conserva la entrega inicial hasta0ee9171. Los commits siguientes son asistidos y no se atribuyen a la rama manual. Las transferencias de base/integración se documentan en INFORME_REDISENO.md.
+
+### 09f1928b2936bb2952b6e013672fcb63702e8e13 · ai-assisted
+
+style: renovar diseño de login y registro
+
+```text
+Semana11/apple_lab11_03_SwiftUI_Compras/Compras/Design.swift
+Semana11/apple_lab11_03_SwiftUI_Compras/Compras/LoginView.swift
+Semana11/apple_lab11_03_SwiftUI_Compras/Compras/RegisterView.swift
+```
+
+### ff17be68f46a64fac17ed233368d5f20bf5a55e9 · ai-assisted
+
+style: mejorar interfaces de productos y proveedores
+
+```text
+Semana11/apple_lab11_03_SwiftUI_Compras/Compras/ProductsView.swift
+Semana11/apple_lab11_03_SwiftUI_Compras/Compras/SuppliersView.swift
+```
+
+### e687268fa2f8429020b10a895191090762ae2dda · ai-assisted
+
+style: rediseñar formulario y resumen de nueva compra
+
+```text
+Semana11/apple_lab11_03_SwiftUI_Compras/Compras/NewPurchaseView.swift
+```
+
+### a8edf4661bd6fbb9b6a5fae747a1fb49d6dd3ef2 · ai-assisted
+
+style: modernizar historial y estados de compras
+
+```text
+Semana11/apple_lab11_03_SwiftUI_Compras/Compras/Design.swift
+Semana11/apple_lab11_03_SwiftUI_Compras/Compras/MyPurchasesView.swift
+```
+
+### 44978f3c6e209478e3b3a3108e26d337ab1621a2 · ai-assisted
+
+style: mejorar aprobación y cuentas por pagar
+
+```text
+Semana11/apple_lab11_03_SwiftUI_Compras/Compras/ApprovalView.swift
+Semana11/apple_lab11_03_SwiftUI_Compras/Compras/PayablesView.swift
+```
+
+### 6d908fb94c39cd21aaa9f9b7413f2e13f12891f1 · ai-assisted
+
+style: renovar dashboard y componentes visuales
+
+```text
+Semana11/apple_lab11_03_SwiftUI_Compras/Compras/Design.swift
+Semana11/apple_lab11_03_SwiftUI_Compras/Compras/HomeView.swift
+Semana11/apple_lab11_03_SwiftUI_Compras/Compras/ProductsView.swift
+Semana11/apple_lab11_03_SwiftUI_Compras/Compras/SummaryView.swift
+Semana11/apple_lab11_03_SwiftUI_Compras/Compras/SuppliersView.swift
+```
+
+### 507bbf4418097a6b9c481ca7963c0cf36d32b504 · ai-assisted
+
+test: revalidar dominio iOS y persistencia con XCTest aislado
+
+```text
+Semana11/apple_lab11_03_SwiftUI_Compras/Compras.xcodeproj/project.pbxproj
+Semana11/apple_lab11_03_SwiftUI_Compras/Compras.xcodeproj/xcshareddata/xcschemes/Compras.xcscheme
+Semana11/apple_lab11_03_SwiftUI_Compras/DomainTests/ComprasDomainTests.swift
+Semana11/apple_lab11_03_SwiftUI_Compras/Evidence/Redesign-2026-11-18/domain-36.txt
+Semana11/apple_lab11_03_SwiftUI_Compras/Evidence/Redesign-2026-11-18/domain-xctest.txt
+```
+
+### 7241bb58ca0989476d07736cd97e7d374b295659 · ai-assisted
+
+test: verificar interfaz rediseñada y relanzamiento persistente en QA
+
+```text
+Semana11/apple_lab11_03_SwiftUI_Compras/Evidence/Redesign-2026-11-18/b1-error-generico-1.png
+Semana11/apple_lab11_03_SwiftUI_Compras/Evidence/Redesign-2026-11-18/b1-login-1.png
+Semana11/apple_lab11_03_SwiftUI_Compras/Evidence/Redesign-2026-11-18/b1-login-2.png
+Semana11/apple_lab11_03_SwiftUI_Compras/Evidence/Redesign-2026-11-18/b1-login-oscuro-1.png
+Semana11/apple_lab11_03_SwiftUI_Compras/Evidence/Redesign-2026-11-18/b1-login-oscuro-2.png
+Semana11/apple_lab11_03_SwiftUI_Compras/Evidence/Redesign-2026-11-18/b2-registro-datos-1.png
+Semana11/apple_lab11_03_SwiftUI_Compras/Evidence/Redesign-2026-11-18/b2-registro-datos-2.png
+Semana11/apple_lab11_03_SwiftUI_Compras/Evidence/Redesign-2026-11-18/b2-registro-rol-1.png
+Semana11/apple_lab11_03_SwiftUI_Compras/Evidence/Redesign-2026-11-18/b2-registro-rol-2.png
+Semana11/apple_lab11_03_SwiftUI_Compras/Evidence/Redesign-2026-11-18/b3-detalle-catalogo-1.png
+Semana11/apple_lab11_03_SwiftUI_Compras/Evidence/Redesign-2026-11-18/b3-productos-1.png
+Semana11/apple_lab11_03_SwiftUI_Compras/Evidence/Redesign-2026-11-18/b4-proveedores-1.png
+Semana11/apple_lab11_03_SwiftUI_Compras/Evidence/Redesign-2026-11-18/b5-nueva-compra-1.png
+Semana11/apple_lab11_03_SwiftUI_Compras/Evidence/Redesign-2026-11-18/b5-nueva-compra-2.png
+Semana11/apple_lab11_03_SwiftUI_Compras/Evidence/Redesign-2026-11-18/b5-nueva-compra-3.png
+Semana11/apple_lab11_03_SwiftUI_Compras/Evidence/Redesign-2026-11-18/b5-nueva-compra-4.png
+Semana11/apple_lab11_03_SwiftUI_Compras/Evidence/Redesign-2026-11-18/b6-mis-compras-1.png
+Semana11/apple_lab11_03_SwiftUI_Compras/Evidence/Redesign-2026-11-18/b7-aprobar-1.png
+Semana11/apple_lab11_03_SwiftUI_Compras/Evidence/Redesign-2026-11-18/b7-todo-al-dia-1.png
+Semana11/apple_lab11_03_SwiftUI_Compras/Evidence/Redesign-2026-11-18/b8-pagadas-1.png
+Semana11/apple_lab11_03_SwiftUI_Compras/Evidence/Redesign-2026-11-18/b8-por-pagar-1.png
+Semana11/apple_lab11_03_SwiftUI_Compras/Evidence/Redesign-2026-11-18/b8-vencidas-vacio-1.png
+Semana11/apple_lab11_03_SwiftUI_Compras/Evidence/Redesign-2026-11-18/b9-barras-y-equipo-1.png
+Semana11/apple_lab11_03_SwiftUI_Compras/Evidence/Redesign-2026-11-18/b9-resumen-1.png
+Semana11/apple_lab11_03_SwiftUI_Compras/Evidence/Redesign-2026-11-18/database-observation.json
+Semana11/apple_lab11_03_SwiftUI_Compras/Evidence/Redesign-2026-11-18/inicio-icono-compras-1.png
+Semana11/apple_lab11_03_SwiftUI_Compras/Evidence/Redesign-2026-11-18/integrity.json
+Semana11/apple_lab11_03_SwiftUI_Compras/Evidence/Redesign-2026-11-18/persistence-summary.json
+Semana11/apple_lab11_03_SwiftUI_Compras/Evidence/Redesign-2026-11-18/persistencia-real-qa.png
+Semana11/apple_lab11_03_SwiftUI_Compras/Evidence/Redesign-2026-11-18/run-3-summary.json
+Semana11/apple_lab11_03_SwiftUI_Compras/Evidence/Redesign-2026-11-18/screenshots.json
+Semana11/apple_lab11_03_SwiftUI_Compras/Evidence/Redesign-2026-11-18/validation-results.json
+Semana11/apple_lab11_03_SwiftUI_Compras/Scripts/test-redesign.sh
+Semana11/apple_lab11_03_SwiftUI_Compras/UITests/ComprasUITests.swift
+```

@@ -71,6 +71,17 @@ Revisión manual y capturas de sustentación: probar ambos roles y todas las pes
 
 ## Alcance académico y Git
 
+> Este bloque conserva el contexto de la primera implementación. El prompt posterior autoriza las transferencias selectivas y su estado actual se registra en INFORME_REDISENO.md.
+
 Se implementa exclusivamente Grupo B. El PDF exige expediente previo y visto bueno, y defensa oral; no se dispone de evidencia de su realización. Por instrucción del usuario se completa el código ahora, dejando documentos y diagramas académicos para otra fase. No se inventa aprobación del docente.
 
 La rama ai-assisted conserva sus 15 commits exclusivos previos. Se copió solo Semana11 desde main en un commit de base, sin merge/rebase general. Las actividades 01/02 son idénticas a main, incluidos sus espacios preexistentes. Su restauración solo las incorpora a una rama que no las tenía. Los commits funcionales posteriores solo incluyen actividad 03 y documentación de Semana11. No integrar toda ai-assisted a main: sus historias previas difieren en otras semanas. La entrega debe trasladar únicamente los archivos de actividad 03, README y PROMPTS, con revisión final obligatoria.
+
+
+## Rediseño y revalidación del 18 de noviembre de 2026
+
+Las nueve pantallas conservan su funcionalidad y usan encabezados, tarjetas, botones y métricas compartidas. El icono, bundle, modelos y servicios no cambiaron. Consulta [la auditoría técnica A–H](AUDITORIA_TECNICA.md), con 22 preguntas para defensa, y [el informe del rediseño](INFORME_REDISENO.md) para resultados actuales e integración selectiva.
+
+El esquema incluye ahora ComprasDomainTests (12 casos XCTest iOS) además del verificador macOS de 36 comprobaciones y los recorridos UI. Para la suite nueva usa `zsh Scripts/test-redesign.sh UDID_QA` con un dispositivo separado llamado Compras Rediseño QA. El recorrido persistente escribe únicamente en ese dispositivo y verifica cuentas/compras tras cerrar y abrir la app. Los otros recorridos usan memoria. La guarda del caso persistente evita ejecutarlo en un simulador personal.
+
+Se conservan las evidencias anteriores. Las nuevas capturas, manifiestos, resultados y prueba de integridad están bajo `Evidence/Redesign-2026-11-18/`. No hay base SQLite publicada; la auditoría explica cómo obtener una copia de lectura local. El prompt nuevo autoriza transferencia selectiva a main y una base de procedencia asistida para manual; no autoriza fusionar historias completas ni atribuir desarrollo asistido a trabajo manual.
