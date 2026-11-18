@@ -4,7 +4,7 @@
 
 ## Entrega y alcance
 
-Proyecto: `/Users/naomisanchez/Desktop/SanchezNaomi/Semana11/apple_lab11_03_SwiftUI_Compras/Compras.xcodeproj`. Abrir con Xcode, esquema Compras, iPhone 17 Pro / iOS 26.5 y ⌘R. Mínimo iOS 17. La implementación B1–B9, arquitectura, modelos, permisos, reglas y ejemplos se describen en [README del proyecto](README.md); el uso de IA, en [PROMPTS](../PROMPTS.md).
+Proyecto: `/Users/naomisanchez/Desktop/SanchezNaomi/Semana12/apple_lab11_03_SwiftUI_Compras/Compras.xcodeproj`. Abrir con Xcode, esquema Compras, iPhone 17 Pro / iOS 26.5 y ⌘R. Mínimo iOS 17. La implementación B1–B9, arquitectura, modelos, permisos, reglas y ejemplos se describen en [README del proyecto](README.md); el uso de IA, en [PROMPTS](../PROMPTS.md).
 
 Solo se desarrolló Grupo B. No se crearon Word ni diagramas finales. La guía académica exige expediente/visto bueno docente y defensa oral: no se recibió evidencia de los primeros y no se afirma su cumplimiento. Se continuó por solicitud expresa del usuario. No se tocó hardware, permisos del sistema ni protecciones.
 
@@ -77,7 +77,7 @@ Para sustentar: explicar @Model, contexto/guardar, @Query/#Predicate, inversas y
 
 ## Integración futura a main
 
-No fusionar la rama completa: su historia anterior contiene diferencias de otras semanas. Integrar únicamente archivos nuevos bajo `Semana11/apple_lab11_03_SwiftUI_Compras/`, la ampliación de `Semana11/README.md` y `Semana11/PROMPTS.md`. No trasladar las actividades 01/02, que ya existen e idénticas en main. No hay autorización para merge/push a main en esta ejecución. Se solicita revisión final del usuario antes de esa fase.
+No fusionar la rama completa: su historia anterior contiene diferencias de otras semanas. Integrar únicamente archivos nuevos bajo `Semana12/apple_lab11_03_SwiftUI_Compras/`, la ampliación de `Semana11/README.md` y `Semana11/PROMPTS.md`. No trasladar las actividades 01/02, que ya existen e idénticas en main. No hay autorización para merge/push a main en esta ejecución. Se solicita revisión final del usuario antes de esa fase.
 
 
 El árbol completo y las 52 rutas exactas propuestas para main están en [ARCHIVOS.md](ARCHIVOS.md). Se debe revisar esa lista y autorizar expresamente la integración en una fase posterior.

@@ -77,3 +77,21 @@ Se auditó y preservó el trabajo previo ajeno; se realizaron seis commits visua
 El verificador conservado pasó 36 comprobaciones; XCTest de dominio pasó 12 casos. UI de login y recorrido B1–B9 pasaron en Tests-3 y el caso persistente definitivo, con navegación comprobada y artefactos nuevos, pasó en Persistence-6 (104.124 s). Se registran resultados por caso en ejecuciones separadas; no se llama verde a la ejecución intermedia que tenía un fallo de automatización. Se generaron 26 capturas nuevas y se conservaron las 17 anteriores. La copia SQLite se limita a QA y no se publica.
 
 Manual se preparó en `bbda928d0b36a9ed1bbd413a272ccd448d7d84ed` desde ai-assisted@8c90a91, mediante un único commit de base que reconoce la asistencia de IA. Main recibió transferencia selectiva en `d3116012aa0253f9f57e4824def1277d7c5e2607`, con README anterior preservado y actividades 01/02 intactas. Ambos pushes se completaron; main compiló desde su worktree antes y después. Integrador no se tocó. El cierre documental se publica también en main, conforme al nuevo prompt, sin modificar código ni atribuir cambios manuales inexistentes. Las seis eliminaciones locales previas ajenas se conservan exactamente.
+
+
+## 18 de noviembre de 2026 · Cierre y organización en Semana12
+
+### Contexto
+Aplicación existente del Laboratorio 11 Grupo B y rediseño visual local pendiente.
+
+### Tarea
+Publicar el rediseño, fortalecer validaciones de productos, probar en aislamiento, trasladar la actividad a Semana12 e integrar selectivamente en main.
+
+### Restricciones
+Conservar modelos, compras, autenticación, permisos, datos y actividades 01/02. Preservar seis eliminaciones ajenas. No modificar manual/integrador, fusionar historias completas, reescribir commits ni hacer staging global.
+
+### Formato esperado
+Informe real de cambios, pruebas, commits, ramas, rutas y limitaciones.
+
+### Uso de la respuesta
+Asistencia de IA en el mismo chat. Se reutilizó el rediseño, se agregó ProductValidation y 12 casos XCTest, y se organizó el traslado con git mv de rutas versionadas. No se detecta universalmente la existencia comercial de un nombre. La organización en Semana12 no cambia la denominación oficial del Laboratorio 11. Los resultados finales e integración se registran en INFORME_CIERRE.md. No se atribuye este trabajo a desarrollo manual.
