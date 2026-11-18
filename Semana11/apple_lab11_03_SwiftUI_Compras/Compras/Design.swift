@@ -41,11 +41,13 @@ struct Metric: View {
     let title: String
     let value: String
     let symbol: String
+    private var tone: Color { symbol.contains("calendar") ? Brand.warning : symbol.contains("doc") ? .blue : Brand.emphasis }
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Label(title, systemImage: symbol).font(.subheadline).foregroundStyle(.secondary)
+        VStack(alignment: .leading, spacing: 14) {
+            IconTile(symbol: symbol, color: tone)
+            Text(title).font(.caption.weight(.medium)).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
             Text(value).foregroundStyle(Brand.ink).font(.title2.bold()).monospacedDigit().minimumScaleFactor(0.65)
-        }.frame(maxWidth: .infinity, alignment: .leading).padding(16).background(.background, in: RoundedRectangle(cornerRadius: 16))
+        }.frame(maxWidth: .infinity, alignment: .leading).surfaceCard(accent: tone)
     }
 }
 struct AccountMenu: View {
@@ -56,7 +58,7 @@ struct AccountMenu: View {
                 Text(u.nombre); Text("@\(u.usuario) · \(u.rol)")
                 Button("Cerrar sesión", systemImage: "rectangle.portrait.and.arrow.right", role: .destructive) { sesion.salir() }
             }
-        } label: { Image(systemName: "person.crop.circle.fill").font(.title2).foregroundStyle(Brand.green).frame(minWidth: 44, minHeight: 44) }
+        } label: { Text(String(sesion.usuario?.nombre.prefix(1) ?? "")).font(.headline.bold()).foregroundStyle(Brand.emphasis).frame(width: 44, height: 44).background(Brand.card, in: Circle()).overlay(Circle().stroke(Brand.emphasis.opacity(0.18), lineWidth: 1)) }
         .accessibilityLabel("Cuenta y cerrar sesión")
     }
 }
@@ -64,7 +66,7 @@ struct Screen<Content: View>: View {
     let title: String
     @ViewBuilder let content: Content
     var body: some View {
-        NavigationStack { content.navigationTitle(title).appToolbar { ToolbarItem(placement: .topBarTrailing) { AccountMenu() } } }
+        NavigationStack { content.background(Brand.background).navigationTitle(title).toolbarBackground(Brand.background, for: .navigationBar).appToolbar { ToolbarItem(placement: .topBarTrailing) { AccountMenu() } } }
     }
 }
 struct ErrorNotice: View {
@@ -137,11 +139,12 @@ struct IconTile: View {
     }
 }
 struct PrimaryActionStyle: ButtonStyle {
+    @Environment(\.isEnabled) private var enabled
     func makeBody(configuration: Configuration) -> some View {
         configuration.label.font(.headline).foregroundStyle(.white)
             .frame(maxWidth: .infinity, minHeight: 52)
             .background(LinearGradient(colors: [Brand.green, Brand.green.opacity(0.88)], startPoint: .leading, endPoint: .trailing), in: RoundedRectangle(cornerRadius: 16))
-            .opacity(configuration.isPressed ? 0.8 : 1)
+            .opacity(enabled ? (configuration.isPressed ? 0.8 : 1) : 0.45)
     }
 }
 struct EmptyPanel: View {

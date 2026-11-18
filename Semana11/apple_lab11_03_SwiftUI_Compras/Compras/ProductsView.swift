@@ -17,7 +17,7 @@ struct ProductsView: View {
                 Section { VisualHeader(eyebrow: "Inventario", title: "Productos que mueven tu negocio", subtitle: "Consulta existencias, costos y valoración en un solo lugar.", symbol: "shippingbox.fill") }.floatingRow()
                 Section { Metric(title: "Valor del inventario", value: Brand.money(products.reduce(0) { $0 + Double($1.stock) * $1.costoPromedio }), symbol: "shippingbox") }.floatingRow()
                 Section("Catálogo · \(filtered.count) productos") {
-                    if filtered.isEmpty { ContentUnavailableView("Sin productos", systemImage: "shippingbox", description: Text(sesion.supervisor ? "Añade un producto con el botón +." : "El supervisor administra el catálogo.")) }
+                    if filtered.isEmpty { EmptyPanel(title: "Sin productos", message: sesion.supervisor ? "Añade un producto con el botón +." : "El supervisor administra el catálogo.", symbol: "shippingbox").floatingRow() }
                     ForEach(filtered) { p in
                         Button { if sesion.supervisor { editing = p; showEditor = true } } label: {
                             ProductRow(product: p).surfaceCard(accent: p.stock < 10 ? Brand.warning : Brand.green)

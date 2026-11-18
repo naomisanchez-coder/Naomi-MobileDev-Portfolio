@@ -16,7 +16,7 @@ struct SuppliersView: View {
             List {
                 Section { VisualHeader(eyebrow: "Abastecimiento", title: "Una red de confianza", subtitle: "Mantén a mano tus proveedores y el estado de tus compras.", symbol: "building.2.fill") }.floatingRow()
                 Section("Red de abastecimiento") {
-                    if filtered.isEmpty { ContentUnavailableView("Sin proveedores", systemImage: "building.2", description: Text("Los proveedores aparecerán aquí cuando el supervisor los registre.")) }
+                    if filtered.isEmpty { EmptyPanel(title: "Sin proveedores", message: "Los proveedores aparecerán aquí cuando el supervisor los registre.", symbol: "building.2").floatingRow() }
                     ForEach(filtered) { p in
                         Button { if sesion.supervisor { editing = p; showEditor = true } } label: {
                             SupplierRow(supplier: p).surfaceCard()
