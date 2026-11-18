@@ -1,0 +1,114 @@
+{
+  "distinct_final_cases": 15,
+  "domain_cases": 12,
+  "ui_cases": 3,
+  "separate_runs": true,
+  "explanation": "Los 12 casos de dominio y UI de login/recorrido pasaron en Tests-3. La persistencia UI pasó después en Persistence-6 con navegación verificada. Tests-3 completo no fue verde; se conserva su resumen con el fallo intermedio.",
+  "cases": [
+    {
+      "class": "ComprasUITests",
+      "method": "testLoginAppearanceAndInvalidCredentials",
+      "seconds": 15.432,
+      "result": "Passed",
+      "source": "Tests-3.xcresult"
+    },
+    {
+      "class": "ComprasUITests",
+      "method": "testScreensAndRoles",
+      "seconds": 225.352,
+      "result": "Passed",
+      "source": "Tests-3.xcresult"
+    },
+    {
+      "class": "ComprasDomainTests",
+      "method": "test01RegistrationAndDuplicate",
+      "seconds": 0.075,
+      "result": "Passed",
+      "source": "Tests-3.xcresult"
+    },
+    {
+      "class": "ComprasDomainTests",
+      "method": "test02IncorrectLogin",
+      "seconds": 0.078,
+      "result": "Passed",
+      "source": "Tests-3.xcresult"
+    },
+    {
+      "class": "ComprasDomainTests",
+      "method": "test03CreditPurchase",
+      "seconds": 0.055,
+      "result": "Passed",
+      "source": "Tests-3.xcresult"
+    },
+    {
+      "class": "ComprasDomainTests",
+      "method": "test04CashPurchase",
+      "seconds": 0.042,
+      "result": "Passed",
+      "source": "Tests-3.xcresult"
+    },
+    {
+      "class": "ComprasDomainTests",
+      "method": "test05PendingHasNoEffects",
+      "seconds": 0.042,
+      "result": "Passed",
+      "source": "Tests-3.xcresult"
+    },
+    {
+      "class": "ComprasDomainTests",
+      "method": "test06ApproveExactlyOnce",
+      "seconds": 0.042,
+      "result": "Passed",
+      "source": "Tests-3.xcresult"
+    },
+    {
+      "class": "ComprasDomainTests",
+      "method": "test07RejectRequiresReason",
+      "seconds": 0.042,
+      "result": "Passed",
+      "source": "Tests-3.xcresult"
+    },
+    {
+      "class": "ComprasDomainTests",
+      "method": "test08OverdueAndPayOnce",
+      "seconds": 0.043,
+      "result": "Passed",
+      "source": "Tests-3.xcresult"
+    },
+    {
+      "class": "ComprasDomainTests",
+      "method": "test09OwnPurchasesAndRoles",
+      "seconds": 0.062,
+      "result": "Passed",
+      "source": "Tests-3.xcresult"
+    },
+    {
+      "class": "ComprasDomainTests",
+      "method": "test10BoundaryAndDeletionGuards",
+      "seconds": 0.042,
+      "result": "Passed",
+      "source": "Tests-3.xcresult"
+    },
+    {
+      "class": "ComprasDomainTests",
+      "method": "test11PersistentReopen",
+      "seconds": 0.084,
+      "result": "Passed",
+      "source": "Tests-3.xcresult"
+    },
+    {
+      "class": "ComprasDomainTests",
+      "method": "test12SupervisorCatalogCRUD",
+      "seconds": 0.043,
+      "result": "Passed",
+      "source": "Tests-3.xcresult"
+    },
+    {
+      "class": "ComprasUITests",
+      "method": "testPersistentRelaunchWithVerifiedNavigation",
+      "seconds": 104.124,
+      "result": "Passed",
+      "source": "Persistence-6.xcresult"
+    }
+  ]
+}
