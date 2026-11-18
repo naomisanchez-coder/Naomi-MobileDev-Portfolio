@@ -19,7 +19,7 @@ struct NewPurchaseView: View {
     var body: some View {
         Screen(title: "Nueva compra") {
             Form {
-                Section { Label(sesion.usuario?.nombre ?? "", systemImage: "person.crop.circle"); Text("Comprador de la sesión actual").font(.caption).foregroundStyle(.secondary) }
+                Section { VisualHeader(eyebrow: "Nueva operación", title: "Planifica tu abastecimiento", subtitle: sesion.usuario?.nombre ?? "", symbol: "cart.badge.plus") }.floatingRow()
                 Section("Abastecimiento") {
                     Picker("Proveedor", selection: $supplierID) {
                         Text("Selecciona un proveedor").tag(nil as PersistentIdentifier?)
@@ -38,21 +38,27 @@ struct NewPurchaseView: View {
                     Picker("Pago", selection: $credit) { Text("Contado").tag(false); Text("Crédito 30 días").tag(true) }.pickerStyle(.segmented)
                     if credit { Text("Vence 30 días calendario después del registro.").font(.footnote).foregroundStyle(.secondary) }
                 }
-                Section("Importes") {
-                    LabeledContent("Subtotal", value: Brand.money(amounts?.subtotal ?? 0))
-                    LabeledContent("IGV 18 %", value: Brand.money(amounts?.igv ?? 0))
-                    LabeledContent("Total", value: Brand.money(amounts?.total ?? 0)).font(.headline)
-                }
+                Section("Resumen de la compra") {
+                    VStack(spacing: 16) {
+                        HStack { Label("Subtotal", systemImage: "receipt"); Spacer(); Text(Brand.money(amounts?.subtotal ?? 0)).monospacedDigit() }
+                        HStack { Text("IGV 18 %"); Spacer(); Text(Brand.money(amounts?.igv ?? 0)).monospacedDigit() }.foregroundStyle(.secondary)
+                        Divider()
+                        VStack(alignment: .leading, spacing: 6) {
+                            Text("Total").font(.subheadline.bold())
+                            Text(Brand.money(amounts?.total ?? 0)).font(.largeTitle.bold()).monospacedDigit().foregroundStyle(Brand.emphasis).minimumScaleFactor(0.7)
+                        }.frame(maxWidth: .infinity, alignment: .leading)
+                    }.surfaceCard()
+                }.floatingRow()
                 if let a = amounts, ComprasService.needsApproval(total: a.total) {
-                    Section { Label("Desde S/ 5 000 requiere aprobación. Hasta entonces no cambia el inventario ni genera deuda.", systemImage: "exclamationmark.shield").foregroundStyle(Brand.warning).font(.callout) }
+                    Section { Label("Desde S/ 5 000 requiere aprobación. Hasta entonces no cambia el inventario ni genera deuda.", systemImage: "exclamationmark.shield").foregroundStyle(Brand.warning).font(.callout).surfaceCard(accent: Brand.amber) }.floatingRow()
                 }
                 if suppliers.isEmpty || products.isEmpty { Section { Text("Un supervisor debe registrar proveedores y productos antes de realizar una compra.").foregroundStyle(.secondary) } }
                 if let error { Section { ErrorNotice(text: error) } }
                 Section {
                     Button((amounts?.total ?? 0) >= 5000 ? "Enviar a aprobación" : "Registrar compra", action: submit)
-                        .buttonStyle(.borderedProminent).frame(maxWidth: .infinity).disabled(saving || amounts == nil || supplierID == nil || productID == nil)
+                        .buttonStyle(PrimaryActionStyle()).frame(maxWidth: .infinity).disabled(saving || amounts == nil || supplierID == nil || productID == nil)
                 }
-            }.scrollDismissesKeyboard(.immediately)
+            }.scrollContentBackground(.hidden).background(Brand.background).scrollDismissesKeyboard(.immediately)
             .appToolbar { ToolbarItemGroup(placement: .keyboard) { Spacer(); Button("Listo") { inputFocused = false } } }
             .alert("Compra guardada", isPresented: $success) { Button("Aceptar", role: .cancel) {} } message: { Text("Puedes consultar su estado en Mis compras.") }
         }
