@@ -1,0 +1,12 @@
+{
+  "protected_files_checked": 30,
+  "activities_01_02_unchanged": true,
+  "models_app_navigation_icon_unchanged": true,
+  "business_only_product_validation_changed": true,
+  "unrelated_deletions_preserved": 6,
+  "manual": "bbda928d0b36a9ed1bbd413a272ccd448d7d84ed",
+  "integrador": "ba8346c05852833fa66722fd7ed00e26f81eef1d",
+  "tested_main_commit": "99c7ae2",
+  "qa_simulator": "ABA6697D-2B9A-419C-85C8-759A286D2AC7",
+  "student_simulator_not_used": true
+}

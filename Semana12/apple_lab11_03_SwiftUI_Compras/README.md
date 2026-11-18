@@ -93,3 +93,6 @@ Se conservan las evidencias anteriores. Las nuevas capturas, manifiestos, result
 El stock debe poder convertirse a `Int` y ser no negativo; el costo debe ser finito, no negativo y producir una valoración finita. Se acepta coma decimal. La combinación nombre/categoría es única tras normalizar espacios y mayúsculas; editar excluye el propio registro. Las categorías existentes se ofrecen como sugerencias, manteniendo texto libre. No se sanea ni migra ningún registro previo automáticamente. Las fórmulas de compras, permisos y modelos no cambian.
 
 Los casos XCTest 13–24 cubren entradas vacías, espacios, límites de longitud, marcadores, marcas legítimas, duplicados en alta/edición, categorías, stock negativo/no numérico/overflow, costo no finito y alta/edición válidas. Usan contenedores aislados.
+
+
+Ubicación de entrega: `Semana12/apple_lab11_03_SwiftUI_Compras/Compras.xcodeproj`. Consulte [INFORME_CIERRE.md](INFORME_CIERRE.md) para los resultados vigentes y la integración selectiva a main. Los informes anteriores se conservan como historial del Laboratorio 11 Grupo B.

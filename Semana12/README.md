@@ -18,3 +18,8 @@ Consulta [la documentación técnica de Compras](apple_lab11_03_SwiftUI_Compras/
 ### Rediseño y auditoría de Compras
 
 La actividad 03 incorpora una presentación renovada B1–B9 sin cambiar modelos, autenticación ni reglas. Se conserva el icono aprobado. [Auditoría técnica](apple_lab11_03_SwiftUI_Compras/AUDITORIA_TECNICA.md) explica arquitectura, persistencia, permisos, PBKDF2 y 22 preguntas de sustentación. [Informe de rediseño](apple_lab11_03_SwiftUI_Compras/INFORME_REDISENO.md) registra pruebas reales y las transferencias selectivas autorizadas a manual y main, con procedencia asistida explícita. Las actividades 01/02 y sus descripciones se mantienen.
+
+
+### Cierre de entrega y validación de productos
+
+La ubicación definitiva es esta Semana12 por organización del repositorio; sigue siendo el Laboratorio 11 Grupo B. La identidad visual más reciente y las validaciones centralizadas están documentadas en [el informe de cierre](apple_lab11_03_SwiftUI_Compras/INFORME_CIERRE.md). Las evidencias resumidas del cierre se conservan en `apple_lab11_03_SwiftUI_Compras/Evidence/Final-2026-11-18/`. Las actividades 01 y 02 y su documentación permanecen en Semana11.

@@ -174,3 +174,16 @@ No se detectó un defecto crítico que justificara cambiar reglas de negocio. Lo
 20. **¿Dónde se calcula el dashboard?** Yo filtro aprobadas y pendientes en SummaryView y sumo inventario, IGV y deuda con sus condiciones; no invento resultados para el gráfico.
 21. **¿Qué significa Cancelar en una edición?** Yo cierro el formulario sin copiar el borrador al modelo. Solo Guardar llama al servicio y confirma cambios.
 22. **¿Por qué no hago merge completo?** Yo transfiero solo Semana11 porque las ramas tienen historias de otras semanas. El commit de manual reconoce la procedencia asistida y no la presenta como trabajo manual.
+
+
+## Actualización de cierre: ubicación y validaciones de productos
+
+La ruta vigente es `Semana12/apple_lab11_03_SwiftUI_Compras/Compras.xcodeproj`. Es el mismo Laboratorio 11, Grupo B; Semana12 es la organización de entrega del repositorio. Las referencias a Semana11, main/manual y resultados anteriores describen el historial de la actividad, no el estado de las ramas de este cierre. Consulte `INFORME_CIERRE.md` para resultados vigentes.
+
+La identidad visual posterior usa azul profundo, turquesa, violeta y coral, y `ShoppingHero` dibuja recursos de compras sin internet. El icono no cambia.
+
+`ProductValidation.spaces` colapsa espacios; `key` obtiene la clave de comparación sin distinguir mayúsculas. `fields` comprueba nombre de 2–120 caracteres, categoría de 2–60, marcadores exactos y repeticiones de seis letras iguales, stock no negativo, costo finito no negativo y valoración finita. El umbral de seis conserva códigos legítimos de pilas como AAAA. No verifica universalmente la existencia comercial. `numbers` transforma los campos del formulario sin desbordar Int y permite coma decimal.
+
+`ComprasService.product` mantiene la comprobación de supervisor, valida el contexto al editar y aplica las validaciones antes de mutar el modelo. Busca duplicados por nombre y categoría normalizados y excluye el propio identificador persistente en edición. `ProductEditor` reutiliza la conversión común y ofrece categorías existentes, sin cambiar el modelo ni exigir una lista cerrada. No se corrigen retroactivamente registros existentes. El resto de funciones de Business.swift conserva su contenido anterior: autenticación, compras, promedio ponderado, aprobaciones, pagos y permisos no fueron modificados.
+
+Los casos XCTest 13–24 amplían las pruebas aisladas de calidad de productos; los casos 1–12 conservan los escenarios del laboratorio, persistencia y CRUD. Cambiar la carpeta del proyecto no cambia el Bundle Identifier ni la configuración de Store, por lo que no cambia la ubicación de los datos de una instalación existente. No se desinstaló la aplicación ni se borraron bases de datos.
