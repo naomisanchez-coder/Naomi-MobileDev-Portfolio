@@ -12,7 +12,7 @@ import SwiftData
     var body: some Scene {
         WindowGroup {
             if let container {
-                Text("Compras Tecsup").modelContainer(container).environment(sesion)
+                LoginView().modelContainer(container).environment(sesion)
             } else {
                 ContentUnavailableView("No se pudo abrir Compras", systemImage: "externaldrive.badge.exclamationmark", description: Text(failure ?? "Vuelve a abrir la app. No se borraron datos."))
             }
