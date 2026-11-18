@@ -3,6 +3,7 @@ struct HomeView: View {
     @Environment(Sesion.self) private var sesion
     var body: some View {
         TabView {
+            if sesion.supervisor { SummaryView().tabItem { Label("Resumen", systemImage: "chart.bar.xaxis") } }
             if sesion.supervisor { ApprovalView().tabItem { Label("Aprobar", systemImage: "checkmark.shield") } }
             if sesion.supervisor { PayablesView().tabItem { Label("Por pagar", systemImage: "calendar.badge.clock") } }
             ProductsView().tabItem { Label("Productos", systemImage: "shippingbox") }
