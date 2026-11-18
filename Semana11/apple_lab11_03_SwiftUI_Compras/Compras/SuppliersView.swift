@@ -14,17 +14,18 @@ struct SuppliersView: View {
     var body: some View {
         Screen(title: "Proveedores") {
             List {
+                Section { VisualHeader(eyebrow: "Abastecimiento", title: "Una red de confianza", subtitle: "Mantén a mano tus proveedores y el estado de tus compras.", symbol: "building.2.fill") }.floatingRow()
                 Section("Red de abastecimiento") {
                     if filtered.isEmpty { ContentUnavailableView("Sin proveedores", systemImage: "building.2", description: Text("Los proveedores aparecerán aquí cuando el supervisor los registre.")) }
                     ForEach(filtered) { p in
                         Button { if sesion.supervisor { editing = p; showEditor = true } } label: {
-                            SupplierRow(supplier: p)
-                        }.buttonStyle(.plain).deleteDisabled(!sesion.supervisor)
+                            SupplierRow(supplier: p).surfaceCard()
+                        }.buttonStyle(.plain).floatingRow().deleteDisabled(!sesion.supervisor)
                     }.onDelete(perform: requestDelete)
                 }
                 if let error { ErrorNotice(text: error) }
                 Section { Text("Los totales incluyen únicamente compras aprobadas. Una compra pendiente o rechazada no genera deuda.").font(.footnote).foregroundStyle(.secondary) }
-            }.searchable(text: $search, prompt: "Nombre o RUC")
+            }.catalogBackground().searchable(text: $search, prompt: "Nombre o RUC")
                 .appToolbar { addToolbar }
                 .sheet(isPresented: $showEditor) { SupplierEditor(supplier: editing) }
                 .confirmationDialog("¿Eliminar este proveedor?", isPresented: Binding(get: { deleting != nil }, set: { if !$0 { deleting = nil } }), titleVisibility: .visible) {
@@ -52,7 +53,7 @@ struct SupplierEditor: View {
             Form {
                 Section("Datos del proveedor") { TextField("Nombre o razón social", text: $nombre); TextField("RUC", text: $ruc).keyboardType(.numberPad) }
                 if let error { ErrorNotice(text: error) }
-            }.navigationTitle(supplier == nil ? "Nuevo proveedor" : "Editar proveedor").navigationBarTitleDisplayMode(.inline)
+            }.scrollContentBackground(.hidden).background(Brand.background).navigationTitle(supplier == nil ? "Nuevo proveedor" : "Editar proveedor").navigationBarTitleDisplayMode(.inline)
                 .appToolbar {
                     ToolbarItem(placement: .cancellationAction) { Button("Cancelar") { dismiss() } }
                     ToolbarItem(placement: .confirmationAction) { Button("Guardar") {
@@ -69,14 +70,24 @@ struct SupplierRow: View {
     var total: Double { supplier.compras.filter { $0.estado == "Aprobada" }.reduce(0) { $0 + $1.total } }
     var hasDebt: Bool { supplier.compras.contains { $0.esDeuda } }
     var body: some View {
-        VStack(alignment: .leading, spacing: 9) {
-            HStack {
-                Label(supplier.nombre, systemImage: "building.2.fill").font(.headline)
+        VStack(alignment: .leading, spacing: 18) {
+            HStack(alignment: .top, spacing: 12) {
+                IconTile(symbol: "building.2.fill")
+                VStack(alignment: .leading, spacing: 5) {
+                    Text(supplier.nombre).font(.headline)
+                    Text("RUC · \(supplier.ruc)").font(.caption).foregroundStyle(.secondary)
+                }
+                Spacer(minLength: 0)
+            }
+            Divider()
+            HStack(alignment: .bottom) {
+                VStack(alignment: .leading, spacing: 5) {
+                    Text("Total comprado").font(.caption).foregroundStyle(.secondary)
+                    Text(Brand.money(total)).font(.title3.bold()).monospacedDigit()
+                }
                 Spacer()
                 StatusBadge(text: hasDebt ? "Por pagar" : "Al día")
             }
-            Text("RUC · \(supplier.ruc)").font(.subheadline).foregroundStyle(.secondary)
-            Text("Total comprado: \(Brand.money(total))").font(.subheadline).monospacedDigit()
-        }.foregroundStyle(Brand.ink).padding(.vertical, 8)
+        }.foregroundStyle(Brand.ink)
     }
 }

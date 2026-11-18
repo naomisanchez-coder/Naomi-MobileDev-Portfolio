@@ -14,17 +14,18 @@ struct ProductsView: View {
     var body: some View {
         Screen(title: "Productos") {
             List {
-                Section { Metric(title: "Valor del inventario", value: Brand.money(products.reduce(0) { $0 + Double($1.stock) * $1.costoPromedio }), symbol: "shippingbox") }
+                Section { VisualHeader(eyebrow: "Inventario", title: "Productos que mueven tu negocio", subtitle: "Consulta existencias, costos y valoración en un solo lugar.", symbol: "shippingbox.fill") }.floatingRow()
+                Section { Metric(title: "Valor del inventario", value: Brand.money(products.reduce(0) { $0 + Double($1.stock) * $1.costoPromedio }), symbol: "shippingbox") }.floatingRow()
                 Section("Catálogo · \(filtered.count) productos") {
                     if filtered.isEmpty { ContentUnavailableView("Sin productos", systemImage: "shippingbox", description: Text(sesion.supervisor ? "Añade un producto con el botón +." : "El supervisor administra el catálogo.")) }
                     ForEach(filtered) { p in
                         Button { if sesion.supervisor { editing = p; showEditor = true } } label: {
-                            ProductRow(product: p)
-                        }.buttonStyle(.plain).deleteDisabled(!sesion.supervisor).accessibilityHint(sesion.supervisor ? "Editar producto" : "Solo consulta")
+                            ProductRow(product: p).surfaceCard(accent: p.stock < 10 ? Brand.warning : Brand.green)
+                        }.buttonStyle(.plain).floatingRow().deleteDisabled(!sesion.supervisor).accessibilityHint(sesion.supervisor ? "Editar producto" : "Solo consulta")
                     }.onDelete(perform: requestDelete)
                 }
                 if let error { Section { ErrorNotice(text: error) } }
-            }.searchable(text: $search, prompt: "Producto o categoría")
+            }.catalogBackground().searchable(text: $search, prompt: "Producto o categoría")
                 .appToolbar { addToolbar }
                 .sheet(isPresented: $showEditor) { ProductEditor(product: editing) }
                 .confirmationDialog("¿Eliminar este producto?", isPresented: Binding(get: { deleting != nil }, set: { if !$0 { deleting = nil } }), titleVisibility: .visible) {
@@ -56,7 +57,7 @@ struct ProductEditor: View {
                 Section { TextField("Stock inicial", text: $stock).keyboardType(.numberPad); TextField("Costo promedio (S/)", text: $costo).keyboardType(.decimalPad) }
                 header: { Text("Inventario") }
                 if let error { ErrorNotice(text: error) }
-            }.navigationTitle(product == nil ? "Nuevo producto" : "Editar producto").navigationBarTitleDisplayMode(.inline)
+            }.scrollContentBackground(.hidden).background(Brand.background).navigationTitle(product == nil ? "Nuevo producto" : "Editar producto").navigationBarTitleDisplayMode(.inline)
                 .appToolbar {
                     ToolbarItem(placement: .cancellationAction) { Button("Cancelar") { dismiss() } }
                     ToolbarItem(placement: .confirmationAction) { Button("Guardar") {
@@ -75,10 +76,26 @@ struct ProductRow: View {
     let product: Producto
     var stockColor: Color { product.stock == 0 ? Brand.danger : product.stock < 10 ? Brand.warning : Brand.emphasis }
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            HStack { Label(product.nombre, systemImage: "cube.box.fill").font(.headline); Spacer(); Text("\(product.stock) u.").font(.caption.bold()).foregroundStyle(stockColor) }
-            HStack { Text(product.categoria); Spacer(); Text(Brand.money(product.costoPromedio)) }.font(.subheadline).foregroundStyle(.secondary)
-            Text("Valor: \(Brand.money(Double(product.stock) * product.costoPromedio))").font(.caption).foregroundStyle(.secondary)
-        }.padding(.vertical, 6).foregroundStyle(Brand.ink)
+        VStack(alignment: .leading, spacing: 18) {
+            HStack(alignment: .top, spacing: 12) {
+                IconTile(symbol: "shippingbox.fill")
+                VStack(alignment: .leading, spacing: 5) {
+                    Text(product.nombre).font(.headline).foregroundStyle(Brand.ink)
+                    Text(product.categoria).font(.subheadline).foregroundStyle(.secondary)
+                }
+                Spacer(minLength: 4)
+            }
+            HStack {
+                Label("\(product.stock) u. · \(product.stock == 0 ? "Sin stock" : product.stock < 10 ? "Stock bajo" : "Disponible")", systemImage: product.stock < 10 ? "exclamationmark.circle.fill" : "checkmark.circle.fill")
+                    .font(.caption.bold()).foregroundStyle(stockColor)
+                Spacer()
+            }
+            Divider()
+            HStack(alignment: .top) {
+                VStack(alignment: .leading, spacing: 5) { Text("Costo promedio").font(.caption).foregroundStyle(.secondary); Text(Brand.money(product.costoPromedio)).font(.headline).monospacedDigit() }
+                Spacer()
+                VStack(alignment: .trailing, spacing: 5) { Text("Valor del inventario").font(.caption).foregroundStyle(.secondary); Text(Brand.money(Double(product.stock) * product.costoPromedio)).font(.headline).monospacedDigit().foregroundStyle(Brand.emphasis) }
+            }
+        }.foregroundStyle(Brand.ink)
     }
 }
