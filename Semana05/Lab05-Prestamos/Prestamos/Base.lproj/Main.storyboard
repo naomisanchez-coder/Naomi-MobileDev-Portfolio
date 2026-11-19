@@ -90,6 +90,9 @@
                                                 </constraints>
                                                 <state key="normal" title="Calcular"/>
                                                 <buttonConfiguration key="configuration" style="filled" title="Calcular" cornerStyle="medium"/>
+                                                <connections>
+                                                    <action selector="calculateLoan:" destination="loan-controller" eventType="touchUpInside" id="calculate-action"/>
+                                                </connections>
                                             </button>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="results-group">
                                                     <rect key="frame" x="0.0" y="434" width="345" height="123"/>
@@ -143,6 +146,13 @@
                             <constraint firstItem="form-scroll" firstAttribute="bottom" secondItem="safe-area" secondAttribute="bottom" id="scroll-bottom"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="principalField" destination="capital-field" id="capital-field-outlet"/>
+                        <outlet property="annualRateField" destination="rate-field" id="rate-field-outlet"/>
+                        <outlet property="yearsField" destination="term-field" id="term-field-outlet"/>
+                        <outlet property="monthlyResultLabel" destination="monthly-result" id="monthly-result-outlet"/>
+                        <outlet property="totalResultLabel" destination="total-result" id="total-result-outlet"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="first-responder" sceneMemberID="firstResponder"/>
             </objects>
