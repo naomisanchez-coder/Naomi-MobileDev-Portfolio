@@ -18,4 +18,15 @@ final class ViewController: UIViewController, UITableViewDelegate, UITableViewDa
         cell.PersonaImagen.accessibilityLabel = "Avatar provisional de \(nombre)"
         return cell
     }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let alerta = UIAlertController(
+            title: "El Docente que Selecciono es :",
+            message: personasArreglo[indexPath.row],
+            preferredStyle: .alert
+        )
+        alerta.addAction(UIAlertAction(title: "OK", style: .cancel))
+        present(alerta, animated: true)
+    }
 }
