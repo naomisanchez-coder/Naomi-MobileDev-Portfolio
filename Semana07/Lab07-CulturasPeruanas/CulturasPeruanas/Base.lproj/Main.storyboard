@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="list-controller">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <scene sceneID="list-scene">
+            <objects>
+                <viewController id="list-controller" customClass="ViewController" customModule="CulturasPeruanas" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="list-view">
+                        <rect key="frame" x="0" y="0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" text="Culturas peruanas" numberOfLines="0" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="list-title">
+                                <rect key="frame" x="20" y="75" width="353" height="41"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="80" estimatedRowHeight="80" translatesAutoresizingMaskIntoConstraints="NO" id="rows-table">
+                                <rect key="frame" x="0" y="128" width="393" height="690"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" reuseIdentifier="cultura" rowHeight="80" accessoryType="disclosureIndicator" customClass="CulturaTableViewCell" customModule="CulturasPeruanas" customModuleProvider="target" id="prototype-cell">
+                                        <rect key="frame" x="0" y="0" width="393" height="80"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" contentMode="center" tableViewCell="prototype-cell" id="cell-content">
+                                            <rect key="frame" x="0" y="0" width="393" height="80"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="row-image">
+                                                    <rect key="frame" x="16" y="12" width="72" height="56"/>
+                                                    <accessibility key="accessibilityConfiguration" identifier="row-image"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="72" id="image-width"/>
+                                                        <constraint firstAttribute="height" constant="56" id="image-height"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Nombre" numberOfLines="0" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="row-label">
+                                                    <rect key="frame" x="102" y="28" width="266" height="24"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="row-image" firstAttribute="leading" secondItem="cell-content" secondAttribute="leading" constant="16" id="image-leading"/>
+                                                <constraint firstItem="row-image" firstAttribute="centerY" secondItem="cell-content" secondAttribute="centerY" id="image-center"/>
+                                                <constraint firstItem="row-image" firstAttribute="top" relation="greaterThanOrEqual" secondItem="cell-content" secondAttribute="top" constant="10" id="image-top"/>
+                                                <constraint firstItem="row-label" firstAttribute="leading" secondItem="row-image" secondAttribute="trailing" constant="14" id="label-leading"/>
+                                                <constraint firstAttribute="trailing" secondItem="row-label" secondAttribute="trailing" constant="16" id="label-trailing"/>
+                                                <constraint firstItem="row-label" firstAttribute="centerY" secondItem="cell-content" secondAttribute="centerY" id="label-center"/>
+                                                <constraint firstItem="row-label" firstAttribute="top" relation="greaterThanOrEqual" secondItem="cell-content" secondAttribute="top" constant="12" id="label-top"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="imagenCultura" destination="row-image" id="image-outlet"/>
+                                            <outlet property="nombreCultura" destination="row-label" id="name-outlet"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="list-controller" id="table-data-source"/>
+                                    <outlet property="delegate" destination="list-controller" id="table-delegate"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="list-safe"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="list-title" firstAttribute="top" secondItem="list-safe" secondAttribute="top" constant="16" id="title-top"/>
+                            <constraint firstItem="list-title" firstAttribute="leading" secondItem="list-safe" secondAttribute="leading" constant="20" id="title-leading"/>
+                            <constraint firstItem="list-safe" firstAttribute="trailing" secondItem="list-title" secondAttribute="trailing" constant="20" id="title-trailing"/>
+                            <constraint firstItem="rows-table" firstAttribute="top" secondItem="list-title" secondAttribute="bottom" constant="12" id="table-top"/>
+                            <constraint firstItem="rows-table" firstAttribute="leading" secondItem="list-safe" secondAttribute="leading" id="table-leading"/>
+                            <constraint firstItem="rows-table" firstAttribute="trailing" secondItem="list-safe" secondAttribute="trailing" id="table-trailing"/>
+                            <constraint firstItem="rows-table" firstAttribute="bottom" secondItem="list-safe" secondAttribute="bottom" id="table-bottom"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="list-responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="20" y="15"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
