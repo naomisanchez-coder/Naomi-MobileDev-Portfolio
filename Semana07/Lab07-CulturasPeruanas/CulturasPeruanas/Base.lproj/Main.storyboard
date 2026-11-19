@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="list-controller">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="navigation-controller">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
@@ -78,13 +78,113 @@
                             <constraint firstItem="rows-table" firstAttribute="bottom" secondItem="list-safe" secondAttribute="bottom" id="table-bottom"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="list-navigation-item">
+                        <barButtonItem key="backBarButtonItem" title="Culturas" id="back-to-list"/>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="detail-controller" kind="show" identifier="mostrarCultura" id="show-detail"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="list-responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="20" y="15"/>
         </scene>
+        <scene sceneID="navigation-scene">
+            <objects>
+                <navigationController id="navigation-controller" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="navigation-bar">
+                        <rect key="frame" x="0" y="59" width="393" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="list-controller" kind="relationship" relationship="rootViewController" id="root-list"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="navigation-responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-800" y="15"/>
+        </scene>
+        <scene sceneID="detail-scene">
+            <objects>
+                <viewController id="detail-controller" customClass="DetalleCulturaViewController" customModule="CulturasPeruanas" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="detail-view">
+                        <rect key="frame" x="0" y="0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="detail-scroll">
+                                <rect key="frame" x="0" y="103" width="393" height="715"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="detail-stack">
+                                        <rect key="frame" x="24" y="20" width="345" height="400"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" text="Nombre" numberOfLines="0" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="detail-name">
+                                                <rect key="frame" x="0" y="0" width="345" height="41"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="detalle-nombre"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" text="Región" numberOfLines="0" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="detail-region">
+                                                <rect key="frame" x="0" y="57" width="345" height="22"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="detalle-region"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="detail-image">
+                                                <rect key="frame" x="0" y="95" width="345" height="220"/>
+                                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="detail-image" secondAttribute="height" multiplier="11:7" id="detail-image-ratio"/>
+                                                </constraints>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" text="Descripción de la cultura" numberOfLines="0" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="detail-description">
+                                                <rect key="frame" x="0" y="331" width="345" height="69"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="detalle-descripcion"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="520" id="detail-max-width"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="detail-stack" firstAttribute="top" secondItem="detail-content" secondAttribute="top" constant="20" id="detail-stack-top"/>
+                                    <constraint firstItem="detail-content" firstAttribute="bottom" secondItem="detail-stack" secondAttribute="bottom" constant="24" id="detail-stack-bottom"/>
+                                    <constraint firstItem="detail-content" firstAttribute="width" secondItem="detail-frame" secondAttribute="width" id="detail-content-width"/>
+                                    <constraint firstItem="detail-stack" firstAttribute="centerX" secondItem="detail-content" secondAttribute="centerX" id="detail-stack-center"/>
+                                    <constraint firstItem="detail-stack" firstAttribute="width" secondItem="detail-content" secondAttribute="width" constant="-48" priority="999" id="detail-stack-width"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="detail-content"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="detail-frame"/>
+                            </scrollView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="detail-safe"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="detail-scroll" firstAttribute="top" secondItem="detail-safe" secondAttribute="top" id="detail-scroll-top"/>
+                            <constraint firstItem="detail-scroll" firstAttribute="leading" secondItem="detail-safe" secondAttribute="leading" id="detail-scroll-leading"/>
+                            <constraint firstItem="detail-scroll" firstAttribute="trailing" secondItem="detail-safe" secondAttribute="trailing" id="detail-scroll-trailing"/>
+                            <constraint firstItem="detail-scroll" firstAttribute="bottom" secondItem="detail-safe" secondAttribute="bottom" id="detail-scroll-bottom"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="detail-navigation-item"/>
+                    <connections>
+                        <outlet property="nombreLabel" destination="detail-name" id="detail-name-outlet"/>
+                        <outlet property="regionLabel" destination="detail-region" id="detail-region-outlet"/>
+                        <outlet property="descripcionLabel" destination="detail-description" id="detail-description-outlet"/>
+                        <outlet property="imagenView" destination="detail-image" id="detail-image-outlet"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="detail-responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="840" y="15"/>
+        </scene>
     </scenes>
     <resources>
+        <systemColor name="secondarySystemBackgroundColor">
+            <color red="0.949" green="0.949" blue="0.969" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

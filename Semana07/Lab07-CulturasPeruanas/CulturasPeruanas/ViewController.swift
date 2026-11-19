@@ -11,4 +11,16 @@ final class ViewController: UIViewController, UITableViewDelegate, UITableViewDa
         cell.mostrar(culturas[indexPath.row])
         return cell
     }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        performSegue(withIdentifier: "mostrarCultura", sender: culturas[indexPath.row])
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard segue.identifier == "mostrarCultura",
+              let detalle = segue.destination as? DetalleCulturaViewController,
+              let cultura = sender as? Cultura else { return }
+        detalle.cultura = cultura
+    }
 }
