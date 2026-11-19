@@ -10,6 +10,10 @@ final class ViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let profesor = listaProfesores[indexPath.row]
         cell.textLabel?.text = profesor.nombre
         cell.detailTextLabel?.text = profesor.cargo
+        cell.imageView?.image = profesor.foto
+        cell.imageView?.isAccessibilityElement = profesor.foto != nil
+        cell.imageView?.accessibilityLabel = "Avatar provisional de \(profesor.nombre)"
+        cell.imageView?.accessibilityIdentifier = "foto-\(profesor.nombre)"
         return cell
     }
 }
