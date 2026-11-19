@@ -14,8 +14,134 @@
                     <view key="view" contentMode="scaleToFill" id="root-view">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="form-scroll">
+                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="loan-form">
+                                            <rect key="frame" x="24" y="24" width="345" height="557"/>
+                                            <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Calculadora de préstamos" numberOfLines="0" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="form-title">
+                                                    <rect key="frame" x="0.0" y="0" width="345" height="82"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleLargeTitle"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="capital-group">
+                                                    <rect key="frame" x="0.0" y="100" width="345" height="74"/>
+                                                    <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Capital inicial (S/)" numberOfLines="0" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="capital-label">
+                                                            <rect key="frame" x="0.0" y="0" width="345" height="21"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Ej. 10000,50" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="capital-field">
+                                                            <rect key="frame" x="0.0" y="28" width="345" height="46"/>
+                                                            <accessibility key="accessibilityConfiguration" label="Capital inicial" identifier="capital-field"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="46" id="capital-field-height"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                            <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="decimalPad"/>
+                                                        </textField>
+                                                    </subviews>
+                                                </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="rate-group">
+                                                    <rect key="frame" x="0.0" y="192" width="345" height="74"/>
+                                                    <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Tasa de interés anual (%)" numberOfLines="0" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rate-label">
+                                                            <rect key="frame" x="0.0" y="0" width="345" height="21"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Ej. 12" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rate-field">
+                                                            <rect key="frame" x="0.0" y="28" width="345" height="46"/>
+                                                            <accessibility key="accessibilityConfiguration" label="Tasa de interés anual" identifier="rate-field"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="46" id="rate-field-height"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                            <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="decimalPad"/>
+                                                        </textField>
+                                                    </subviews>
+                                                </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="term-group">
+                                                    <rect key="frame" x="0.0" y="284" width="345" height="74"/>
+                                                    <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Plazo (años enteros)" numberOfLines="0" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="term-label">
+                                                            <rect key="frame" x="0.0" y="0" width="345" height="21"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Ej. 1" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="term-field">
+                                                            <rect key="frame" x="0.0" y="28" width="345" height="46"/>
+                                                            <accessibility key="accessibilityConfiguration" label="Plazo en años enteros" identifier="term-field"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="46" id="term-field-height"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                            <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numberPad"/>
+                                                        </textField>
+                                                    </subviews>
+                                                </stackView>
+                                            <button opaque="NO" contentMode="scaleToFill" buttonType="system" translatesAutoresizingMaskIntoConstraints="NO" id="calculate-button">
+                                                <rect key="frame" x="0.0" y="366" width="345" height="50"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="calculate-height"/>
+                                                </constraints>
+                                                <state key="normal" title="Calcular"/>
+                                                <buttonConfiguration key="configuration" style="filled" title="Calcular" cornerStyle="medium"/>
+                                            </button>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="results-group">
+                                                    <rect key="frame" x="0.0" y="434" width="345" height="123"/>
+                                                    <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Cuota mensual" numberOfLines="0" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="monthly-title">
+                                                            <rect key="frame" x="0.0" y="0" width="345" height="21"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="—" numberOfLines="0" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="monthly-result">
+                                                            <rect key="frame" x="0.0" y="26" width="345" height="41"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Monto total a pagar" numberOfLines="0" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="total-title">
+                                                            <rect key="frame" x="0.0" y="72" width="345" height="21"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="—" numberOfLines="0" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="total-result">
+                                                            <rect key="frame" x="0.0" y="98" width="345" height="25"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="width" relation="lessThanOrEqual" constant="480" id="form-max-width"/>
+                                            </constraints>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="loan-form" firstAttribute="top" secondItem="scroll-content" secondAttribute="top" constant="24" id="form-top"/>
+                                    <constraint firstItem="scroll-content" firstAttribute="bottom" secondItem="loan-form" secondAttribute="bottom" constant="32" id="form-bottom"/>
+                                    <constraint firstItem="scroll-content" firstAttribute="width" secondItem="scroll-frame" secondAttribute="width" id="scroll-width"/>
+                                    <constraint firstItem="loan-form" firstAttribute="centerX" secondItem="scroll-content" secondAttribute="centerX" id="form-center"/>
+                                    <constraint firstItem="loan-form" firstAttribute="width" relation="lessThanOrEqual" secondItem="scroll-content" secondAttribute="width" constant="-48" id="form-margins"/>
+                                    <constraint firstItem="loan-form" firstAttribute="width" secondItem="scroll-content" secondAttribute="width" constant="-48" priority="999" id="form-width"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="scroll-content"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="scroll-frame"/>
+                            </scrollView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="safe-area"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="form-scroll" firstAttribute="top" secondItem="safe-area" secondAttribute="top" id="scroll-top"/>
+                            <constraint firstItem="form-scroll" firstAttribute="leading" secondItem="safe-area" secondAttribute="leading" id="scroll-leading"/>
+                            <constraint firstItem="form-scroll" firstAttribute="trailing" secondItem="safe-area" secondAttribute="trailing" id="scroll-trailing"/>
+                            <constraint firstItem="form-scroll" firstAttribute="bottom" secondItem="safe-area" secondAttribute="bottom" id="scroll-bottom"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="first-responder" sceneMemberID="firstResponder"/>
