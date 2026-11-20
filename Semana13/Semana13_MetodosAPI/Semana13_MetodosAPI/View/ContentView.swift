@@ -65,11 +65,14 @@ struct ContentView: View {
                 }
 
                 if !viewModel.hasLoaded && !viewModel.isBusy {
-                    Button("Reintentar", action: viewModel.fetchUsers).padding()
+                    Button("Reintentar") {
+                        Task { await viewModel.fetchUsers() }
+                    }
+                    .padding()
                 }
             }
             .navigationTitle("Usuarios")
-            .onAppear(perform: viewModel.fetchUsers)
+            .onAppear { Task { await viewModel.fetchUsers() } }
             .sheet(isPresented: $showingForm) {
                 if let user = editingUser {
                     UserFormView(viewModel: viewModel, name: user.name, email: user.email, isEditing: true) { name, email in

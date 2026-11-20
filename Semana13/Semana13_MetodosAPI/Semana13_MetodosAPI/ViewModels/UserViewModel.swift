@@ -18,12 +18,21 @@ final class UserViewModel: ObservableObject {
         return users.filter { $0.name.lowercased().contains(searchText.lowercased()) }
     }
 
-    func fetchUsers() {
+    func fetchUsers() async {
         guard !isBusy, !hasLoaded else { return }
-        send(URLRequest(url: usersURL)) { data, code in
-            self.users = try JSONDecoder().decode([User].self, from: data)
-            self.hasLoaded = true
-            self.status = "GET HTTP \(code) · \(self.users.count) usuarios"
+        isBusy = true
+        errorMessage = nil
+        defer { isBusy = false }
+        do {
+            let (data, response) = try await URLSession.shared.data(from: usersURL)
+            let code = try Self.statusCode(response)
+            users = try JSONDecoder().decode([User].self, from: data)
+            hasLoaded = true
+            status = "GET HTTP \(code) · \(users.count) usuarios"
+        } catch {
+            if !Task.isCancelled {
+                errorMessage = "GET: \(error.localizedDescription)"
+            }
         }
     }
 
