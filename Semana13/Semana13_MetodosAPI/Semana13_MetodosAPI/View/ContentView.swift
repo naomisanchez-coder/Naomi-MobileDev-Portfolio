@@ -31,7 +31,7 @@ struct ContentView: View {
                     .swipeActions(allowsFullSwipe: false) {
                         if user.id > 0 {
                             Button {
-                                viewModel.deleteUser(id: user.id)
+                                Task { await viewModel.deleteUser(id: user.id) }
                             } label: {
                                 Label("Eliminar", systemImage: "trash")
                             }
@@ -76,8 +76,10 @@ struct ContentView: View {
             .sheet(isPresented: $showingForm) {
                 if let user = editingUser {
                     UserFormView(viewModel: viewModel, name: user.name, email: user.email, isEditing: true) { name, email in
-                        viewModel.updateUser(user: User(id: user.id, name: name, email: email)) {
-                            showingForm = false
+                        Task {
+                            await viewModel.updateUser(user: User(id: user.id, name: name, email: email)) {
+                                showingForm = false
+                            }
                         }
                     }
                 } else {

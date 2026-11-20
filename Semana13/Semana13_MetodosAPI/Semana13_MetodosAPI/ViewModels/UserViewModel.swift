@@ -63,29 +63,41 @@ final class UserViewModel: ObservableObject {
         }
     }
 
-    func updateUser(user: User, onSuccess: @escaping () -> Void) {
+    func updateUser(user: User, onSuccess: () -> Void) async {
+        guard !isBusy, let index = users.firstIndex(where: { $0.id == user.id }) else { return }
+        isBusy = true
+        errorMessage = nil
+        defer { isBusy = false }
+
         let url = usersURL.appendingPathComponent(String(user.id))
         do {
             let request = try userRequest(method: "PUT", url: url, user: user)
-            send(request) { _, code in
-                guard let index = self.users.firstIndex(where: { $0.id == user.id }) else { return }
-                self.users[index] = user
-                self.searchText = ""
-                self.status = "PUT HTTP \(code) · Edición local: \(user.name)"
-                onSuccess()
-            }
+            let (_, response) = try await URLSession.shared.data(for: request)
+            let code = try Self.statusCode(response)
+            users[index] = user
+            searchText = ""
+            status = "PUT HTTP \(code) · Edición local: \(user.name)"
+            onSuccess()
         } catch {
             errorMessage = "PUT: \(error.localizedDescription)"
         }
     }
 
-    func deleteUser(id: Int) {
-        guard let user = users.first(where: { $0.id == id }) else { return }
+    func deleteUser(id: Int) async {
+        guard !isBusy, let user = users.first(where: { $0.id == id }) else { return }
+        isBusy = true
+        errorMessage = nil
+        defer { isBusy = false }
+
         var request = URLRequest(url: usersURL.appendingPathComponent(String(id)))
         request.httpMethod = "DELETE"
-        send(request) { _, code in
-            self.users.removeAll { $0.id == id }
-            self.status = "DELETE HTTP \(code) · Baja local: \(user.name)"
+        do {
+            let (_, response) = try await URLSession.shared.data(for: request)
+            let code = try Self.statusCode(response)
+            users.removeAll { $0.id == id }
+            status = "DELETE HTTP \(code) · Baja local: \(user.name)"
+        } catch {
+            errorMessage = "DELETE: \(error.localizedDescription)"
         }
     }
 
@@ -95,26 +107,6 @@ final class UserViewModel: ObservableObject {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = try JSONEncoder().encode(user)
         return request
-    }
-
-    private func send(_ request: URLRequest, apply: @escaping (Data, Int) throws -> Void) {
-        guard !isBusy else { return }
-        isBusy = true
-        errorMessage = nil
-        let method = request.httpMethod ?? "GET"
-        URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
-            DispatchQueue.main.async {
-                guard let self else { return }
-                defer { self.isBusy = false }
-                do {
-                    if let error { throw error }
-                    let code = try Self.statusCode(response)
-                    try apply(data ?? Data(), code)
-                } catch {
-                    self.errorMessage = "\(method): \(error.localizedDescription)"
-                }
-            }
-        }.resume()
     }
 
     private static func statusCode(_ response: URLResponse?) throws -> Int {
