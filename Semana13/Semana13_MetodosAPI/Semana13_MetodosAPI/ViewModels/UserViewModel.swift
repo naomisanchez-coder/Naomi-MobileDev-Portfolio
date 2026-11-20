@@ -65,6 +65,16 @@ final class UserViewModel: ObservableObject {
         }
     }
 
+    func deleteUser(id: Int) {
+        guard let user = users.first(where: { $0.id == id }) else { return }
+        var request = URLRequest(url: usersURL.appendingPathComponent(String(id)))
+        request.httpMethod = "DELETE"
+        send(request) { _, code in
+            self.users.removeAll { $0.id == id }
+            self.status = "DELETE HTTP \(code) · Baja local: \(user.name)"
+        }
+    }
+
     private func userRequest(method: String, url: URL, user: User) throws -> URLRequest {
         var request = URLRequest(url: url)
         request.httpMethod = method

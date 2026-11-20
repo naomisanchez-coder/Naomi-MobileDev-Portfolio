@@ -31,6 +31,14 @@ struct ContentView: View {
                     .swipeActions(allowsFullSwipe: false) {
                         if user.id > 0 {
                             Button {
+                                viewModel.deleteUser(id: user.id)
+                            } label: {
+                                Label("Eliminar", systemImage: "trash")
+                            }
+                            .tint(.red)
+                            .disabled(viewModel.isBusy)
+
+                            Button {
                                 viewModel.clearError()
                                 editingUser = user
                                 showingForm = true
