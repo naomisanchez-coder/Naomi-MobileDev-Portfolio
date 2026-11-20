@@ -3,6 +3,8 @@ import SwiftUI
 struct ContentView: View {
     @StateObject private var viewModel = UserViewModel()
 
+    @State private var showingForm = false
+
     var body: some View {
         NavigationView {
             VStack(spacing: 0) {
@@ -28,12 +30,30 @@ struct ContentView: View {
                 }
                 .scrollDismissesKeyboard(.interactively)
 
+                if viewModel.hasLoaded {
+                    Button {
+                        viewModel.clearError()
+                        showingForm = true
+                    } label: {
+                        Label("Agregar Usuario", systemImage: "plus")
+                    }
+                    .padding()
+                    .disabled(viewModel.isBusy)
+                }
+
                 if !viewModel.hasLoaded && !viewModel.isBusy {
                     Button("Reintentar", action: viewModel.fetchUsers).padding()
                 }
             }
             .navigationTitle("Usuarios")
             .onAppear(perform: viewModel.fetchUsers)
+            .sheet(isPresented: $showingForm) {
+                UserFormView(viewModel: viewModel, name: "", email: "", isEditing: false) { name, email in
+                    viewModel.createUser(name: name, email: email) {
+                        showingForm = false
+                    }
+                }
+            }
         }
         .navigationViewStyle(.stack)
     }

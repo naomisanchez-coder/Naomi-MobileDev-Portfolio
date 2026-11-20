@@ -10,6 +10,7 @@ final class UserViewModel: ObservableObject {
     @Published private(set) var isBusy = false
     @Published private(set) var hasLoaded = false
 
+    private var nextLocalID = -1
     private let usersURL = URL(string: "https://jsonplaceholder.typicode.com/users")!
 
     var filteredUsers: [User] {
@@ -24,6 +25,36 @@ final class UserViewModel: ObservableObject {
             self.hasLoaded = true
             self.status = "GET HTTP \(code) · \(self.users.count) usuarios"
         }
+    }
+
+    func clearError() {
+        errorMessage = nil
+    }
+
+    func createUser(name: String, email: String, onSuccess: @escaping () -> Void) {
+        let user = User(id: 0, name: name, email: email)
+        do {
+            let request = try userRequest(method: "POST", url: usersURL, user: user)
+            send(request) { data, code in
+                let created = try JSONDecoder().decode(User.self, from: data)
+                let local = User(id: self.nextLocalID, name: created.name, email: created.email)
+                self.nextLocalID -= 1
+                self.users.insert(local, at: 0)
+                self.searchText = ""
+                self.status = "POST HTTP \(code) · Alta local: \(local.name)"
+                onSuccess()
+            }
+        } catch {
+            errorMessage = "POST: \(error.localizedDescription)"
+        }
+    }
+
+    private func userRequest(method: String, url: URL, user: User) throws -> URLRequest {
+        var request = URLRequest(url: url)
+        request.httpMethod = method
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try JSONEncoder().encode(user)
+        return request
     }
 
     private func send(_ request: URLRequest, apply: @escaping (Data, Int) throws -> Void) {
