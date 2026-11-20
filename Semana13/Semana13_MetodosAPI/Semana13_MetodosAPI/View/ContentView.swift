@@ -72,23 +72,18 @@ struct ContentView: View {
                 }
             }
             .navigationTitle("Usuarios")
-            .onAppear { Task { await viewModel.fetchUsers() } }
+            .task { await viewModel.fetchUsers() }
             .sheet(isPresented: $showingForm) {
-                if let user = editingUser {
-                    UserFormView(viewModel: viewModel, name: user.name, email: user.email, isEditing: true) { name, email in
-                        Task {
-                            await viewModel.updateUser(user: User(id: user.id, name: name, email: email)) {
-                                showingForm = false
-                            }
+                let user = editingUser
+                UserFormView(viewModel: viewModel, name: user?.name ?? "", email: user?.email ?? "", isEditing: user != nil) { name, email in
+                    Task {
+                        let saved: Bool
+                        if let user {
+                            saved = await viewModel.updateUser(user: User(id: user.id, name: name, email: email))
+                        } else {
+                            saved = await viewModel.createUser(name: name, email: email)
                         }
-                    }
-                } else {
-                    UserFormView(viewModel: viewModel, name: "", email: "", isEditing: false) { name, email in
-                        Task {
-                            await viewModel.createUser(name: name, email: email) {
-                                showingForm = false
-                            }
-                        }
+                        if saved { showingForm = false }
                     }
                 }
             }

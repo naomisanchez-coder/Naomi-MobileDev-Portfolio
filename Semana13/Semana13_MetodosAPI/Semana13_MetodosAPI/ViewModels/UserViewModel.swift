@@ -40,8 +40,8 @@ final class UserViewModel: ObservableObject {
         errorMessage = nil
     }
 
-    func createUser(name: String, email: String, onSuccess: () -> Void) async {
-        guard !isBusy else { return }
+    func createUser(name: String, email: String) async -> Bool {
+        guard !isBusy else { return false }
         isBusy = true
         errorMessage = nil
         defer { isBusy = false }
@@ -57,14 +57,15 @@ final class UserViewModel: ObservableObject {
             users.insert(local, at: 0)
             searchText = ""
             status = "POST HTTP \(code) · Alta local: \(local.name)"
-            onSuccess()
+            return true
         } catch {
             errorMessage = "POST: \(error.localizedDescription)"
+            return false
         }
     }
 
-    func updateUser(user: User, onSuccess: () -> Void) async {
-        guard !isBusy, let index = users.firstIndex(where: { $0.id == user.id }) else { return }
+    func updateUser(user: User) async -> Bool {
+        guard !isBusy, let index = users.firstIndex(where: { $0.id == user.id }) else { return false }
         isBusy = true
         errorMessage = nil
         defer { isBusy = false }
@@ -77,9 +78,10 @@ final class UserViewModel: ObservableObject {
             users[index] = user
             searchText = ""
             status = "PUT HTTP \(code) · Edición local: \(user.name)"
-            onSuccess()
+            return true
         } catch {
             errorMessage = "PUT: \(error.localizedDescription)"
+            return false
         }
     }
 
