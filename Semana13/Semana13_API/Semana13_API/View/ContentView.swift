@@ -5,8 +5,17 @@ struct ContentView: View {
 
     var body: some View {
         NavigationView {
-            List(viewModel.users) { user in
-                Text(user.name)
+            VStack(spacing: 0) {
+                TextField("Buscar usuario por nombre", text: $viewModel.searchText)
+                    .textFieldStyle(.roundedBorder)
+                    .autocorrectionDisabled()
+                    .accessibilityIdentifier("search")
+                    .padding()
+
+                List(viewModel.filteredUsers) { user in
+                    Text(user.name)
+                }
+                .scrollDismissesKeyboard(.interactively)
             }
             .safeAreaInset(edge: .bottom) {
                 VStack(spacing: 6) {
@@ -23,7 +32,7 @@ struct ContentView: View {
                 .padding(.vertical, 8)
                 .background(.background)
             }
-            .navigationTitle("Usuarios - API")
+            .navigationTitle("Usuarios")
             .onAppear(perform: viewModel.fetchUsers)
         }
         .navigationViewStyle(.stack)
