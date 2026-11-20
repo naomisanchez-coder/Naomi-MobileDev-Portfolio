@@ -40,19 +40,24 @@ final class UserViewModel: ObservableObject {
         errorMessage = nil
     }
 
-    func createUser(name: String, email: String, onSuccess: @escaping () -> Void) {
+    func createUser(name: String, email: String, onSuccess: () -> Void) async {
+        guard !isBusy else { return }
+        isBusy = true
+        errorMessage = nil
+        defer { isBusy = false }
+
         let user = User(id: 0, name: name, email: email)
         do {
             let request = try userRequest(method: "POST", url: usersURL, user: user)
-            send(request) { data, code in
-                let created = try JSONDecoder().decode(User.self, from: data)
-                let local = User(id: self.nextLocalID, name: created.name, email: created.email)
-                self.nextLocalID -= 1
-                self.users.insert(local, at: 0)
-                self.searchText = ""
-                self.status = "POST HTTP \(code) · Alta local: \(local.name)"
-                onSuccess()
-            }
+            let (data, response) = try await URLSession.shared.data(for: request)
+            let code = try Self.statusCode(response)
+            let created = try JSONDecoder().decode(User.self, from: data)
+            let local = User(id: nextLocalID, name: created.name, email: created.email)
+            nextLocalID -= 1
+            users.insert(local, at: 0)
+            searchText = ""
+            status = "POST HTTP \(code) · Alta local: \(local.name)"
+            onSuccess()
         } catch {
             errorMessage = "POST: \(error.localizedDescription)"
         }
