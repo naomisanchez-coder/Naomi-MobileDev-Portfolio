@@ -4,6 +4,7 @@ struct ContentView: View {
     @StateObject private var viewModel = UserViewModel()
 
     @State private var showingForm = false
+    @State private var editingUser: User? = nil
 
     var body: some View {
         NavigationView {
@@ -27,12 +28,26 @@ struct ContentView: View {
                         Text(user.email).font(.subheadline).foregroundStyle(.secondary)
                     }
                     .accessibilityIdentifier("user-\(user.id)")
+                    .swipeActions(allowsFullSwipe: false) {
+                        if user.id > 0 {
+                            Button {
+                                viewModel.clearError()
+                                editingUser = user
+                                showingForm = true
+                            } label: {
+                                Label("Editar", systemImage: "pencil")
+                            }
+                            .tint(.blue)
+                            .disabled(viewModel.isBusy)
+                        }
+                    }
                 }
                 .scrollDismissesKeyboard(.interactively)
 
                 if viewModel.hasLoaded {
                     Button {
                         viewModel.clearError()
+                        editingUser = nil
                         showingForm = true
                     } label: {
                         Label("Agregar Usuario", systemImage: "plus")
@@ -48,9 +63,17 @@ struct ContentView: View {
             .navigationTitle("Usuarios")
             .onAppear(perform: viewModel.fetchUsers)
             .sheet(isPresented: $showingForm) {
-                UserFormView(viewModel: viewModel, name: "", email: "", isEditing: false) { name, email in
-                    viewModel.createUser(name: name, email: email) {
-                        showingForm = false
+                if let user = editingUser {
+                    UserFormView(viewModel: viewModel, name: user.name, email: user.email, isEditing: true) { name, email in
+                        viewModel.updateUser(user: User(id: user.id, name: name, email: email)) {
+                            showingForm = false
+                        }
+                    }
+                } else {
+                    UserFormView(viewModel: viewModel, name: "", email: "", isEditing: false) { name, email in
+                        viewModel.createUser(name: name, email: email) {
+                            showingForm = false
+                        }
                     }
                 }
             }

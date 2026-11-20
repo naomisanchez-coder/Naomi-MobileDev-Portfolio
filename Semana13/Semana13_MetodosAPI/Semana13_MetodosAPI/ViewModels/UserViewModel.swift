@@ -49,6 +49,22 @@ final class UserViewModel: ObservableObject {
         }
     }
 
+    func updateUser(user: User, onSuccess: @escaping () -> Void) {
+        let url = usersURL.appendingPathComponent(String(user.id))
+        do {
+            let request = try userRequest(method: "PUT", url: url, user: user)
+            send(request) { _, code in
+                guard let index = self.users.firstIndex(where: { $0.id == user.id }) else { return }
+                self.users[index] = user
+                self.searchText = ""
+                self.status = "PUT HTTP \(code) · Edición local: \(user.name)"
+                onSuccess()
+            }
+        } catch {
+            errorMessage = "PUT: \(error.localizedDescription)"
+        }
+    }
+
     private func userRequest(method: String, url: URL, user: User) throws -> URLRequest {
         var request = URLRequest(url: url)
         request.httpMethod = method
