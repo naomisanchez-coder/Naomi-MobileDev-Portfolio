@@ -58,3 +58,23 @@ Se reutilizó el checkout existente. Se conservaron los worktrees registrados y 
 ## Protección de Lab13
 
 No se abrió ni operó la aplicación Xcode. Se compilaron solo el .xcodeproj y scheme de Semana14 con xcodebuild. No se cerraron, editaron, guardaron ni recompilaron las ventanas o proyectos del Lab13. Los UUID usados para Lab14 fueron el Pro Max y el Pro; el iPhone 17e usado previamente en Lab13 permaneció intacto. El único reinicio de dispositivo fue el del Pro reservado para Lab14, para resolver su arranque bloqueado; no se borró ningún simulador.
+
+
+## Encargo posterior: rediseño de Lab14IntroFirebase
+
+La usuaria pidió implementar un rediseño intuitivo, amigable y profesional sobre el proyecto existente, con azul profundo, turquesa, verde, coral y fondos suaves; estilos reutilizables, etiquetas claras y estados que no dependan solo del color, sin nuevas dependencias. Mejorar acceso/registro, bienvenida histórica y chat, conservar las acciones accesibles con teclado, los remitentes, los servicios, reglas, modelo de datos y Bundle ID. Probar realmente registro, acceso, cierre, contraseña incorrecta y mensajes entre dos cuentas sin refrescar. Guardar nuevas evidencias separadas, conservar las 16 originales y sus enlaces, hacer commits progresivos en español y publicar solo en origin/main. No rehacer el laboratorio ni completar el informe Word. Mantener intactos archivos, ventanas, sesiones y simuladores del Lab13.
+
+### Ajustes implementados y comprobados
+
+- Este encargo autoriza cambiar la presentación original de la guía. Los apartados de fidelidad anteriores describen la entrega inicial, no el nuevo diseño.
+- LabTheme centraliza colores, espaciado, radios, botones y marca. AuthView conserva los métodos Firebase; añade etiquetas en español, foco entre campos, bloqueo de envíos duplicados y mensajes de error legibles. No registra contraseñas. Los errores se muestran con la alerta nativa del sistema.
+- La primera revisión con teclado mostró poco espacio para la contraseña. Se ocultó el título decorativo al enfocar un campo, se compactó la tarjeta y se retiró una barra de teclado redundante. Las capturas finales muestran ambos campos y las dos acciones encima del teclado.
+- MessagesView mantiene DatabaseService sin cambios; presenta mensajes propios a la derecha en azul y recibidos a la izquierda sobre blanco, con etiquetas Tú/Recibido, símbolos, remitente y hora. El compositor usa safeAreaInset, texto de hasta cuatro líneas y botón Enviar; la lista acompaña los mensajes nuevos y el foco del teclado.
+- La bienvenida no se reincorporó al flujo actual. Se extrajo el proyecto histórico a81fb8f mediante git archive a una carpeta temporal, se reutilizaron AuthView y LabTheme actuales y se reemplazó solo la rama autenticada por AuthenticationWelcomeView. La copia compiló y registró realmente a bob.rediseno@example.com. El helper publicado reproduce esos archivos sin cambiar ramas ni escribir en el checkout. Después se instaló de nuevo la app principal en el Pro.
+- No se cambió el proyecto Firebase, SDK, paquetes, reglas, colección messages, campos, Bundle ID, arranque ni configuración de firma. No se abrió Firebase Console para este rediseño. El plist real continúa local e ignorado.
+
+### Verificación del rediseño
+
+El estado inicial estaba limpio y main coincidía con origin/main en aab6b4dd4ea41a7d9d873b3d96f52ff7bf13343e. Se revisaron raíz, remoto, índice, worktrees y archivos existentes; no se encontraron AGENTS.md aplicables. Se calcularon las huellas de las 16 capturas antes de editar y se compararon después contra el manifiesto y los blobs de ese commit, con igualdad en todas.
+
+Las compilaciones y pruebas reales están documentadas en [verificacion.md](evidencias/rediseno/verificacion.md). Se usaron únicamente los dos simuladores reservados para Lab14, sin reiniciarlos ni borrarlos. No se operó Xcode ni se intervinieron ventanas, proyectos o simuladores de Lab13. Los commits del rediseño se auditan individualmente y solo contienen rutas Semana14/.

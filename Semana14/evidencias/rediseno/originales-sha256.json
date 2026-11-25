@@ -1,0 +1,18 @@
+{
+  "Semana14/evidencias/actividad-01/01-formulario-inicial.png": "45f80b0992ff266eafc22282cf33dea127b63d1b08e4f98bceac7718ecb56074",
+  "Semana14/evidencias/actividad-01/02-bienvenida-inicio-sesion.png": "937ce5955c9b69565c2352d0b1f0591f616c6570d6c17465740b0f7af0ffb8ca",
+  "Semana14/evidencias/actividad-01/03-sesion-cerrada.png": "66c251642c2aae6f5e19fc7818d981dc1f6ef645bcd7b5554476d7374210d030",
+  "Semana14/evidencias/actividad-01/04-credenciales-invalidas.png": "998ececd8d659bfe41fac678f28f35ae6705895e384b9e55999699a786aa7a4b",
+  "Semana14/evidencias/actividad-01/05-proveedor-habilitado.png": "f1e588ad68452572991dfb3e5c5cd055797974ee174ced5f73ff418027ba50ce",
+  "Semana14/evidencias/actividad-01/06-cuentas-en-authentication.png": "bdcc44ab2bc3e5f18bd4b0695c31cfd540313ae4c259cbc65a1e47da2195ff15",
+  "Semana14/evidencias/actividad-01/07-registro-correcto.png": "eca6debc4424726ae0b5f59bdcf0dd4d7f143128fa913dcc359d622c3aa53a91",
+  "Semana14/evidencias/actividad-02/01-mensajes-inicial.png": "292931fa326c67404d3041dd80f51c5f64c5c76937dc58b59a693c8ab7c056c2",
+  "Semana14/evidencias/actividad-02/02-recepcion-bob-en-pro-max.png": "450da74324367d525d60a77483652804ff6ba5c7fb18d74576823c29307338fb",
+  "Semana14/evidencias/actividad-02/03-intercambio-en-pro-max.png": "3f9e8dda1575aebebffbcca4080e7c8919a77800ab0dd83feecc9337d938b953",
+  "Semana14/evidencias/actividad-02/04-recepcion-ana-en-pro.png": "fc55b923a939149fdd954cf9b356fcc6c3636753d0df4eade97764bd2aa039c4",
+  "Semana14/evidencias/actividad-02/05-firestore-mensaje-ana.png": "39fd7928097ddad0b53e807b413d31b2920436bbe4934378cfa8eb8bc6c9e5bc",
+  "Semana14/evidencias/actividad-02/06-firestore-mensaje-bob.png": "de928f19d47504ba02fa0be2fa0eec12aa029b7043201d78bacf21137695a1b4",
+  "Semana14/evidencias/actividad-02/07-reglas-autenticadas.png": "792db81c3ffc95119d4dfb6a0bf114fe0f76fd953768ea3bee984f17ecbef6c1",
+  "Semana14/evidencias/actividad-02/08-evaluador-lectura-anonima-rechazada.png": "08e1b2efc2da630ad2a178c2f5feaa16268e86e53c7b0e91ac432b8606e5c70d",
+  "Semana14/evidencias/actividad-02/09-cierre-sesion-desde-mensajes.png": "5cbf9a75a5f072b2745f33d21d91c578b69f687ca7cd1408b29c1feab378f450"
+}

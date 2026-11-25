@@ -90,3 +90,27 @@ Compilaciones e intercambio real completados con Ana en el Pro Max y Bob en el P
 Las pruebas funcionales solicitadas están completadas. Para repetirlas, crear cuentas ficticias propias desde Sign Up. Las contraseñas empleadas durante la verificación se generaron en memoria y no se publican.
 
 Los ajustes comprobados y las aclaraciones del encargo se registran en [prompts.md](prompts.md).
+
+
+## Rediseño de la interfaz
+
+El rediseño continúa sobre el laboratorio terminado `aab6b4dd4ea41a7d9d873b3d96f52ff7bf13343e`. La paleta, los estilos de botones y la marca compartida están en [LabTheme.swift](Lab14IntroFirebase/Lab14IntroFirebase/LabTheme.swift). El acceso agrupa campos y mantiene sus acciones encima del teclado; el chat distingue mensajes con alineación, símbolos y etiquetas, además del color. Se conservan Firebase Authentication, Cloud Firestore, el modelo y el flujo directo de acceso al chat.
+
+### Nuevas evidencias de Actividad 01
+
+- [Formulario inicial](evidencias/rediseno/actividad-01/01-formulario-inicial.png).
+- [Bienvenida autenticada en la copia histórica](evidencias/rediseno/actividad-01/02-bienvenida-autenticada-historica.png).
+- [Alerta por acceso inválido](evidencias/rediseno/actividad-01/03-alerta-acceso-invalido.png).
+- [Regreso al formulario tras cerrar sesión desde el chat](evidencias/rediseno/actividad-01/04-formulario-tras-cerrar-sesion.png).
+- [Formulario con teclado abierto y acciones accesibles](evidencias/rediseno/actividad-01/05-formulario-con-teclado.png).
+
+La bienvenida se ejecutó desde una copia temporal de `a81fb8fcecb92e840a4d2b4ed25e92c3711ad385`, con los estilos actuales y Firebase real. No forma parte del target ni del flujo actual. Para reproducir esa copia, ejecutar `python3 Semana14/recursos/actividad-01/preparar_bienvenida.py` desde la raíz. Requiere el plist local ya configurado y devuelve la ruta del proyecto temporal. Compilar ese proyecto con el scheme Lab14IntroFirebase, un DerivedData independiente y el UUID reservado para Lab14; nunca cambiar de rama ni usar un simulador de Lab13. El [archivo de bienvenida](recursos/actividad-01/AuthenticationWelcomeView.swift) se incorpora únicamente a esa copia.
+
+### Nuevas evidencias de Actividad 02
+
+- [Composición y envío con teclado abierto](evidencias/rediseno/actividad-02/01-envio-con-teclado.png).
+- [Ana recibe el mensaje de Bob sin refrescar](evidencias/rediseno/actividad-02/02-recepcion-bob-en-pro-max.png).
+- [Intercambio en el Pro Max de Ana](evidencias/rediseno/actividad-02/03-intercambio-ana-pro-max.png).
+- [Bob recibe la respuesta de Ana en el Pro](evidencias/rediseno/actividad-02/04-intercambio-bob-pro.png).
+
+[Detalle de compilaciones, pruebas y alcance](evidencias/rediseno/verificacion.md). Las 16 capturas originales permanecen en sus rutas anteriores y conservan sus SHA-256; se incluye su [manifiesto de integridad](evidencias/rediseno/originales-sha256.json). Las nueve imágenes nuevas son PNG directos del simulador, sin retoques.
