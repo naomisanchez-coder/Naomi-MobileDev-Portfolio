@@ -45,14 +45,14 @@ struct AuthView: View {
 
     private var authenticationForm: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 28) {
+            VStack(alignment: .leading, spacing: focusedField == nil ? 28 : 16) {
                 LabBrandMark(compact: focusedField != nil)
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("Tu espacio\npara conectar.")
-                        .font(focusedField == nil ? .largeTitle.weight(.bold) : .title2.weight(.bold))
-                        .foregroundStyle(LabTheme.navy)
-                        .fixedSize(horizontal: false, vertical: true)
-                    if focusedField == nil {
+                if focusedField == nil {
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("Tu espacio\npara conectar.")
+                            .font(.largeTitle.weight(.bold))
+                            .foregroundStyle(LabTheme.navy)
+                            .fixedSize(horizontal: false, vertical: true)
                         Text("Comparte ideas y mantén la conversación cerca.")
                             .font(.body)
                             .foregroundStyle(LabTheme.secondaryText)
@@ -60,14 +60,16 @@ struct AuthView: View {
                     }
                 }
 
-                VStack(alignment: .leading, spacing: 22) {
+                VStack(alignment: .leading, spacing: focusedField == nil ? 22 : 16) {
                     VStack(alignment: .leading, spacing: 6) {
                         Text("Accede a tu cuenta")
                             .font(.title3.weight(.bold))
                             .foregroundStyle(LabTheme.navy)
-                        Text("Ingresa tu correo y contraseña para continuar.")
-                            .font(.subheadline)
-                            .foregroundStyle(LabTheme.secondaryText)
+                        if focusedField == nil {
+                            Text("Ingresa tu correo y contraseña para continuar.")
+                                .font(.subheadline)
+                                .foregroundStyle(LabTheme.secondaryText)
+                        }
                     }
                     VStack(alignment: .leading, spacing: 9) {
                         fieldLabel("Correo electrónico", symbol: "envelope")
@@ -93,7 +95,7 @@ struct AuthView: View {
                             .accessibilityLabel("Contraseña")
                     }
                 }
-                .padding(22)
+                .padding(focusedField == nil ? 22 : 18)
                 .background(LabTheme.surface, in: RoundedRectangle(cornerRadius: LabTheme.cardRadius))
                 .overlay {
                     RoundedRectangle(cornerRadius: LabTheme.cardRadius)
@@ -143,12 +145,6 @@ struct AuthView: View {
             .frame(maxWidth: .infinity)
             .background(LabTheme.surface)
             .overlay(alignment: .top) { Divider().overlay(LabTheme.border) }
-        }
-        .toolbar {
-            ToolbarItemGroup(placement: .keyboard) {
-                Spacer()
-                Button("Listo") { focusedField = nil }
-            }
         }
     }
 
