@@ -128,7 +128,12 @@ struct AuthView: View {
     }
 
     func checkAuthState() {
-        isSignedIn = Auth.auth().currentUser != nil
+        // Listen for authentication state changes and store the listener handle
+        authStateListener = Auth.auth().addStateDidChangeListener { auth, user in
+            DispatchQueue.main.async {
+                self.isSignedIn = user != nil
+            }
+        }
     }
 }
 
