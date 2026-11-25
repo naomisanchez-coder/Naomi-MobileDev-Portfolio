@@ -1,106 +1,200 @@
 import SwiftUI
 import FirebaseAuth
 import FirebaseCore
+
 struct AuthView: View {
     @State private var email = ""
     @State private var password = ""
     @State private var isSignedIn = false
     @State private var showAlert = false
+    @State private var alertTitle = "Información"
     @State private var alertMessage = ""
+    @State private var isSubmitting = false
     @State private var authStateListener: AuthStateDidChangeListenerHandle?
+    @FocusState private var focusedField: Field?
+    private enum Field { case email, password }
+
     var body: some View {
-        NavigationView {
-            VStack(spacing: 20) {
-                Text("Lab 14: Firebase")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .padding(.top, 50)
-                Spacer()
+        NavigationStack {
+            Group {
                 if isSignedIn {
-                    // Show MessagesView when signed in
                     MessagesView()
                 } else {
-                    // Sign in form
-                    VStack(spacing: 15) {
-                        TextField("Email", text: $email)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            .autocapitalization(.none)
-                            .keyboardType(.emailAddress)
-                        SecureField("Password", text: $password)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                        HStack(spacing: 20) {
-                            Button("Sign In") {
-                                signIn()
-                            }
-                            .buttonStyle(PrimaryButtonStyle())
-                            Button("Sign Up") {
-                                signUp()
-                            }
-                            .buttonStyle(SecondaryButtonStyle())
-                        }
-                    }
-                    .padding(.horizontal, 30)
+                    authenticationForm
                 }
-                Spacer()
             }
-            .navigationBarHidden(true)
+            .toolbar(.hidden, for: .navigationBar)
+            .background(LabTheme.background.ignoresSafeArea())
         }
-        .alert("Message", isPresented: $showAlert) {
-            Button("OK") { }
+        .tint(LabTheme.turquoise)
+        .preferredColorScheme(.light)
+        .alert(alertTitle, isPresented: $showAlert) {
+            Button("Entendido", role: .cancel) { }
         } message: {
             Text(alertMessage)
         }
-        .onAppear {
-            checkAuthState()
-        }
-        .onChange(of: isSignedIn) {
-            // Clear form when signing out
-            if !isSignedIn {
+        .onAppear { checkAuthState() }
+        .onChange(of: isSignedIn) { _, signedIn in
+            focusedField = nil
+            if !signedIn {
                 email = ""
                 password = ""
             }
         }
     }
 
-    // MARK: - Authentication Functions
+    private var authenticationForm: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 28) {
+                LabBrandMark(compact: focusedField != nil)
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("Tu espacio\npara conectar.")
+                        .font(focusedField == nil ? .largeTitle.weight(.bold) : .title2.weight(.bold))
+                        .foregroundStyle(LabTheme.navy)
+                        .fixedSize(horizontal: false, vertical: true)
+                    if focusedField == nil {
+                        Text("Comparte ideas y mantén la conversación cerca.")
+                            .font(.body)
+                            .foregroundStyle(LabTheme.secondaryText)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                }
+
+                VStack(alignment: .leading, spacing: 22) {
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("Accede a tu cuenta")
+                            .font(.title3.weight(.bold))
+                            .foregroundStyle(LabTheme.navy)
+                        Text("Ingresa tu correo y contraseña para continuar.")
+                            .font(.subheadline)
+                            .foregroundStyle(LabTheme.secondaryText)
+                    }
+                    VStack(alignment: .leading, spacing: 9) {
+                        fieldLabel("Correo electrónico", symbol: "envelope")
+                        TextField("nombre@ejemplo.com", text: $email)
+                            .keyboardType(.emailAddress)
+                            .textContentType(.username)
+                            .textInputAutocapitalization(.never)
+                            .autocorrectionDisabled()
+                            .submitLabel(.next)
+                            .focused($focusedField, equals: .email)
+                            .onSubmit { focusedField = .password }
+                            .modifier(AuthFieldAppearance(active: focusedField == .email))
+                            .accessibilityLabel("Correo electrónico")
+                    }
+                    VStack(alignment: .leading, spacing: 9) {
+                        fieldLabel("Contraseña", symbol: "lock")
+                        SecureField("Al menos 6 caracteres", text: $password)
+                            .textContentType(.password)
+                            .submitLabel(.go)
+                            .focused($focusedField, equals: .password)
+                            .onSubmit { focusedField = nil; signIn() }
+                            .modifier(AuthFieldAppearance(active: focusedField == .password))
+                            .accessibilityLabel("Contraseña")
+                    }
+                }
+                .padding(22)
+                .background(LabTheme.surface, in: RoundedRectangle(cornerRadius: LabTheme.cardRadius))
+                .overlay {
+                    RoundedRectangle(cornerRadius: LabTheme.cardRadius)
+                        .stroke(LabTheme.border, lineWidth: 1)
+                }
+
+                if focusedField == nil {
+                    Label("Tu sesión, en un espacio seguro", systemImage: "checkmark.shield")
+                        .font(.footnote)
+                        .foregroundStyle(LabTheme.secondaryText)
+                        .frame(maxWidth: .infinity)
+                }
+            }
+            .frame(maxWidth: 560)
+            .padding(.horizontal, LabTheme.pagePadding)
+            .padding(.top, focusedField == nil ? 30 : 12)
+            .padding(.bottom, 24)
+            .frame(maxWidth: .infinity)
+        }
+        .scrollDismissesKeyboard(.interactively)
+        .safeAreaInset(edge: .bottom, spacing: 0) {
+            VStack(spacing: 12) {
+                Button {
+                    focusedField = nil
+                    signIn()
+                } label: {
+                    HStack(spacing: 10) {
+                        if isSubmitting { ProgressView().tint(.white) }
+                        Text(isSubmitting ? "Un momento…" : "Iniciar sesión")
+                        if !isSubmitting { Image(systemName: "arrow.right") }
+                    }
+                }
+                .buttonStyle(LabActionStyle())
+                Button {
+                    focusedField = nil
+                    signUp()
+                } label: {
+                    Label("Crear cuenta", systemImage: "person.badge.plus")
+                }
+                .buttonStyle(LabActionStyle(kind: .secondary))
+            }
+            .disabled(isSubmitting)
+            .frame(maxWidth: 560)
+            .padding(.horizontal, LabTheme.pagePadding)
+            .padding(.top, 16)
+            .padding(.bottom, 12)
+            .frame(maxWidth: .infinity)
+            .background(LabTheme.surface)
+            .overlay(alignment: .top) { Divider().overlay(LabTheme.border) }
+        }
+        .toolbar {
+            ToolbarItemGroup(placement: .keyboard) {
+                Spacer()
+                Button("Listo") { focusedField = nil }
+            }
+        }
+    }
+
+    private func fieldLabel(_ title: String, symbol: String) -> some View {
+        Label(title, systemImage: symbol)
+            .font(.subheadline.weight(.semibold))
+            .foregroundStyle(LabTheme.navy)
+    }
+
+    // Se conservan los servicios y métodos de autenticación del laboratorio.
     func signIn() {
+        guard !isSubmitting else { return }
         guard !email.isEmpty && !password.isEmpty else {
-            alertMessage = "Please enter both email and password"
-            showAlert = true
+            present("Completa tu correo electrónico y contraseña.", success: false)
             return
         }
+        isSubmitting = true
         Auth.auth().signIn(withEmail: email, password: password) { result, error in
+            isSubmitting = false
             if let error = error {
-                alertMessage = "Sign in failed: \(error.localizedDescription)"
-                showAlert = true
-                print("error.localizedDescription: \(error.localizedDescription)")
+                present(authenticationMessage(for: error), success: false)
             } else {
                 isSignedIn = true
-                alertMessage = "Sign in successful!"
-                showAlert = true
+                present("Iniciaste sesión correctamente.", success: true)
             }
         }
     }
 
     func signUp() {
+        guard !isSubmitting else { return }
         guard !email.isEmpty && !password.isEmpty else {
-            alertMessage = "Please enter both email and password"
-            showAlert = true
+            present("Completa tu correo electrónico y contraseña.", success: false)
             return
         }
         guard password.count >= 6 else {
-            alertMessage = "Password must be at least 6 characters"
-            showAlert = true
+            present("Usa una contraseña de al menos 6 caracteres.", success: false)
             return
         }
+        isSubmitting = true
         Auth.auth().createUser(withEmail: email, password: password) { result, error in
+            isSubmitting = false
             if let error = error {
-                alertMessage = "Sign up failed: \(error.localizedDescription)"
-                showAlert = true
+                present(authenticationMessage(for: error), success: false)
             } else {
                 isSignedIn = true
-                alertMessage = "Account created successfully!"
-                showAlert = true
+                present("Tu cuenta se creó correctamente.", success: true)
             }
         }
     }
@@ -109,59 +203,63 @@ struct AuthView: View {
         do {
             try Auth.auth().signOut()
             isSignedIn = false
-            alertMessage = "Signed out successfully!"
-            showAlert = true
+            present("Cerraste tu sesión correctamente.", success: true)
         } catch {
-            alertMessage = "Sign out failed: \(error.localizedDescription)"
-            showAlert = true
+            present(authenticationMessage(for: error), success: false)
         }
     }
 
     func checkAuthState() {
-        // Listen for authentication state changes and store the listener handle
+        guard authStateListener == nil else { return }
         authStateListener = Auth.auth().addStateDidChangeListener { auth, user in
             DispatchQueue.main.async {
                 self.isSignedIn = user != nil
             }
         }
     }
+
+    private func present(_ message: String, success: Bool) {
+        alertTitle = success ? "¡Todo listo!" : "Revisa tus datos"
+        alertMessage = message
+        showAlert = true
+    }
+
+    private func authenticationMessage(for error: Error) -> String {
+        switch AuthErrorCode(rawValue: (error as NSError).code) {
+        case .invalidEmail:
+            return "Ingresa una dirección de correo electrónico válida."
+        case .invalidCredential, .wrongPassword, .userNotFound:
+            return "El correo o la contraseña no son correctos. Revisa tus datos e inténtalo de nuevo."
+        case .emailAlreadyInUse:
+            return "Este correo ya tiene una cuenta. Usa Iniciar sesión para continuar."
+        case .weakPassword:
+            return "Elige una contraseña de al menos 6 caracteres."
+        case .networkError:
+            return "No pudimos conectarnos. Revisa tu conexión e inténtalo de nuevo."
+        case .tooManyRequests:
+            return "Se realizaron varios intentos. Espera un momento antes de volver a ingresar."
+        default:
+            return error.localizedDescription
+        }
+    }
 }
 
+private struct AuthFieldAppearance: ViewModifier {
+    var active: Bool
+    func body(content: Content) -> some View {
+        content
+            .font(.body)
+            .foregroundStyle(LabTheme.navy)
+            .padding(15)
+            .frame(minHeight: 52)
+            .background(LabTheme.background, in: RoundedRectangle(cornerRadius: 13))
+            .overlay {
+                RoundedRectangle(cornerRadius: 13)
+                    .stroke(active ? LabTheme.turquoise : LabTheme.border, lineWidth: active ? 2 : 1)
+            }
+    }
+}
 
-// MARK: - Button Styles
-struct PrimaryButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .foregroundColor(.white)
-            .padding()
-            .background(Color.blue)
-            .cornerRadius(10)
-            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
-    }
-}
-struct SecondaryButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .foregroundColor(.blue)
-            .padding()
-            .background(Color.clear)
-            .overlay(
-                RoundedRectangle(cornerRadius: 10)
-                    .stroke(Color.blue, lineWidth: 2)
-            )
-            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
-    }
-}
-struct SignOutButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .foregroundColor(.white)
-            .padding()
-            .background(Color.red)
-            .cornerRadius(10)
-            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
-    }
-}
 #Preview {
     AuthView()
 }
