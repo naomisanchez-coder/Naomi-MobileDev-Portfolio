@@ -9,9 +9,9 @@
  000000000000000000000009 = {isa = PBXFileSystemSynchronizedRootGroup; path = Lab14IntroFirebase; sourceTree = "<group>";};
  000000000000000000000003 = {isa = PBXGroup; children = (000000000000000000000004); name = Products; sourceTree = "<group>";};
  000000000000000000000004 = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lab14IntroFirebase.app; sourceTree = BUILT_PRODUCTS_DIR;};
- 000000000000000000000005 = {isa = PBXNativeTarget; buildConfigurationList = 00000000000000000000000B; buildPhases = (000000000000000000000006, 000000000000000000000007, 000000000000000000000008); buildRules = (); dependencies = (); fileSystemSynchronizedGroups = (000000000000000000000009); name = Lab14IntroFirebase; packageProductDependencies = (A00000000000000000000002, A00000000000000000000003); productName = Lab14IntroFirebase; productReference = 000000000000000000000004; productType = "com.apple.product-type.application";};
+ 000000000000000000000005 = {isa = PBXNativeTarget; buildConfigurationList = 00000000000000000000000B; buildPhases = (000000000000000000000006, 000000000000000000000007, 000000000000000000000008); buildRules = (); dependencies = (); fileSystemSynchronizedGroups = (000000000000000000000009); name = Lab14IntroFirebase; packageProductDependencies = (A00000000000000000000002, A00000000000000000000003, A00000000000000000000006, A00000000000000000000007); productName = Lab14IntroFirebase; productReference = 000000000000000000000004; productType = "com.apple.product-type.application";};
  000000000000000000000006 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0;};
- 000000000000000000000007 = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (A00000000000000000000004, A00000000000000000000005); runOnlyForDeploymentPostprocessing = 0;};
+ 000000000000000000000007 = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (A00000000000000000000004, A00000000000000000000005, A00000000000000000000008, A00000000000000000000009); runOnlyForDeploymentPostprocessing = 0;};
  000000000000000000000008 = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0;};
  00000000000000000000000A = {isa = XCConfigurationList; buildConfigurations = (00000000000000000000000C, 00000000000000000000000D); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release;};
  00000000000000000000000B = {isa = XCConfigurationList; buildConfigurations = (00000000000000000000000E, 00000000000000000000000F); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release;};
@@ -25,6 +25,11 @@
  A00000000000000000000003 = {isa = XCSwiftPackageProductDependency; package = A00000000000000000000001; productName = FirebaseAuth;};
  A00000000000000000000004 = {isa = PBXBuildFile; productRef = A00000000000000000000002;};
  A00000000000000000000005 = {isa = PBXBuildFile; productRef = A00000000000000000000003;};
+
+ A00000000000000000000006 = {isa = XCSwiftPackageProductDependency; package = A00000000000000000000001; productName = FirebaseDatabase;};
+ A00000000000000000000007 = {isa = XCSwiftPackageProductDependency; package = A00000000000000000000001; productName = FirebaseFirestore;};
+ A00000000000000000000008 = {isa = PBXBuildFile; productRef = A00000000000000000000006;};
+ A00000000000000000000009 = {isa = PBXBuildFile; productRef = A00000000000000000000007;};
  };
  rootObject = 000000000000000000000001;
 }
