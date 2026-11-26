@@ -48,3 +48,29 @@ Los dos proyectos se compilaron para iPhone 17e con iOS 26.5. Las pruebas de int
 - Actividad 01. Primero se ejecutó el listado sin filtro. Después se comprobó el GET HTTP 200, la coincidencia de “gRaHaM” y el retorno de la lista completa al borrar la búsqueda.
 - Actividad 02. Se verificó que el formulario rechazara campos vacíos y un correo incompleto. POST devolvió HTTP 201, PUT HTTP 200 y DELETE HTTP 200. PUT usó el registro original de Leanne Graham y DELETE el de Ervin Howell. Se comprobaron los efectos visibles en memoria.
 - Actividad 03. Se repitieron GET, POST, PUT y DELETE desde la versión async/await y se comprobaron los mismos códigos HTTP, la validación, la precarga del formulario y los cambios de la lista.
+
+## Evidencias del rediseño
+
+Se verificaron la carga, la búsqueda, el estado sin coincidencias y el retorno a la lista completa en la Actividad 01. En las Actividades 02 y 03 se comprobó la validación del formulario, el acceso a las acciones con el teclado abierto y la precarga de edición. El servicio devolvió GET 200, POST 201, PUT 200 y DELETE 200 en ambas versiones. Las pruebas usaron XCUITest en iPhone 17e con iOS 26.5. La Actividad 02 se ejecutó desde una copia temporal de `ff6e3d5` con los cambios visuales compatibles.
+
+### Actividad 01
+
+- [Lista cargada](evidencias/rediseno/actividad-01/01-lista-cargada.png)
+- [Búsqueda por nombre aplicada](evidencias/rediseno/actividad-01/02-busqueda-aplicada.png)
+
+### Actividad 02
+
+- [Formulario de alta](evidencias/rediseno/actividad-02/02-formulario-alta.png)
+- [Alta local con POST 201](evidencias/rediseno/actividad-02/03-resultado-post.png)
+- [Formulario de edición de un registro original](evidencias/rediseno/actividad-02/04-formulario-edicion.png)
+- [Edición local con PUT 200](evidencias/rediseno/actividad-02/05-resultado-put.png)
+- [Lista tras DELETE 200](evidencias/rediseno/actividad-02/06-resultado-delete.png)
+
+### Actividad 03
+
+- [Lista cargada](evidencias/rediseno/actividad-03/01-lista-cargada.png)
+- [Formulario de alta](evidencias/rediseno/actividad-03/02-formulario-alta.png)
+- [Alta local con POST 201](evidencias/rediseno/actividad-03/03-resultado-post.png)
+- [Formulario de edición de un registro original](evidencias/rediseno/actividad-03/04-formulario-edicion.png)
+- [Edición local con PUT 200](evidencias/rediseno/actividad-03/05-resultado-put.png)
+- [Lista tras DELETE 200](evidencias/rediseno/actividad-03/06-resultado-delete.png)
