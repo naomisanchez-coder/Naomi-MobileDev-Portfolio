@@ -8,25 +8,29 @@ struct ContentView: View {
 
     var body: some View {
         NavigationView {
-            VStack(spacing: 0) {
-                TextField("Buscar usuario por nombre", text: $viewModel.searchText)
-                    .textFieldStyle(.roundedBorder)
-                    .autocorrectionDisabled()
-                    .padding()
+            VStack(spacing: 8) {
+                UserHeader(title: "Usuarios", icon: "person.crop.rectangle.stack.fill")
+                    .padding(.horizontal, 16)
+                UserSearch(text: $viewModel.searchText)
+                    .padding(.horizontal, 16)
 
                 if viewModel.isBusy {
-                    ProgressView("Procesando…").padding(.bottom, 8)
+                    ProgressView("Procesando…").padding(.vertical, 6)
                 } else if let error = viewModel.errorMessage {
-                    Text(error).font(.footnote).foregroundStyle(.red).padding(.horizontal)
+                    UserNotice(text: error, isError: true).padding(.horizontal, 16)
                 } else if !viewModel.status.isEmpty {
-                    Text(viewModel.status).font(.footnote).padding(.horizontal)
+                    UserNotice(text: viewModel.status).padding(.horizontal, 16)
                 }
 
                 List(viewModel.filteredUsers) { user in
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(user.name).font(.headline)
-                        Text(user.email).font(.subheadline).foregroundStyle(.secondary)
+                    HStack(spacing: 12) {
+                        UserBadge(name: user.name)
+                        VStack(alignment: .leading, spacing: 3) {
+                            Text(user.name).font(.headline)
+                            Text(user.email).font(.subheadline).foregroundStyle(.secondary)
+                        }
                     }
+                    .listRowBackground(UserStyle.surface)
                     .accessibilityIdentifier("user-\(user.id)")
                     .swipeActions(allowsFullSwipe: false) {
                         if user.id > 0 {
@@ -35,7 +39,7 @@ struct ContentView: View {
                             } label: {
                                 Label("Eliminar", systemImage: "trash")
                             }
-                            .tint(.red)
+                            .tint(UserStyle.coral)
                             .disabled(viewModel.isBusy)
 
                             Button {
@@ -45,11 +49,12 @@ struct ContentView: View {
                             } label: {
                                 Label("Editar", systemImage: "pencil")
                             }
-                            .tint(.blue)
+                            .tint(UserStyle.indigo)
                             .disabled(viewModel.isBusy)
                         }
                     }
                 }
+                .scrollContentBackground(.hidden)
                 .scrollDismissesKeyboard(.interactively)
 
                 if viewModel.hasLoaded {
@@ -58,9 +63,16 @@ struct ContentView: View {
                         editingUser = nil
                         showingForm = true
                     } label: {
-                        Label("Agregar Usuario", systemImage: "plus")
+                        Label("Agregar Usuario", systemImage: "plus.circle.fill")
+                            .font(.headline)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 5)
                     }
-                    .padding()
+                    .buttonStyle(.borderedProminent)
+                    .tint(UserStyle.teal)
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 8)
                     .disabled(viewModel.isBusy)
                 }
 
@@ -71,7 +83,9 @@ struct ContentView: View {
                     .padding()
                 }
             }
-            .navigationTitle("Usuarios")
+            .padding(.top, 8)
+            .background(UserStyle.background.ignoresSafeArea())
+            .toolbar(.hidden, for: .navigationBar)
             .task { await viewModel.fetchUsers() }
             .sheet(isPresented: $showingForm) {
                 let user = editingUser
